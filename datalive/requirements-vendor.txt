@@ -1,0 +1,18 @@
+Django==1.11.2
+googlemaps
+
+django-mysql==2.2.0
+requests-toolbelt
+
+# for use with SMS/Voice
+twilio
+
+# New for JWF
+djangorestframework
+djangorestframework-jwt
+django-cors-headers
+google_cloud_storage
+django-storages
+oauth2client
+openpyxl==2.2.6
+

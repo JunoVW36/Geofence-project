@@ -1,0 +1,181 @@
+
+
+<section class="wrapper-administration o-content">
+  <aside class="admin-navigation o-content__sidebar c-sidebar" [ngClass]="{'o-content__sidebar--hidden': !sidemenuOpen}">
+   <div class="d-context-panel__head flex-direction--column">
+     
+        <h4 class="d-context-panel__title">Driver Behaviour Report</h4>
+    </div>
+    <search-safety-report (outputVehicleName)="this.searchAutocomplete=$event"
+                                      (outputAbcData)="this.abcData=$event"
+                                      (outputShowPage)="this.showPage=$event"
+                                      (outputApiIsLoading)="this.isLoading=$event"
+                                      [redirectToTimesheet]="false"
+                                      (outputStartDate)="this.startDateTime=$event"
+                                      (outputEndDate)="this.endDateTime=$event"
+                                      [namePage]="'abc'">
+        </search-safety-report>
+        <button (click)="sidemenuOpen = !sidemenuOpen" class="c-title-toolbar__toggle-btn" [ngClass]="{'sidemenu-is-hidden': !sidemenuOpen}">
+          <mat-icon class="icon--16 c-title-toolbar__toggle-btn-icon">chevron_left</mat-icon>
+        </button>
+  </aside>
+
+  <main class="wrapper-admin-content o-content__main">
+      <mat-toolbar class="c-title-toolbar">
+        <h1 class="c-title-toolbar__heading">
+          Driver Behaviour Report
+          <mat-icon class="mat-icon--16">chevron_right</mat-icon>
+          <span class="c-title-toolbar__heading__meta">
+            {{ searchAutocomplete }}
+            <mat-icon class="mat-icon--16">chevron_right</mat-icon>
+            {{ startDateTime | date:'dd.MM.yyyy' }} - {{ endDateTime | date:'dd.MM.yyyy' }}
+            <mat-icon class="mat-icon--16">date_range</mat-icon>
+          </span>
+
+           <div class="trips-stops-switch print-hidden">
+            <div class="c-switch--wrap">
+              <span class="label">Kms</span>
+              <div class="c-switch">
+                <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" type="checkbox" [checked]="isInMiles" (change)="isInMiles = !isInMiles" >
+                <label for="cmn-toggle-4"></label>
+              </div>
+
+              <span class="label">Miles</span>
+            </div>
+          </div>
+        </h1>
+         <button onclick="window.print();" class="c-title-toolbar__print c-btn"><mat-icon class="">print</mat-icon></button>
+      </mat-toolbar>
+
+      <div class="c-grid-list__row c-grid-list__row--header time-fields-header" *ngIf="abcData.rows.length > 0">
+      
+            <div class="c-grid-list__cell c-grid-list__cell--width-15">
+              <span>Vehicle</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-7">
+              <span class="text--right">Score</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10">
+              <span class="text--right">Distance<br><small>({{isInMiles ? 'miles':'kms'}})</small></span>
+            </div>
+           <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-10 flex flex-justify--space-between flex-wrap--wrap">
+              <span class="c-grid-list__cell--width-100 text--right">Speeding</span>
+              <small class="flex-flex--1-1-auto c-grid-list__cell--width-60 text--right"></small>
+              <small class="c-grid-list__cell--width-40 text--right">({{isInMiles ? 'miles':'kms'}})</small>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-13 flex flex-justify--space-between flex-wrap--wrap">
+              <span class="c-grid-list__cell--width-100 text--right">Acceleration</span>
+              <small class="flex-flex--1-1-auto c-grid-list__cell--width-60 text--right">(per 1000 {{isInMiles ? 'miles':'kms'}})</small>
+              <small class="c-grid-list__cell--width-40 text--right">count</small>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-13 flex flex-justify--space-between flex-wrap--wrap">
+              <span class="c-grid-list__cell--width-100 text--right">Braking</span>
+              <small class="flex-flex--1-1-auto c-grid-list__cell--width-60 text--right">(per 1000 {{isInMiles ? 'miles':'kms'}})</small>
+              <small class="c-grid-list__cell--width-40 text--right">count</small>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-13 flex flex-justify--space-between flex-wrap--wrap">
+              <span class="c-grid-list__cell--width-100 text--right">Cornering</span>
+              <small class="flex-flex--1-1-auto c-grid-list__cell--width-60 text--right">(per 1000 {{isInMiles ? 'miles':'kms'}})</small>
+              <small class="c-grid-list__cell--width-40 text--right">count</small>
+            </div>
+            
+            <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-10 flex flex-justify--space-between flex-wrap--wrap">
+              <span class="c-grid-list__cell--width-100 text--right">Idling</span>
+              <small class="flex-flex--1-1-auto c-grid-list__cell--width-60 text--right"></small>
+              <small class="c-grid-list__cell--width-40 text--right">hours</small>
+            </div>
+          
+      </div>
+    <section class="o-scrollable--with-toolbar o-scrollable--with-shadow o-content--has-footer-totals o-content--safety-report">
+
+      <div class="content-time" [ngClass]="{'is-loading': isLoading}">
+
+        <div *ngIf="abcData.rows.length === 0 && !isLoading" class="c-message c-message--no-data">
+           <mat-icon class="mat-icon--48">sentiment_dissatisfied</mat-icon>
+           <h3 class="c-message__header">{{outputStatusText}} There is no behaviour data for those dates</h3>
+          <div class="c-message__text">
+            <p>Please choose a vehicle and a date to retrieve behaviour data</p>
+          </div>
+        </div>
+
+        <div class="c-grid-list" *ngIf="abcData.rows.length > 0">
+          <div *ngFor="let time of abcData.rows; let i = index" [attr.data-index]="i"
+          class="c-grid-list__row c-grid-list__row--hove"
+          [ngClass]="{'c-grid-list__row--even': (i%2)==0 }">
+
+            <div class="c-grid-list__cell c-grid-list__cell--width-15">
+              <span>{{ time.vehicleName }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-7">
+              <span class="safety-score-col text--right --error" [ngClass]="{'--warning': time.score >= 70, '--success': time.score >= 80}">
+                {{ time.score | number:'1.2-2' }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10" >
+              <span class="text--right" *ngIf="isInMiles">{{ time.distance | number:'1.2-2' }}</span>
+              <span class="text--right" *ngIf="!isInMiles">{{ time.distanceKms | number:'1.2-2' }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-10" >
+              <span class="text--right" *ngIf="isInMiles">{{ time.speedingDistance | number:'1.2-2' }}</span>
+              <span class="text--right" *ngIf="!isInMiles">{{ time.speedingDistanceKms | number:'1.2-2' }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-13 text--left flex flex-justify--space-between">
+              <span class="c-grid-list__cell--width-60 flex-flex--1-1-auto text--right" *ngIf="isInMiles">{{ time.aPerThousand | number:'1.2-2' }}</span>
+              <span class="c-grid-list__cell--width-60 flex-flex--1-1-auto text--right" *ngIf="!isInMiles">{{ time.aPerThousandKms | number:'1.2-2' }}</span>
+              <span class="c-grid-list__cell--width-40 flex-flex--1-1-auto text--right">{{ time.aCount }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-13 text--left flex flex-justify--space-between">
+              <span class="c-grid-list__cell--width-60 flex-flex--1-1-auto text--right" *ngIf="isInMiles">{{ time.bPerThousand | number:'1.2-2' }}</span>
+              <span class="c-grid-list__cell--width-60 flex-flex--1-1-auto text--right" *ngIf="!isInMiles">{{ time.bPerThousandKms | number:'1.2-2' }}</span>
+              <span class="c-grid-list__cell--width-40 flex-flex--1-1-auto text--right">{{ time.bCount }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-13 text--left flex flex-justify--space-between">
+              <span class="c-grid-list__cell--width-60 flex-flex--1-1-auto text--right" *ngIf="isInMiles">{{ time.cPerThousand | number:'1.2-2' }}</span>
+              <span class="c-grid-list__cell--width-60 flex-flex--1-1-auto text--right" *ngIf="!isInMiles">{{ time.cPerThousandKms | number:'1.2-2' }}</span>
+              <span class="c-grid-list__cell--width-40 flex-flex--1-1-auto text--right">{{ time.cCount }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-10" >
+              <span class="text--right">{{ time.idleDuration }}</span>
+            </div>
+
+          </div>
+        </div>
+
+          <mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+      </div>
+
+
+    </section>
+          <!-- ABC footer -->
+          <div class="c-grid-list__row c-grid-list__row--footer" *ngIf="abcData.rows.length > 0">
+            <div class="c-grid-list__cell c-grid-list__cell--width-15">
+              <span><strong>Totals:</strong></span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-7">
+              <span class="safety-score-col text--right --error" >{{abcData.averageScore | number:'1.2-2'}}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10" >
+              <span class="text--right" *ngIf="isInMiles">{{abcData.totalDistance | number:'1.2-2'}}</span>
+              <span class="text--right" *ngIf="!isInMiles">{{ abcData.totalDistanceKms | number:'1.2-2' }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-10" >
+              <span class="text--right" *ngIf="isInMiles">{{abcData.totalSpeedingDistance | number:'1.2-2'}}</span>
+              <span class="text--right" *ngIf="!isInMiles">{{abcData.totalSpeedingDistanceKms | number:'1.2-2'}}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-13 text--left flex flex-justify--space-between">
+              <span class="c-grid-list__cell--width-60 flex-flex--1-1-auto text--right" *ngIf="isInMiles">{{abcData.averageAPerThousand | number:'1.2-2'}}</span>
+              <span class="c-grid-list__cell--width-60 flex-flex--1-1-auto text--right" *ngIf="!isInMiles">{{abcData.averageAPerThousandKms | number:'1.2-2'}}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-13 text--left flex flex-justify--space-between">
+              <span class="c-grid-list__cell--width-60 flex-flex--1-1-auto text--right" *ngIf="isInMiles">{{abcData.averageBPerThousand | number:'1.2-2'}}</span>
+              <span class="c-grid-list__cell--width-60 flex-flex--1-1-auto text--right" *ngIf="!isInMiles">{{abcData.averageBPerThousandKms | number:'1.2-2'}}</span>             
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-13 text--left flex flex-justify--space-between">
+              <span class="c-grid-list__cell--width-60 flex-flex--1-1-auto text--right" *ngIf="isInMiles">{{abcData.averageCPerThousand | number:'1.2-2'}}</span>
+              <span class="c-grid-list__cell--width-60 flex-flex--1-1-auto text--right" *ngIf="!isInMiles">{{abcData.averageCPerThousandKms | number:'1.2-2'}}</span>            
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--border-left c-grid-list__cell--width-10" >
+              <span class="text--right">{{abcData.totalIdleDuration }}</span>
+            </div>
+          </div>
+  </main>
+</section>

@@ -1,0 +1,39 @@
+// Color palette
+$color-brand:           #C54F97;//#6F3F74;
+$color-brand--highlight: lighten($color-brand, 15%);
+$color-brand--shadow:    darken($color-brand, 15%);
+
+$color-grey:            #565656; //handsfree grey
+$color-grey--medium:    #999;
+$color-grey--light:      #ccc;
+$color-grey--lighter:    #e7e7e7;
+$color-grey--lightest:   #fafafa;
+$color-grey--zebra:     lighten($color-grey--lightest, 1);
+$color-grey-dark:       #333;
+$color-grey-navigation: #979797;
+
+
+$color-success:         #51a351;
+$color-warning:         #f89406;
+$color-orange:          #f77426;
+$color-error:           #bd362f;
+
+$color-highlight:       rgba(255, 255, 255, 0.05);
+$color-shadow:          rgba(0, 0, 0, 0.05);
+$box-shadow:            0px 1px 6px 0px rgba(0, 0, 0, 0.25);
+
+$datalive-gradient: linear-gradient(to left top, rgba(69, 40, 77, 1) 0%, rgba(129, 73, 134, 1) 50%, rgba(196, 100, 109, 1) 100%),
+    linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
+
+// UI
+$color-ui:              $color-grey--light;
+$color-vehichlecheck: #f1f1f1;
+
+// Text
+$color-text:            $color-grey;
+$color-text--overlay:   #fff;
+$color-heading-text:    $color-grey-dark;
+
+// Links
+$color-link:            $color-brand;
+$color-link--hover:      $color-brand--shadow;

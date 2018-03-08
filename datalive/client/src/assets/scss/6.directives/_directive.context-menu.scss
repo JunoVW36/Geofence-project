@@ -1,0 +1,98 @@
+
+
+/*--- styles moved from the styles.scss. ---*/
+
+/*TODO - convert into a custom directive ---*/
+
+// .wrapper-time .mat-sidenav-container {
+//   height: calc(100vh - 68px);
+//   background: $color-grey--lightest;
+// }
+
+// .wrapper-time .mat-toolbar {
+//   align-items: flex-start;
+//   background: $color-grey--lightest;
+//   width: 68px;
+//   height: inherit;
+//   padding: 0 6px;
+//   border-right: 2px solid $color-grey--lighter;
+//   border-left: 1px solid lighten($color-grey--lighter,2);
+//   //height: 50px;
+//   .mat-icon-button{
+//       padding-right: 12px;
+//   }
+// }
+
+// .wrapper-time .mat-sidenav-content {
+//   display: flex;
+// }
+
+.wrapper-time .sidenav-block {
+  width: 100%;
+  border: 2px solid $color-grey--lighter;
+}
+
+.wrapper-time{
+    .mat-sidenav {
+        background-color: transparent;
+    }   
+}
+
+.d-context-panel__row {
+    padding: 0 $spacing-unit--base $spacing-unit--base $spacing-unit--base ;
+}
+
+
+
+.d-context-panel__head {
+    padding: $spacing-unit--base $spacing-unit--small $spacing-unit--small;
+    margin-bottom: $spacing-unit--small;
+    border-bottom: 1px solid $color-grey--lighter;
+}
+
+
+.d-context-panel__head-img {
+    max-width: 40px;
+    margin: 0 $spacing-unit--small 0 0;
+    
+}
+
+.d-context-panel__title {
+
+    display: inline-block;
+   // text-align: center;
+    @include font-size(19px);
+    @extend .font-family--light;
+    margin: 0;
+    margin: $spacing-unit--tiny 0 $spacing-unit--tiny 0;
+    text-transform: capitalize;
+}
+
+.d-context-panel__heading {
+    @include font-size(15px);
+    @extend .font-family--light;
+    margin: $spacing-unit--tiny 0 $spacing-unit--small 0;
+}
+
+.d-context-panel__date-field {
+    .mat-input-underline {
+        bottom:0;
+    }
+    .mat-input-infix {
+        border-top:0;
+    }
+    .mat-input-wrapper {
+        padding-bottom: 0;
+    }
+    .mat-input-invalid .mat-input-wrapper {
+        padding-bottom: 1.29688em;
+    }
+    .mat-input-subscript-wrapper {
+        margin-top: 0;
+    }
+}
+
+
+.d-context-panel__search-btn {
+    width: 100%;
+}

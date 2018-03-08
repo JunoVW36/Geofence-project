@@ -1,0 +1,108 @@
+button {
+    &:focus {
+        outline: none;
+    }
+}
+
+
+
+.c-btn {
+    display: inline-block;
+    padding: (0.5 * $spacing-unit--base) $spacing-unit--base;
+    text-decoration: none;
+    background-color: $btn-color;
+    color: $btn-text-color;
+    border: $btn-border;
+    border-bottom: $btn-border--bottom;
+    border-radius: $base-radius;
+    transition: background-color 0.2s;
+    box-shadow: $btn-shadow;
+
+    &:hover,
+    &:focus {
+        background-color: $btn-color--hover;
+        border-bottom-color: $btn-text-color--hover;
+        color:$btn-text-color--hover;
+        cursor:pointer;
+    }
+    &[disabled] {
+        color: $btn-color--disabled;
+        border-bottom: $btn-border--bottom--disabled;
+       
+        &:hover,
+        &:focus {
+            color: $btn-color--disabled;
+            border-bottom: $btn-border--bottom--disabled;
+            cursor:default; 
+            background-color: #fff;
+        }
+    }
+}
+
+// ---- colours -----//
+.c-btn--brand {
+    background-color:#fff;
+    border-color: $color-brand;
+    color: $color-brand;
+    &:hover {
+        background-color: $color-brand;
+        color: #fff;
+    }
+}
+.c-btn--white {
+    background-color: transparent;
+    border-color: #fff;
+    color: #fff;
+    &:hover {
+        background-color: $color-brand;
+    }
+}
+.c-btn--red {
+    background-color: $color-error;
+    border-color: darken($color-error,5);
+    color: #fff;
+    &:hover {
+        background-color: darken($color-error,5);
+    }
+}
+.c-btn--green, .c-btn--success {
+    background-color: #fff;
+    border-color: $color-success;
+    color: $color-success;
+    &:hover {
+        border-color: $color-success;
+        color: #fff;
+        background-color: lighten($color-success, 5);
+    }
+}
+
+//----- Modifiers ---//
+.c-btn--transparent {
+    background-color: transparent;
+    color: $btn-text-color;
+    border: none;
+    box-shadow: none;
+    &:hover {
+        background-color: $color-grey--lighter;
+    }
+}
+.c-btn--no-padding {
+    padding:0;
+}
+
+// successfull form button 
+form.ng-valid {
+    .c-btn-submit {
+        @extend .c-btn--green;
+    }
+}
+
+.c-btn--full-width {
+    width: 100%;
+}
+.c-btn--large {
+    padding: $spacing-unit--base;
+};
+.c-btn--block {
+    display: block
+}

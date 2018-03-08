@@ -1,0 +1,13 @@
+.mat-dialog-container {
+    overflow-y: auto;
+}
+
+.d-dialog-pre {
+    min-height: 200px;
+    max-height: 400px;
+    overflow: auto;
+    border: 1px solid $color-grey--lighter;
+    padding: $spacing-unit--small;
+}
+
+

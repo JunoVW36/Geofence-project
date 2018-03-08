@@ -1,0 +1,187 @@
+<header class="c-site-header o-header">
+  <mat-sidenav-container>
+    <mat-sidenav align="start" #sidenav mode="side" class="mat-sidenav c-sidenav">
+      <div class="c-sidenav__header">
+        <h3 class="c-sidenav__heading">Modules Menu</h3>
+        <button class="c-btn--transparent c-sidenav__home-btn" [routerLink]="['/home']" (click)="sidenav.close()" ><mat-icon>home</mat-icon></button>
+      </div>
+      <ul class="mat-nav-list c-sidenav-list">
+       <li class="c-sidenav-list__item">
+        <div *ngxPermissionsOnly="['Track']; else elseBlockTrack; then thenBlockTrack"></div>
+             <ng-template #elseBlockTrack>
+                 <span class="c-sidenav-list__link c-sidenav-list__link--disabled">
+                    <figure><img src="{{img}}track-icon.png" alt="track"></figure>
+                    <figcaption>Track</figcaption>
+                </span>
+              </ng-template>
+              <ng-template #thenBlockTrack>
+                <a class="c-sidenav-list__link" (click)="sidenav.close()" [routerLink]="['/track']">
+                    <figure><img src="{{img}}track-icon.png" alt="track"></figure>
+                    <figcaption>Track</figcaption>
+                </a>
+              </ng-template>
+          </li>
+        <li class="c-sidenav-list__item">
+          <div *ngxPermissionsOnly="['Trace']; else elseBlockTrace; then thenBlockTrace"></div>
+             <ng-template #elseBlockTrace>
+               <span class="c-sidenav-list__link c-sidenav-list__link--disabled">
+                <figure><img src="{{img}}trace-icon.png" alt="trace"></figure>
+                <figcaption>Trace</figcaption></span>
+            </ng-template>
+            <ng-template #thenBlockTrace>
+                <a class="c-sidenav-list__link" (click)="sidenav.close()" [routerLink]="['/trace']">
+                <figure><img src="{{img}}trace-icon.png" alt="trace"></figure>
+                <figcaption>Trace</figcaption></a>
+            </ng-template>
+        </li>
+        
+        <li class="c-sidenav-list__item  ">
+            <a (click)="sidenav.close()" title="Geofence coming soon" class="c-sidenav-list__link c-sidenav-list__link--disabled">
+                <figure><img src="{{img}}geofence-icon.png" alt="geofence"></figure>
+                <figcaption>Geofence</figcaption>
+            </a>
+        </li>
+       
+        <!--<li class="c-sidenav-list__item">
+          <a (click)="sidenav.close()">
+            <figure><img src="{{img}}activity-icon.png" alt="activity"></figure>
+            <figcaption>Activity</figcaption>
+            </a>
+        </li>-->
+        <li class="c-sidenav-list__item">
+          <div *ngxPermissionsOnly="['Timesheet']; else elseBlockTimsheets; then thenBlockTimsheets"></div>
+             <ng-template #elseBlockTimsheets>
+              <span class="c-sidenav-list__link c-sidenav-list__link--disabled">
+                <figure><img src="{{img}}time-shets-icon.png" alt="timesheets"></figure>
+                <figcaption>Timesheets</figcaption>
+              </span>
+            </ng-template>
+            <ng-template #thenBlockTimsheets>
+              <a class="c-sidenav-list__link" (click)="sidenav.close();" [routerLink]="['/timesheet']">
+                <figure><img src="{{img}}time-shets-icon.png" alt="timesheets"></figure>
+                <figcaption>Timesheets</figcaption>
+              </a>
+            </ng-template>
+        </li>
+         <li class="c-sidenav-list__item">
+            <div *ngxPermissionsOnly="['Trips']; else elseBlockTrips; then thenBlockTrips"></div>
+             <ng-template #elseBlockTrips>
+                <a class="c-sidenav-list__link c-sidenav-list__link--disabled">
+                  <figure><img src="{{img}}trips-stops-icon.png" alt="trips and stops"></figure>
+                  <figcaption>Trips/Stops</figcaption>
+                </a>
+             </ng-template>
+              <ng-template #thenBlockTrips>
+                 <a class="c-sidenav-list__link" (click)="sidenav.close();" [routerLink]="['/trip']">
+                  <figure><img src="{{img}}trips-stops-icon.png" alt="trips and stops"></figure>
+                  <figcaption>Trips/Stops</figcaption>
+                </a>
+              </ng-template>
+        </li>
+        <li class="c-sidenav-list__item">
+            <div *ngxPermissionsOnly="['Vehicle Check']; else elseBlockTrips; then thenBlockVehCheck"></div>
+             <ng-template #elseBlockVehCheck>
+                <a class="c-sidenav-list__link c-sidenav-list__link--disabled">
+                  <figure><img src="{{img}}vehicle-check-icon--white.png" alt="Vehicle Check"></figure>
+                  <figcaption>Vehicle Check</figcaption>
+                </a>
+             </ng-template>
+              <ng-template #thenBlockVehCheck>
+                <a class="c-sidenav-list__link" (click)="sidenav.close();" [routerLink]="['/vehiclecheck/region']">
+                  <figure><img src="{{img}}vehicle-check-icon--white.png" alt="Vehicle Check"></figure>
+                  <figcaption>Vehicle Check</figcaption>
+                </a>
+              </ng-template>
+        </li>
+        <li class="c-sidenav-list__item">
+          <div *ngxPermissionsOnly="['Mobileye ADAS']; else elseBlockMobileye; then thenBlockMobileye"></div>
+            <ng-template #elseBlockMobileye>
+            <a class="c-sidenav-list__link c-sidenav-list__link--disabled">
+              <figure><img src="{{img}}mobileye-icon--white1.png" alt="Mobileye ADAS report"></figure>
+              <figcaption>Mobileye ADAS</figcaption>
+            </a>
+            </ng-template>
+            <ng-template #thenBlockMobileye>
+                <a class="c-sidenav-list__link"(click)="sidenav.close();" [routerLink]="['/safety/mobileye']">
+                  <figure><img src="{{img}}mobileye-icon--white1.png" alt="Mobileye ADAS report"></figure>
+                  <figcaption>Mobileye ADAS</figcaption>
+                </a>
+            </ng-template>
+        </li>
+         <li class="c-sidenav-list__item">
+           <div *ngxPermissionsOnly="['Driver Behaviour']; else elseBlockBehave; then thenBlockBehave"></div>
+             <ng-template #elseBlockBehave>
+              <a class="c-sidenav-list__link c-sidenav-list__link--disabled">
+                <figure><img src="{{img}}driver-behaviour-icon--white.png" alt="Driver Behaviour report"></figure>
+                <figcaption>Driver Behaviour</figcaption>
+              </a>
+            </ng-template>
+            <ng-template #thenBlockBehave>
+                <a class="c-sidenav-list__link" (click)="sidenav.close();" [routerLink]="['/safety/abc']">
+                  <figure><img src="{{img}}driver-behaviour-icon--white.png" alt="Driver Behaviour report"></figure>
+                  <figcaption>Driver Behaviour</figcaption>
+                </a>
+            </ng-template>
+        </li>
+      </ul>
+
+      <div class="sidenav-admin">
+        <div class="hr-under-sidenav">
+          <hr>
+        </div>
+          <ul class="mat-nav-list c-sidenav-list">
+            <li class="c-sidenav-list__item">
+              <a class="c-sidenav-list__link" (click)="sidenav.close()" [routerLink]="['/administration']">
+                <figure><img src="{{img}}admin-icon.png" alt="administration"></figure>
+                <figcaption>Administration</figcaption>
+              </a>
+            </li>
+            <li class="c-sidenav-list__item">
+               <a class="c-sidenav-list__link" (click)="sidenav.close()" [routerLink]="['/login']">
+                 <figure><img src="{{img}}logout-icon.png" alt="logout"></figure>
+                 <figcaption>Log out</figcaption></a>
+            </li>
+          </ul>
+      </div>
+
+    </mat-sidenav>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="sidenav.toggle()" class="c-site-header__toggle">
+        <mat-icon class="mat-24 c-site-header__toggle-icon">menu</mat-icon>
+      </button>
+      <hr class="line">
+      <nav class="new-navigation">
+        <ul>
+          <li>
+            <span>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item [routerLink]="['administration/user-preferences']">
+                  <mat-icon>account_circle</mat-icon>
+                  <span>User preferences</span>
+                </button>
+                <button mat-menu-item  [routerLink]="['/login']" >
+
+                    <mat-icon>forward</mat-icon>
+                    <span>Logout</span>
+
+                </button>
+              </mat-menu>
+              <button mat-icon-button [matMenuTriggerFor]="menu" class="user-name" xPosition="before">
+               <span >
+                {{ userName }}
+              </span> <mat-icon>more_vert</mat-icon>
+              </button>
+              
+            </span>
+          </li>
+          <li class="left-border">
+            <a >
+              <img src="{{img}}globe-loader.png" alt="handsfree" [routerLink]="['/home']">
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+    </mat-toolbar>
+  </mat-sidenav-container>
+</header>

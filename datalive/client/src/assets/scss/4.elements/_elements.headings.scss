@@ -1,0 +1,32 @@
+h1 {
+    @include font-size(32px);
+    //font-family: 'Naste Light', Helvetica, Arial, sans-serif;
+    @extend .font-family--light;
+    font-weight: 300;
+}
+
+h2 {
+    @include font-size(28px);
+    @extend .font-family--light;
+    font-weight: 300;
+}
+
+h3 {
+    @include font-size(24px);
+}
+
+h4 {
+    @include font-size(20px);
+}
+
+h5 {
+    @include font-size(18px);
+}
+
+h6 {
+    @include font-size(16px);
+}
+
+h1, h2, h3, h4 {
+    color:$color-heading-text;
+}

@@ -1,0 +1,17 @@
+@media print {
+  .c-title-toolbar__print, .mat-toolbar.mat-primary, .c-sidebar, .c-title-toolbar__toggle-btn, .print-hidden, .print{
+    display: none!important;
+  }
+  .o-content__sidebar+.o-content__main{
+    left: 0!important;
+  }
+  .o-scrollable--with-shadow{
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    margin: 30px 0;
+  }
+  .c-grid-list__cell{
+    font-size: 12px;
+  }
+}
+

@@ -1,0 +1,15 @@
+
+// Buttons
+$btn-color: #fefefe;
+$btn-border: 1px solid $color-grey--lighter;
+$btn-border--bottom: 2px solid $color-grey-dark;
+$btn-text-color: $color-grey-dark;
+$btn-shadow: 0 2px 1px -1px rgba(0,0,0,.15), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+
+// button hover
+$btn-color--hover:      #fff;
+$btn-text-color--hover: $color-brand;
+
+// disabled styles
+$btn-color--disabled: $color-grey--medium;//lighten($color-text, 5);
+$btn-border--bottom--disabled: 2px solid $color-grey--medium;

@@ -1,0 +1,265 @@
+<section class="wrapper-administration o-content">
+  <aside class="admin-navigation o-content__sidebar c-sidebar" [ngClass]="{'o-content__sidebar--hidden': !sidemenuOpen}">
+    <div class="d-context-panel__head flex-direction--column">
+      <img class="d-context-panel__head-img" src="{{ img }}trips-stops-gray-icon.png" alt="Trips and stops icon">
+        <h4 class="d-context-panel__title">Trips & Stops</h4>
+    </div>
+    <search-vehicle-timesheet-app (outputVehicleName)="this.searchAutocomplete=$event"
+                                      (outputTimesheet)="this.timesheet=$event"
+                                      (outputShowPage)="this.showPage=$event"
+                                      (outputTrip)="this.trip=$event"
+                                      (outputTripTitle)="this.titleTrip=$event"
+                                      (outputApiIsLoading)="this.isLoading=$event"
+                                      (outputStartDate)="this.startDateTime=$event"
+                                      (outputEndDate)="this.endDateTime=$event"
+                                      (outputTripDistance) = "this.distanceOverall=$event"
+                                      (outputTripDuration) = "this.durationOverall=$event"
+                                      (outputStopDuration) = "this.stopsOverall=$event"
+                                      [redirectToTimesheet]="true"
+                                      [namePage]="'trip'"
+                                      [urlParams]="urlParams">
+        </search-vehicle-timesheet-app>
+        <button (click)="sidemenuOpen = !sidemenuOpen" class="c-title-toolbar__toggle-btn" [ngClass]="{'sidemenu-is-hidden': !sidemenuOpen}">
+          <mat-icon class="icon--16 c-title-toolbar__toggle-btn-icon">chevron_left</mat-icon>
+        </button>
+
+  </aside>
+
+  <main class="wrapper-admin-content o-content__main ">
+      <mat-toolbar class="c-title-toolbar">
+
+        <h1 class="c-title-toolbar__heading">
+
+          <span *ngIf="titleTimesheet == true">
+              <a class="timesheet-navigation" [routerLink]="['/timesheet']">Timesheet</a>
+              <mat-icon class="mat-icon--16">chevron_right</mat-icon>
+          </span>
+            <span>{{ showTripsTable ? 'Trip Report': 'Stop Report'}} </span>
+            <mat-icon class="mat-icon--16">chevron_right</mat-icon>
+
+            <span class="c-title-toolbar__heading__meta">
+             {{ searchAutocomplete }}
+            <mat-icon class="mat-icon--16">chevron_right</mat-icon>
+              {{ startDateTime | date:'dd.MM.yyyy' }}
+              <mat-icon class="mat-icon--16">date_range</mat-icon>
+            </span>
+            <div class="trips-stops-switch print-hidden" *ngIf="trip.trips.length > 0">
+            <div class="c-switch--wrap">
+              <span class="label">Stops</span>
+
+              <div class="c-switch">
+                <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" type="checkbox" [checked]="showTripsTable" (change)="showTripsTable = !showTripsTable" >
+                <label for="cmn-toggle-4"></label>
+              </div>
+
+              <span class="label">Trips</span>
+            </div>
+          </div>
+        </h1>
+       <button onclick="window.print();" class="c-title-toolbar__print c-btn"><mat-icon class="">print</mat-icon></button>
+      </mat-toolbar>
+
+      <div class="c-grid-list__row c-grid-list__row--header time-fields-header" *ngIf="trip.trips.length > 0 && showTripsTable">
+            <div class="c-grid-list__cell c-grid-list__cell--check-box">
+              <span>Trip</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-12">
+              <span>Driver</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-12">
+              <span>Start</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-18">
+              <span>Start Location</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-12">
+              <span>End</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-18">
+              <span>End Location</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10 text--right">
+              <span>Duration</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10 text--right">
+             <span>Distance</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--check-box c-grid-list__cell--no-padding print-hidden">
+              <span>-</span>
+            </div>
+      </div>
+       <div class="c-grid-list__row c-grid-list__row--header time-fields-header" *ngIf="trip.stops.length > 0 && !showTripsTable">
+            <div class="c-grid-list__cell c-grid-list__cell--check-box">
+              <span>ID</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-15">
+              <span>Driver</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-15">
+              <span>Arrive</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-50">
+              <span>Location</span>
+            </div>
+
+            <div class="c-grid-list__cell c-grid-list__cell--width-15 text--right">
+              <span>Duration</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--check-box c-grid-list__cell--no-padding print-hidden">
+              <span>-</span>
+            </div>
+          </div>
+    <section class="o-scrollable--with-toolbar o-scrollable--with-shadow o-content--has-footer-totals">
+
+      <div class="content-time" [ngClass]="{'is-loading': isLoading}">
+
+        <div *ngIf="trip.trips.length === 0 && !isLoading" class="c-message c-message--no-data">
+           <mat-icon class="mat-icon--48">sentiment_dissatisfied</mat-icon>
+           <h3 class="c-message__header">There is no Trip data for those dates</h3>
+          <div class="c-message__text">
+            <p>Please choose a vehicle and a date to retrieve Trip data.</p>
+          </div>
+        </div>
+
+        <!--Trips table list-->
+        <div class="c-grid-list" *ngIf="trip.trips.length > 0 && showTripsTable">
+
+          <div class="c-grid-list__row" *ngFor="let trp of trip.trips | orderBy: 'tripNumber'">
+            <div class="c-grid-list__cell c-grid-list__cell--check-box">
+               <a>{{ trp.tripNumber + 1 }}</a>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-12" >
+              <span>No Driver ID</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-12" >
+               <span>{{ trp.startDateTime | date:'dd MMM' }} {{ trp.startDateTime | date:'shortTime' }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-18">
+            {{ trp.startLocationName }}
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-12">
+              <span>{{ trp.endDateTime | date:'dd MMM' }} {{ trp.endDateTime | date:'shortTime' }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-18">
+             {{ trp.endLocationName }}
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10 text--right">
+              <span>{{ trp.duration }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10 text--right">
+              <span *ngIf="units_distance == 'MLS'">{{ trp.distance }} miles</span>
+              <span *ngIf="units_distance == 'KMS'">{{ trp.distance }} km</span>
+            </div>
+
+            <div class="c-grid-list__cell c-grid-list__cell--check-box c-grid-list__cell--no-padding link print-hidden">
+               <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="traceThisTrip(trp)">
+                  <img src="{{img}}trace-icon-purple-mini.png" alt="trace icon" class="small-image">
+                  <span>View Trace</span>
+                </button>
+              </mat-menu>
+
+            </div>
+          </div>
+
+        </div>
+
+
+
+        <!--Stops table list-->
+        <div class="c-grid-list" *ngIf="trip.stops != undefined && !showTripsTable">
+
+          <div class="c-grid-list__row" *ngFor="let stp of trip.stops | orderBy: 'tripNumber'">
+            <div class="c-grid-list__cell c-grid-list__cell--check-box">
+               <a>{{ stp.stopNumber + 1 }}</a>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-15" >
+              <span>No Driver ID</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-15" >
+               <span>{{ stp.arrivalDateTime | date:'dd MMM' }} {{ stp.arrivalDateTime | date:'shortTime' }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-50">
+            {{ stp.arrivalLocationName }}
+            </div>
+
+            <div class="c-grid-list__cell c-grid-list__cell--width-15 text--right">
+              <span>{{ stp.duration }}</span>
+            </div>
+
+            <div class="c-grid-list__cell c-grid-list__cell--check-box c-grid-list__cell--no-padding link print-hidden">
+               <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="traceThisTrip(trp)">
+                  <img src="{{img}}trace-icon-purple-mini.png" alt="trace icon" class="small-image">
+                  <span>View Trace</span>
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+
+        </div>
+
+         <mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+      </div>
+
+
+    </section>
+
+        <!-- Trips footer row -->
+        <div class="c-grid-list__row c-grid-list__row--footer" *ngIf="trip.trips.length > 0 && showTripsTable">
+          <div class="c-grid-list__cell c-grid-list__cell--check-box">
+
+          </div>
+          <div class="c-grid-list__cell c-grid-list__cell--width-12" >
+
+          </div>
+          <div class="c-grid-list__cell c-grid-list__cell--width-12" >
+
+          </div>
+          <div class="c-grid-list__cell c-grid-list__cell--width-18">
+
+          </div>
+          <div class="c-grid-list__cell c-grid-list__cell--width-12">
+
+          </div>
+          <div class="c-grid-list__cell c-grid-list__cell--width-18 text--right">
+            <span> Totals:</span>
+          </div>
+          <div class="c-grid-list__cell c-grid-list__cell--width-10 text--right">
+            <span>{{ durationOverall }}</span>
+          </div>
+          <div class="c-grid-list__cell c-grid-list__cell--width-10 text--right">
+              <span *ngIf="units_distance == 'MLS'">{{ distanceOverall }} miles</span>
+              <span *ngIf="units_distance == 'KMS'">{{ distanceOverall }} km</span>
+          </div>
+          <div class="c-grid-list__cell c-grid-list__cell--check-box link print-hidden c-grid-list__cell--no-padding"></div>
+      </div>
+      <!-- Stops footer -->
+          <div class="c-grid-list__row c-grid-list__row--footer" *ngIf="trip.stops.length > 0 && !showTripsTable">
+            <div class="c-grid-list__cell c-grid-list__cell--check-box">
+
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-15" >
+
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-15" >
+
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-50 text--right">
+              <span>Totals:</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-15 text--right">
+              <span>{{ stopsOverall }}</span>
+            </div>
+
+            <div class="c-grid-list__cell c-grid-list__cell--no-padding c-grid-list__cell--check-box link print-hidden">
+            </div>
+          </div>
+  </main>
+</section>

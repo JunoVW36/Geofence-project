@@ -1,0 +1,112 @@
+
+.c-site-header {
+  box-shadow: $header-drop-shadow;
+  height: $header-bar-height;
+  //overflow: hidden;
+  .mat-sidenav-container{
+    overflow: inherit;
+  }
+  .mat-toolbar-layout {
+    height: $header-bar-height; //IE fix
+  }
+  .mat-toolbar .mat-toolbar-row {
+    display: block;
+    height: $header-bar-height;
+  }
+}
+
+.c-site-header__logo {
+  max-width: 200px;
+  outline: 0;
+  //flex: 0 1 auto;
+  float: left;
+  display: block;
+  margin-top: 10px;
+}
+.c-site-header__logo-img {
+
+}
+.c-site-header__toggle {
+    color: $header-toggle-btn-color;
+    border: none;
+    background-color: transparent;
+    float: right;
+    margin-top: 10px !important;
+    
+
+    &.mat-icon-button {
+      border-radius: 0;
+      margin-right: 5px;
+      padding-right: 10px;
+    }
+}
+.mat-toolbar .mat-icon-button{
+    float: left;
+}
+.c-site-header__toggle {
+  margin-right: 15px!important;
+  position: relative;
+
+}
+hr.line{
+  position: absolute;
+  top: 0;
+  left: 73px;
+  z-index: 2;
+  width: 1px;
+  background:$color-grey--lighter;
+  height: $header-bar-height;
+  bottom:0;
+  margin: 0;
+  border: none;
+}
+.c-site-header__toggle-icon {
+  @include font-size(32px);
+  color: $color-grey-navigation;
+}
+.new-navigation{
+  float: right;
+  color:$color-grey-dark;
+  .user-name{
+    padding: 18px 0;
+    float: left;
+    width: auto;
+  }
+
+  ul{
+    list-style:none;
+    li{
+      float: left;
+      display: block;
+      font-size: 16px;
+      
+      .mat-icon-button mat-icon{
+        font-size: 22px;
+        margin-top: 4px;
+      }
+      &.left-border{
+        position: relative;
+        padding-left: 15px;
+        margin-left: 15px;
+        &:before{
+          content: ' ';
+          position: absolute;
+          top: 0;
+          left: 0px;
+          height: 100px;
+          width: 1px;
+          background:$color-grey--lighter;
+        }
+      }
+      img{
+        max-width: 59px;
+        padding: 10px;
+      }
+    }
+  }
+  .mat-icon-button{
+    float: right;
+    padding: 11px 0 0;
+  }
+
+}

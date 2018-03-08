@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>{{data.statusText}}</h1>
+<div mat-dialog-content class="text--center">
+  <mat-icon class="mat-icon--48">sentiment_dissatisfied</mat-icon>
+  
+  <div>
+    <p><strong>Status:</strong> {{data.status}}</p>
+    <p><strong>Status text:</strong> {{data.statusText}}</p>
+  </div>
+
+
+   <mat-accordion class="">
+      <mat-expansion-panel>
+          
+          <mat-expansion-panel-header>
+              <mat-panel-title>
+                 Full Error Details 
+              </mat-panel-title>
+          </mat-expansion-panel-header>
+        
+          <pre class="d-dialog-pre ">{{data}}</pre>
+          
+      </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<div mat-dialog-actions>
+  <!--<button mat-button (click)="onNoClick()">Okay</button>-->
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>
+
+

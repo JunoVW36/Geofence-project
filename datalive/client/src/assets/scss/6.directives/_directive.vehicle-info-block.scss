@@ -1,0 +1,43 @@
+
+
+/*--- styles moved from the styles.scss. ---*/
+.d-vehicle-info-block {
+    
+}
+.d-vehicle-info-block__schematic {
+    text-align: center;
+    padding: 0;
+    background-color: #E9E9E9; // o match the provided schematic image bgs
+    margin: 0;
+    img {
+        text-align: right;
+    }
+}
+.d-vehicle-info-block-stats {
+    
+}
+
+
+.d-vehicle-info-block-stats__item {
+    padding: $spacing-unit--small;
+    @extend .font-family--light;
+    display: flex;
+    border-top: 1px solid #efefef;
+}
+.d-vehicle-info-block-stats__value {
+    @include font-size(17px);
+    display: block;
+}
+.d-vehicle-info-block-stats__label {
+    display: block;
+    text-transform: uppercase;
+    @include font-size(12px);
+    flex: 1 1 45%;
+}
+
+.d-vehicle-info-block__more-details {
+    border-bottom: 1px solid $color-ui;
+    .content-padding {
+        padding-top: $spacing-unit--tiny;
+    }
+}

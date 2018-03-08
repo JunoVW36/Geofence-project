@@ -1,0 +1,100 @@
+1. Install Google cloud SDK according instructions here:
+https://cloud.google.com/sdk/docs/
+
+2. Make cloud visible everywhere:
+>> vim /Users/<username>/.bash_profile
+
+add the following line into the end of the file:
+export PATH=<path to foulder>/google-cloud-sdk/bin:$PATH
+
+3. Authenticate gcloud
+>> gcloud auth login (using the link get and put the code)
+
+4. Set project ID:
+>> gcloud config set project datalive-staging
+
+5. Clone the repository:
+>> gcloud source repos clone datalive-staging
+NOTE: Make sure yout git global Author settings are set correctly.
+git config --global user.email "<name>@thejustbrand.com"
+git config --global user.name e.g. "thejustbrand"
+
+6. Install packages:
+>> pip install -r requirements-vendor.txt -t lib
+>> pip install -r requirements.txt
+>> pip install pyyaml     (because the migrations commands error without this)
+
+7. Run the application (from dir: datalive-staging/gae-web/datalive)
+>> dev_appserver.py --port=8080 app.yaml
+>> dev_appserver.py --port=8080 app.yaml --default_gcs_bucket_name datalive-staging-file-storage
+>> dev_appserver.py --port=8080 app.yaml --enable_sendmail=yes
+7. Open new terminal tab
+
+8. Install SQL proxy (https://cloud.google.com/python/django/appengine#download_app):
+>> curl -o cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.darwin.amd64
+>> chmod +x cloud_sql_proxy
+
+9. Application authentication:
+>> gcloud beta auth application-default login
+
+10. Run SQL cloud instance:
+>> ./cloud_sql_proxy_osx -instances="datalive-staging:europe-west1:datalive-django"=tcp:3307
+or for production    ./cloud_sql_proxy_osx -instances="datalive-production:europe-west1:datalive-django"=tcp:3307
+
+11. Open new terminal tab (folder: datalive-staging/gae-web/datalive/client)
+
+12. Install npm packages:
+>> npm install
+
+13. Build packages:
+NOTE: you need angular Cli installed globally >> npm install -g @angular/cli
+>> ng build --aot=false  --deploy-url='client/dist/'
+or
+>> ng build --prod --aot=false  --output-hashing bundles --deploy-url='client/dist/'
+# the following is depreciated!! (no cache busting) - ng build --prod --aot=false  --output-hashing none --deploy-url='client/dist/'
+(this command will generate static files without hashes)
+
+14. Replace index.html from /datalive-staging/gae-web/datalive/client/dist to /datalive-staging/gae-web/datalive/templates
+>> in client folder use this terminal cmd: cp -i dist/index.html ../templates/
+
+15. Commit your changes
+
+16. Deploy your changes (from the datalive-staging folder)
+>> gcloud app deploy
+
+
+______________________Run application without google cloud sdk___________________________________
+ref: https://cloud.google.com/python/django/appengine
+Note: you cannot run virtual Env in Google App Engine environment and Google Cloud SDK
+
+1. create virtual environment in the datalive folder:
+>> virtualenv env
+
+2. Activate virtual environment:
+>> source env/bin/activate
+
+3. navigate to /datalive-staging/gae-web/datalive
+
+4. Install packages:
+>> pip install -r requirements-vendor.txt -t lib
+>> pip install -r requirements.txt
+>> pip install pyyaml     (because the migrations commands error without this)
+
+Note:
+// add python path to environment if required - check if you have pythonpath first
+export PYTHONPATH=/Users/brianyoung/google-cloud-sdk/platform/google_appengine:/Library/Frameworks/Python.framework/Versions/2.7/bin:/Users/brianyoung/google-cloud-sdk/platform/google_appengine/lib
+
+
+
+4. Copy and populate manually local environment settings:
+>> scp datalive_site/template.local-settings.txt datalive_site/local-settings.py
+(Do not push local-settings.py file into repository)
+
+5. Note: currently emails are sending using Google cloud SDK
+you may need manually comment google library import here datalive-staging/gae-web/datalive/services/email_service.py
+
+6. Run server:
+>> python manage.py runserver
+>> python manage.py runserver --settings datalive_site.settings-debug
+
+7. Run UI in the same way like described above

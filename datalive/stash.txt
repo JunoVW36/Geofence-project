@@ -1,0 +1,42 @@
+(env) Jamess-MacBook-Pro:datalive jamesfletcher$ python manage.py migrate
+System check identified some issues:
+
+WARNINGS:
+datalive_auth.DataliveUser.customers: (fields.W340) null has no effect on ManyToManyField.
+datalive_auth.DataliveUser.vehicle_groups: (fields.W340) null has no effect on ManyToManyField.
+datalive_cust_veh.Region.contacts: (fields.W340) null has no effect on ManyToManyField.
+datalive_cust_veh.VehicleGroup.contacts: (fields.W340) null has no effect on ManyToManyField.
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, datalive_auth, datalive_cust_veh, datalive_defects, sessions
+Running migrations:
+  Applying datalive_cust_veh.0004_auto_20171027_2158... OK
+  Applying datalive_cust_veh.0005_auto_20171028_0842... OK
+  Applying datalive_cust_veh.0006_auto_20171028_0843... OK
+  Applying datalive_defects.0001_initial... OK
+  Applying datalive_defects.0002_auto_20171021_1548... OK
+  Applying datalive_defects.0003_auto_20171021_1602... OK
+  Applying datalive_defects.0004_defectsetting_customer... OK
+  Applying datalive_defects.0005_auto_20171021_1613... OK
+  Applying datalive_defects.0006_auto_20171021_1630... OK
+  Applying datalive_defects.0007_auto_20171021_2249... OK
+  Applying datalive_defects.0008_auto_20171022_1639... OK
+  Applying datalive_defects.0009_auto_20171022_2050... OK
+
+
+YG66 YWS - A HARPER
+4532071798
+
+select * from trackerPoint where __key__ has ancestor key(tracker, 4532071798) and updateDateTime < DATETIME('2017-03-16T00:00:00.00002-08:00') order by updateDateTime desc limit 500
+
+
+curl 'http://localhost:8080/api/behaviour/safety_mobileeye/vehicle_group/?vehicle_group=30&start=2017-03-12T00:00:00Z&end=2017-03-17T00:00:00Z' -H 'Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2NSwiZW1haWwiOiJqYW1lcy5mbGV0Y2hlckA0M2Rldi5jb20iLCJleHAiOjE1MTM3NjQ4NTgsInVzZXJuYW1lIjoiamFtZXMuZmxldGNoZXJANDNkZXYuY29tIiwib3JpZ19pYXQiOjE1MTM2Nzg0NTh9.QqckcA6vh8T3ngFfWn3KYHIbd3CYMVZK7JQMN9txOYY' -H 'Accept-Encoding: gzip, deflate, br' -H 'Accept-Language: en-US,en;q=0.9,la;q=0.8' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36' -H 'Accept: application/json, text/plain, */*' -H 'Referer: http://localhost:8080/trip' -H 'Cookie: Pycharm-7fa02570=a0ebf53e-6dbb-40c2-9ec5-a9bb9cc7228a; session=eyJ1c2VyS2V5Ijp7IiBiIjoiWVdkb2ExcFlXaTFVYlRsMVdsaEpVa040U1VWV1dFNXNZMmhwUVdkSlEwRm5TVU56UTNkMyJ9LCJ1c2VybmFtZSI6IkZsZXRjaCJ9.DGHg0g.E0xF6sH7ArWpQqfpKeK-w7NqVPw; csrftoken=44xfqk8M3XHcmH3za5xTtkVbaWSoQemYgUAv4b8PWndAsLqM31gA1J7SYQmrCy9b' -H 'Connection: keep-alive' --compressed
+
+curl 'http://localhost:8080/api/behaviour/safety_abc/vehicle_group/?vehicle_group=30&start=2017-03-12T00:00:00Z&end=2017-03-17T00:00:00Z' -H 'Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2NSwiZW1haWwiOiJqYW1lcy5mbGV0Y2hlckA0M2Rldi5jb20iLCJleHAiOjE1MTM3NjQ4NTgsInVzZXJuYW1lIjoiamFtZXMuZmxldGNoZXJANDNkZXYuY29tIiwib3JpZ19pYXQiOjE1MTM2Nzg0NTh9.QqckcA6vh8T3ngFfWn3KYHIbd3CYMVZK7JQMN9txOYY' -H 'Accept-Encoding: gzip, deflate, br' -H 'Accept-Language: en-US,en;q=0.9,la;q=0.8' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36' -H 'Accept: application/json, text/plain, */*' -H 'Referer: http://localhost:8080/trip' -H 'Cookie: Pycharm-7fa02570=a0ebf53e-6dbb-40c2-9ec5-a9bb9cc7228a; session=eyJ1c2VyS2V5Ijp7IiBiIjoiWVdkb2ExcFlXaTFVYlRsMVdsaEpVa040U1VWV1dFNXNZMmhwUVdkSlEwRm5TVU56UTNkMyJ9LCJ1c2VybmFtZSI6IkZsZXRjaCJ9.DGHg0g.E0xF6sH7ArWpQqfpKeK-w7NqVPw; csrftoken=44xfqk8M3XHcmH3za5xTtkVbaWSoQemYgUAv4b8PWndAsLqM31gA1J7SYQmrCy9b' -H 'Connection: keep-alive' --compressed
+
+
+
+
+
+
+
+

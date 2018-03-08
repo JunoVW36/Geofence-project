@@ -1,0 +1,17 @@
+.c-divider {
+    margin: $spacing-unit--base 0;
+    hr {
+        border-top: 1px solid $color-ui;
+        margin: 0;
+        padding:0;
+        height: 0;
+    }
+}
+
+.c-divider--small {
+    margin: $spacing-unit--small 0;
+}
+
+.c-divider--tiny {
+    margin: $spacing-unit--tiny 0;
+}

@@ -1,0 +1,172 @@
+
+/* ----- Forms ------*/
+.mat-input-container {
+    width: 100%;
+}
+
+/* ----- mat select ------*/
+.mat-select {
+    width: 100%;
+}
+.mat-option-text, .mat-option, .mat-select-value-text, .mat-icon-button {
+    @include font-size($base-font-size);
+    @extend .font-family--light; 
+}
+.mat-form-field {
+    @extend .font-family--light; 
+}
+
+.mat-toolbar {
+    color: $color-text;
+    @extend .font-family--light; 
+    h1, h2, h3, h4, h5, h6 {
+        @extend .font-family--light; 
+    }
+
+    //select in a toolbar
+    .mat-select-value {
+        @include font-size($base-font-size);
+        padding-left: $spacing-unit--tiny;
+    }
+    .mat-form-field-infix{
+        border-top: 1px solid $color-ui;
+        border-right: 1px solid $color-ui;
+        border-left: 1px solid $color-ui;
+        
+        background-color: #fff;
+    }
+    .mat-select-value-text {
+        @include font-size($base-font-size - 2);
+    }
+    .mat-form-field-underline {
+        bottom: 0;
+    }
+    .mat-select-content {
+        @include font-size($base-font-size);
+    }
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
+    }
+
+}
+
+.mat-card {
+    color: inherit;
+    font-family: 'Naste Regular', Helvetica, Arial, sans-serif;
+}
+
+input.cmn-toggle-round-flat+label, input.cmn-toggle-round-flat:checked+label:after,
+input.cmn-toggle-round-flat+label:after{
+  background-color: $color-brand!important;
+}
+
+.mat-icon{
+    &.mat-icon--16 {
+        width: 16px;
+        height: 16px;
+        @include font-size(16px);
+    }
+    &.mat-icon--24 {
+        width: 24px;
+        height: 24px;
+        @include font-size(24px);
+    }
+    &.mat-icon--32 {
+        width: 32px;
+        height: 32px;
+        @include font-size(32px);
+    }
+    &.mat-icon--48 {
+        width: 48px;
+        height: 48px;
+        @include font-size(48px);
+    }
+}
+
+/* ------------------ Mat inputs -----------------*/
+/* ----- Mat checkbox ------*/
+.mat-checkbox.mat-checkbox-checked .mat-checkbox-background {
+    background-color: $color-brand;
+}
+/* ----- END Mat checkbox ------*/
+
+/* ---- Mat accordian -----*/
+.c-accordian {
+    .mat-expansion-panel {
+        box-shadow: none;
+        border-top: 1px solid $color-grey--lighter;
+    }
+    .mat-expansion-panel-header {
+        padding: 10px $spacing-unit--base;
+        background-color: #fff;
+    }
+   
+}
+.mat-accordion{
+    // transparent styling override
+    &.c-accordian--transparent {
+         .mat-expansion-panel {
+            box-shadow: none;
+        }
+        .mat-expansion-panel-header {
+            background-color: transparent;
+        }
+    }
+    // centered text
+    &.c-accordian--centered { 
+        .mat-expansion-panel-header {
+            justify-content: center;
+            .mat-expansion-panel-header-title {
+                //flex: 0
+            }
+            .mat-content {
+                flex: 0 0 auto;
+            }
+        }
+    }
+}
+
+.mat-expansion-panel-header-title{
+    color:$color-text;
+    // @extend .font-family--light;       
+}
+.mat-tab-group{
+    @extend .font-family--light; 
+}
+
+/*
+* Datepicker
+*/  
+.cdk-overlay-pane {
+    right:auto; //prevent the cdk datepicker overlay from going full width
+}
+
+/*
+* Mat Menu
+*/
+.mat-menu-panel {
+     .mat-menu-item {
+        img {
+            display: inline-block;
+            max-height: 32px;
+            margin-right: $spacing-unit--small;
+        }
+    }
+}
+.mat-menu-panel .mat-menu-content{
+    padding:0;
+}
+
+
+
+/*
+* Dialog
+*/
+.mat-dialog-content {
+    padding: 0 0 $spacing-unit--small !important;
+}
+.mat-dialog-actions {
+    border-top: 1px solid $color-grey--lighter;
+    margin: 0 -24px;
+    padding: $spacing-unit--small $spacing-unit--base !important;
+}

@@ -1,0 +1,158 @@
+$dpd-red: #DC0032;
+
+.page-help-qr {
+  
+  .c-title-toolbar {
+    padding: 0;
+    margin: 0;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    border: 0;
+    .mat-toolbar-row{
+      height: auto;
+      display: block;
+    }
+    h1{
+      padding: 0;
+      margin: 10px 0 0 0;
+      display: inline-block;
+      background-color: rgba(0,0,0,0.6);
+      color: #fff;
+      padding: 10px 15px;
+      margin-bottom: 4px;
+      @include font-size(17px);
+    }
+  }
+  .d-vehicle-info-block__schematic {
+    min-height: 60px;
+  }
+  // DPD coloured tab active bar
+  .mat-tab-group.mat-primary .mat-ink-bar {
+    background-color: $dpd-red;
+  }
+
+}
+
+
+@media only screen 
+  and (min-width: 768px) {
+    .veh-detail-help-section {
+       border-left: 1px solid $color-ui;
+    }
+  }
+
+@media only screen 
+  and (max-width: 767px) {
+    .veh-detail-stats-section, .veh-detail-help-section {
+      float: none;
+      width: 100%;
+    }
+   
+    .veh-detail-stats-section {
+      display: flex;
+      .content-padding {
+        flex: 1 1 auto;
+      }
+    }
+    .d-vehicle-info-block__schematic {
+      width: 45%;
+    }
+
+}
+
+@media only screen 
+  and (max-width: 700px) {
+    .veh-detail-help-section {
+       border-left:none;
+       border-top: 1px solid $color-ui;
+    }
+    .d-vehicle-info-block__schematic {
+      width: 100%;
+      img {
+        display: flex;
+      }
+      .rear, .front {
+        display: none;
+      }
+    }
+    .veh-detail-stats-section {
+      display: block;
+    }
+}
+
+.c-depot-contact-group-heading {
+  padding: $spacing-unit--small 0;
+  margin: 0 0 $spacing-unit--base 0;
+  border-bottom: 1px solid $color-heading-text;
+  color: $color-heading-text;
+}
+
+.c-depot-contact {
+    padding: $spacing-unit--base 0;
+}
+.c-depot-contact__name {
+    @include font-size(17px);
+    margin: 0 0 $spacing-unit--small 0;
+    padding: 0;
+}
+.c-depot-contact__address {
+    margin-bottom: $spacing-unit--small;
+}
+.c-depot-contact-action-list {
+   @extend .font-family--regular;
+   li {
+     margin-top: $spacing-unit--small;
+   }
+   
+}
+.c-depot-contact-action-list__label {
+    display: inline-block;
+    width: 65px;
+}
+
+.c-depot-contact-list {
+  margin-top: $spacing-unit--small;
+  margin-bottom: $spacing-unit--base;
+}
+.c-depot-contact-list__item {
+  margin: $spacing-unit--tiny 0;
+  strong {
+    display: inline-block;
+    padding-right: 5px;
+  }
+}
+
+.c-depot-contact--maintenance-control {
+  border: 1px solid $color-grey--lighter;
+  background-color: $color-grey--lightest;
+  padding: $spacing-unit--small;
+  box-shadow: $box-shadow;
+}
+
+.c-breakdown-button {
+  
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  align-content: stretch;
+  .mat-icon {
+    flex: 0 0 auto;
+    padding: 0 4px;
+    margin-left: $spacing-unit--tiny;
+    border-left: 1px solid rgba(255,255,255, 0.08);
+    width: 30px;
+    height:30px;
+  }
+  span{
+    flex: 1 1 auto;
+    text-align: left;
+  }
+  &:hover {
+    color: #fff;
+  }
+
+}
+

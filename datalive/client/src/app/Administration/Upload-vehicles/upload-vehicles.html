@@ -1,0 +1,265 @@
+<style>
+
+.o-scrollable--with-toolbar {
+    top: 140px;
+}
+
+
+.scroll-left {
+    overflow-x: scroll;
+}
+
+
+
+.error-row {
+    color: #fd6b54;
+}
+
+#tableNav {
+    width: 100%;
+    padding: 0.5em;
+}
+
+#tableNav li {
+    display: inline;
+    padding: 0.5em 1em 0.5em 1em;
+    background-color: #fafafa;
+}
+
+.selected {
+    background-color: white !important;
+}
+
+.relative {
+    position: relative;
+}
+
+.abs-top {
+    position: absolute;
+    top: 0;
+    z-index: 7;
+}
+
+.mr-1 {
+    margin-right: 1em;
+}
+
+
+</style>
+
+
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+<mat-toolbar class="title-users c-title-toolbar">
+    <h1 class="c-title-toolbar__heading">Upload Vehicles</h1>
+    
+    <div class="func-button-users c-title-toolbar__action-buttons">
+        <a class="c-btn c-btn--white" mat-button href="https://docs.google.com/spreadsheets/d/1y9Ehxo60loZxfJk9YkFJk0oHWCVufq-FTHPsQdkdnhk/edit?usp=sharing" title="Vehicle Import Template" target="_blank">Download Template</a>
+    </div>
+</mat-toolbar>
+
+<div [ngClass]="{'is-loading': isLoading}" class="">
+ <div class="flex margin-left--large margin-top--base">
+    <div *ngIf="userPerm.is_global_admin" style="width:300px;" class="margin-right--small"> 
+        <mat-input-container class="example-full-width">
+            <mat-select placeholder="Assign upload to customer" [ngModel]="customerId" [compareWith]="compareFn" (change)="setCustomerId($event)" required>
+                <mat-option *ngFor="let customer of customerObservable" [value]="customer.id">{{customer.name}}</mat-option>
+            </mat-select>
+            <!--<mat-hint [hidden]="myForm.controls.customers.valid || (myForm.controls.customers.pristine && !submitted)">
+            <div class="error_field">A customer is required</div>
+            </mat-hint>-->
+            <small *ngIf="myForm.controls.customers.value && myForm.controls.customers.value.length > 1">{{myForm.controls.customers.value.length }} customers selected</small>
+        </mat-input-container>  
+    </div>
+
+    <div class="margin-right--small" *ngIf="!verifyingUpload">
+        <div class="c-upload">
+            <label class="c-btn" for="upload" id="uploadLabel">Upload Import File</label>
+            <input mat-raised-button id="upload" accept=".xlsx,.xls,.csv" class="field c-upload__input" type="file" (change)="uploadFileVerify($event)">
+        </div>
+    </div>
+    <div *ngIf="verifyingUpload" class="">
+        <button class="c-btn c-btn--success" (click)="commitChanges()">Commit Changes </button>
+    </div>
+    <div *ngIf="verifyingUpload">
+        <button class="margin-right--small" mat-button>Cancel upload</button>
+    </div>
+</div>
+<section class="o-scrollable o-scrollable--with-toolbar"> 
+<mat-accordion>
+    <mat-expansion-panel [expanded]="previewPanelOpenState" [disabled]="!verifyingUpload">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+       Import Preview 
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    
+
+    <ul id="tableNav" *ngIf="verifyingUpload">
+        <li (click)="changeCurrentTab('vehicle')" [ngClass]="{'selected': currentTab=='vehicle'}">Vehicle</li>
+        <li (click)="changeCurrentTab('vehicleManufacturer')" [ngClass]="{'selected': currentTab=='vehicleManufacturer'}">Vehicle Manufacturer Model</li>
+        <li (click)="changeCurrentTab('depot')" [ngClass]="{'selected': currentTab=='depot'}">Depot</li>
+    </ul>
+   
+    <table *ngIf="currentTab == 'vehicle' && verifyingUpload && vehiclesArray.length > 0" class="c-table">
+        <thead>
+            <tr>
+                <th class="c-grid-list__cell--check-box">&nbsp;</th>
+                <th>registration</th>
+                <th>make</th>
+                <th>model</th>
+                <th>driver_category</th>
+                <th>livery_category</th>
+                <th>fleet_id</th>
+                <th>vehicle_group</th>
+                <th>allocated_depot_date</th>
+                <th>vin</th>
+                <th>service_due_odo</th>
+                <th>service_due_date</th>
+                <th>mot_date</th>
+                <th>ved</th>
+                <th>latest_odometer_reading</th>
+                <th>latest_odometer_date</th>
+                <th>latest_odometer_source</th>
+                <th>mobile_number</th>
+                <th>lease_company</th>
+                <th>archived</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--<tr *ngFor="let obj of vehiclesArray" [ngClass]="{'due-update': !obj.insert, 'due-create': obj.insert}">-->
+            <tr *ngFor="let obj of vehiclesArray" >
+                <td [ngClass]="{'row--update': !obj.insert, 'row--create': obj.insert}" align="center">
+                    <mat-icon *ngIf="obj.insert" class="color--white" title="Status: Insert">done</mat-icon>
+                    <mat-icon *ngIf="!obj.insert" class="color--white" title="Status: Update">compare_arrows</mat-icon>
+                </td>
+                <td>{{ obj.registration }}</td>
+                <td>{{ obj.make }}</td>
+                <td>{{ obj.model }}</td>
+                <td>{{ obj.driver_category }}</td>
+                <td>{{ obj.livery_category }}</td>
+                <td>{{ obj.fleet_id }}</td>
+                <td>{{ obj.vehicle_group }}</td>
+                <td>{{ obj.allocated_depot_date | date:'yyyy-MM-dd' }}</td>
+                <td>{{ obj.vin }}</td>
+                <td>{{ obj.service_due_odo }}</td>
+                <td>{{ obj.service_due_date | date:'yyyy-MM-dd' }}</td>
+                <td>{{ obj.mot_date | date:'yyyy-MM-dd' }}</td>
+                <td>{{ obj.ved | date:'yyyy-MM-dd' }}</td>
+                <td>{{ obj.latest_odometer_reading }}</td>
+                <td>{{ obj.latest_odometer_date | date:'yyyy-MM-dd' }}</td>
+                <td>{{ obj.latest_odometer_source }}</td>
+                <td>{{ obj.mobile_number }}</td>
+                <td>{{ obj.lease_company }}</td>
+                <td>{{ obj.archived }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table *ngIf="currentTab=='vehicleManufacturer' && verifyingUpload" class="c-table">
+        <thead>
+            <tr>
+                <th class="c-grid-list__cell--check-box">&nbsp;</th>
+                <th>manufacturer</th>
+                <th class="c-grid-list__cell--name">model</th>
+                <th>fuel_type</th>
+                <th>vehicle_type</th>
+                <th>load_capacity</th>
+                <th>gross_vehicle_weight</th>
+                <th>tyre_size</th>
+                <th>front_tyre_pressure</th>
+                <th>rear_tyre_pressure</th>
+                <th>vehicle_model_contacts</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let obj of vehicleManufacturerArray">
+                <td [ngClass]="{'row--update': !obj.insert, 'row--create': obj.insert}" align="center">
+                    <mat-icon *ngIf="obj.insert" class="color--white" title="Status: Insert">done</mat-icon>
+                    <mat-icon *ngIf="!obj.insert" class="color--white" title="Status: Update">compare_arrows</mat-icon>
+                </td>
+                <td>{{ obj.manufacturer }}</td>
+                <td>{{ obj.model }}</td>
+                <td>{{ obj.fuel_type }}</td>
+                <td>{{ obj.vehicle_type }}</td>
+                <td>{{ obj.load_capacity }}</td>
+                <td>{{ obj.gross_vehicle_weight }}</td>
+                <td>{{ obj.tyre_size }}</td>
+                <td>{{ obj.front_tyre_pressure }}</td>
+                <td>{{ obj.rear_tyre_pressure }}</td>
+                <td>{{ obj.vehicle_model_contacts }}</td>
+            </tr>
+    </table>
+    <table *ngIf="currentTab=='depot' && verifyingUpload" class="c-table">
+        <thead>
+            <tr>
+                <th class="c-grid-list__cell--check-box">&nbsp;</th>
+                <th>name</th>
+                <th>ref_number</th>
+                <th>description</th>
+                <th>vehicles</th>
+                <th>notifications_emails</th>
+                <th>vehicle_group_contacts</th>
+                <th>is_depot</th>
+                <th>is_hub</th>
+                <th>is_linehaul</th>
+                <th>archived</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let obj of depotArray">
+               <td [ngClass]="{'row--update': !obj.insert, 'row--create': obj.insert}" align="center">
+                    <mat-icon *ngIf="obj.insert" class="color--white" title="Status: Insert">done</mat-icon>
+                    <mat-icon *ngIf="!obj.insert" class="color--white" title="Status: Update">compare_arrows</mat-icon>
+                </td>
+                <td>{{ obj.name }}</td>
+                <td>{{ obj.ref_number }}</td>
+                <td>{{ obj.description }}</td>
+                <td>{{ obj.vehicles }}</td>
+                <td>{{ obj.notifications_emails }}</td>
+                <td>{{ obj.vehicle_group_contacts }}</td>
+                <td>{{ obj.is_depot }}</td>
+                <td>{{ obj.is_hub }}</td>
+                <td>{{ obj.is_linehaul }}</td>
+                <td>{{ obj.archived }}</td>
+            </tr>
+        </tbody>
+    </table>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="resultPanelOpenState" [disabled]="resultPanelOpenState === false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Import Results
+      </mat-panel-title>
+      <mat-panel-description *ngIf="data">
+        {{data?.rows_inserted}} rows inserted and {{ data?.rows_failed }} rows failed due to error and {{data?.rows_updated}} rows updated.
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p class="text--center">{{ uploadError }}</p>
+
+    <table *ngIf="errorRows.length > 0" class="c-table c-table--no-hover">
+        <thead>
+            <tr>
+                <th class="c-grid-list__cell--check-box">Status</th>
+                <th>Error</th>
+                <th>Row Number</th>
+                <th>Sheet Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let error of errorRows">
+                <td class="row--error c-grid-list__cell--check-box"><mat-icon class="color--white">error</mat-icon></td>
+                <td>{{ error.error_name }}</td>
+                <td>{{ error.row }}</td>
+                <td>{{ error.sheet }}</td>
+            </tr>
+        </tbody>
+    </table>
+  </mat-expansion-panel>
+ 
+</mat-accordion>
+
+ <div>
+    <mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+</div>
+</section>
+</div>
+

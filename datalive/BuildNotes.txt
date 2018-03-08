@@ -1,0 +1,209 @@
+JWF Notes on environment
+========================
+
+Initial project is based on GAE example docs:
+https://cloud.google.com/python/django/appengine
+
+Created as a copy of:
+git clone https://github.com/GoogleCloudPlatform/python-docs-samples.git
+cd python-docs-samples/appengine/standard/django
+
+Cloud SQL proxy is OSX version, need to download your own windows version if required:
+cloud_sql_proxy_osx
+
+Staging Env SQL connection name:
+datalive-staging:europe-west1:datalive-django
+
+Created SQL DB via console:
+datalive
+
+Created SQL User via console:
+datalive
+
+Modified django project name from 'mysite' to 'datalive_site'
+
+Build virtual env:
+virtualenv env
+Start virtual env:
+source env/bin/activate
+
+
+// add python path to environment if required
+export PYTHONPATH=/Users/brianyoung/google-cloud-sdk/platform/google_appengine:/Library/Frameworks/Python.framework/Versions/2.7/bin:/Users/brianyoung/google-cloud-sdk/platform/google_appengine/lib
+-- to check to see what lis are on the pythonpath:
+$ python -c "import sys; print('\n'.join(sys.path))"
+
+
+Libraries installed with:
+pip install -r requirements-vendor.txt -t lib/
+pip install -r requirements.txt (pip install -t lib -r requirements.txt)
+
+/********************
+NOTE: if using Homebrew on Mac to install python then you will have errors installing the requirements dependances. - Check this out:
+found the solution. It's because my python was from homebrew. I just needed to create a pydistutils.cfg file in my home directory.
+
+vi ~/.pydistutils.cfg
+
+[install]
+prefix=
+
+https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/Homebrew-and-Python.md
+https://cloud.google.com/appengine/docs/standard/python/tools/using-libraries-python-27#vendoring
+********************/
+
+
+
+Launch local test version of site with (visible on localhost:8000):
+python manage.py runserver
+
+
+
+
+Clone GIT Repo
+======================================================================
+Details of the Git repor url is:
+https://console.cloud.google.com/code/develop/repo?project=datalive-staging    
+
+(optional)
+You can use the gcloud cli to push and pull or manually authenticate your git client using the below intructions:
+----- Manually configure GIT credentials -----
+https://accounts.google.com/o/oauth2/auth?response_type=code&access_type=offline&approval_prompt=force&client_id=791937593231.apps.googleusercontent.com&scope=https://www.googleapis.com/auth/cloud-platform&redirect_uri=https://source.developers.google.com/new-password&state=cloud
+
+
+Git Credentials
+Git usernamep
+Git password
+This is your Git username:
+
+To use this password, add the following text to your .netrc file (Which is normally in the home folder (Mac)):
+
+machine source.developers.google.com 
+login XXXXXXXXXXX 
+password XXXXXXXXXXX
+
+
+
+
+
+
+
+Run BE (backend) application on local env using Google App Engine CLI:
+======================================================================
+1. Install SDK for App Engine:
+https://cloud.google.com/appengine/docs/standard/python/download
+
+2. Install SQL Cloud proxy
+https://cloud.google.com/python/django/appengine#download_app
+
+3. run cloud sql proxy instance:
+>> cloud_sql_proxy -instances="datalive-staging:europe-west1:datalive-django"=tcp:3307
+
+4. run django server (/datalive-staging/gae-web/datalive):
+>> dev_appserver.py --port 8080 . (or dev_appserver.py --port=8080 app.yaml)
+
+
+
+Run FE (frontend) application local environment:
+================================================
+1. Install packages (datalive-staging/gae-web/datalive/client):
+>> npm install
+
+/* Development -> ng build --aot=false  --deploy-url='client/dist/' --watch */
+
+2. Build packages:
+>> ng build --deploy-url="static" (or ng build --watch)
+
+
+
+Deploy changes into Google App Engine:
+======================================
+>> gcloud app deploy
+
+
+
+Creating a new User Auth App and Model
+======================================
+Purpose: To create login via email address rather than username
+Based on instructions in:
+https://docs.djangoproject.com/en/1.11/topics/auth/customizing/
+
+Created datalive_auth app and DataliveUser model
+
+May need to add some code from base user model: lib/django/contrib/auth/models.py
+
+
+Directory structure changes to keep client and server code seperated
+====================================================================
+modify django 'static' location to 'server-static' (settings.py, app.yaml
+add 'client' as a static folder in app.yaml
+
+
+Install DjangoRestFramework
+===========================
+added to requirements.txt and re-run pip install -r requirements.txt
+( pip install -t lib -r requirements.txt ) if updating google app engine /lib folder
+pip install -r requirements.txt -t lib/
+
+Test
+====
+python manage.py makemigrations      - needed for our new user model
+python manage.py migrate
+python manage.py runserver
+
+python manage.py createsuperuser
+
+#Modify directory structure for root client / server folders.
+
+
+
+
+
+ToDo
+====
+Add user model fields
+Migrate
+
+
+
+Brain Dump
+===========
+
+?????????? Add onetoone model for user prefs? or just add to user model? (how to inherit from a default prefs set for customer? Need to inherit just individual values) ????????????
+
+?????????? Look at DjangoREstFramework ???????????
+
+?????????? Use TastyPie rather that DRF ???????????
+
+?????????? Look at DjangoAngular ??????????????
+
+
+
+
+
+
+
+Build note for Local Angular
+=================================
+Install Node.js
+Install angular cli    npm install -g @angular/cli
+
+
+
+
+
+
+
+//----
+// Moment.js NPM import fix
+When importing moment.js via NPM you cannot use ES6 module imports, 
+so doing the following enables this:
+locate the 'moment/src' folder in node_modules.
+- added a new file named 'moment.shim.d.ts'
+- paste this into the file:
+import * as moment from "moment";
+export as namespace moment;
+export = moment;
+
+
+Then you can import moment into any component/module using:
+import * as moment from 'moment';

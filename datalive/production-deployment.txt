@@ -1,0 +1,93 @@
+Method for Deployment to Production Project
+============================================
+
+THIS IS A STARTING POINT AND IS BY NO MEANS COMPLETE!  OTHER STEPS MAY BE REQUIRED
+
+USE COMMON SENSE WHEN DEPLOYING!
+
+
+Known issues
+============
+Python path picks incorrect google module and causes No module named google.appengine.api error
+make sure python path is in this order:
+export PYTHONPATH=/Users/jamesfletcher/google-cloud-sdk/platform/google_appengine/:/Users/jamesfletcher/google-cloud-sdk/platform/google_appengine/lib:/Library/Frameworks/Python.framework/Versions/2.7/bin
+manage.py has been modified to force a module re-load.  There's risk with this as the module globals from old module will be left over in namespace.
+
+
+
+
+Basic methodology is as follows:
+=================================
+
+1) Diff settings.py vs settings-prod.py
+Migrate any new settings into settings-prod.py, human involvement required
+
+2) Possible requirement to rebuild python virtual env??
+
+3) Blanket bomb pip install by runnning both pip install varients inside and outside the virtual env
+From datalive/ run:
+	pip install -r requirements-vendor.txt -t lib/
+	pip install -r requirements.txt
+
+4) Install any new NPM modules
+From datalive/client/ run:
+	npm install 
+
+
+... Consider complete lib/ folder rebuild?
+
+
+
+!!! Do a staging deployment to verify file count is OK.
+
+
+!!! Deploy 'Site Down' GAE version
+
+!!! Back up SQL DB!!!!
+
+
+
+5) Swap to production project, choose datalive-production in options for gcloud init
+	gcloud init
+
+6) Connect to production database
+From datalive/ run:
+	./cloud_sql_proxy_osx -instances="datalive-production:europe-west1:datalive-django"=tcp:3307
+
+7) Activate virtual env for all manage.py steps
+	source env/bin/activate
+
+8) Run DJANGO Migrations
+	python manage.py migrate
+
+Check output and copy to production-deployment-logs.txt in case of issues later
+
+9) Deactivate virtual env
+	deactivate
+
+10) Build angular
+From datalive/client/ run:
+	ng build --prod --aot=false  --deploy-url='client/dist/' --watch
+From datalive/
+	cp client/dist/index.html templates/
+
+11) Test locally
+From datalive/
+	dev_appserver.py --port=8080 app.yaml
+
+Verify basic functionality and any major fixes
+
+12) Deploy!
+From datalive/ run:
+	gcloud app deploy
+
+13) Test live site
+
+14) swap back to staging project.
+
+
+
+
+
+
+

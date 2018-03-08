@@ -1,0 +1,567 @@
+Migrations run on production 2017116
+=====================================
+
+python manage.py migrate
+System check identified some issues:
+
+WARNINGS:
+datalive_auth.DataliveUser.customers: (fields.W340) null has no effect on ManyToManyField.
+datalive_auth.DataliveUser.vehicle_groups: (fields.W340) null has no effect on ManyToManyField.
+datalive_cust_veh.Region.contacts: (fields.W340) null has no effect on ManyToManyField.
+datalive_cust_veh.VehicleGroup.contacts: (fields.W340) null has no effect on ManyToManyField.
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, datalive_auth, datalive_cust_veh, datalive_defects, datalive_vehicle_check, sessions
+Running migrations:
+  Applying datalive_auth.0018_auto_20171114_2101.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-14 18:12:33.580791) while time zone support is active.
+  RuntimeWarning)
+/Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-15 21:01:23.259641) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0019_auto_20171114_2342.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-15 23:42:38.173595) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0020_auto_20171115_0005.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-16 00:05:27.355518) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0021_auto_20171115_0008.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-16 00:08:09.822821) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0022_auto_20171115_0008.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-16 00:08:22.478242) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0023_auto_20171115_0011.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-16 00:11:27.076524) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0024_auto_20171115_0011.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-16 00:11:49.691269) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0025_auto_20171115_0012.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-16 00:11:59.659454) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0026_auto_20171115_0013.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-16 00:13:29.672749) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0027_auto_20171115_0013.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-16 00:13:45.860047) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0028_auto_20171115_0017.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-16 00:17:09.106413) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0029_auto_20171115_0728.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-16 07:28:34.836884) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0030_auto_20171115_0730.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-16 07:29:34.381708) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0031_auto_20171115_2146.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-16 21:46:40.815700) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0032_auto_20171115_2147.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-16 21:47:11.977626) while time zone support is active.
+  RuntimeWarning)
+ OK
+
+
+
+
+Migrations run on production 20171114
+======================================
+
+python manage.py migrate
+System check identified some issues:
+
+WARNINGS:
+datalive_auth.DataliveUser.customers: (fields.W340) null has no effect on ManyToManyField.
+datalive_auth.DataliveUser.vehicle_groups: (fields.W340) null has no effect on ManyToManyField.
+datalive_cust_veh.Region.contacts: (fields.W340) null has no effect on ManyToManyField.
+datalive_cust_veh.VehicleGroup.contacts: (fields.W340) null has no effect on ManyToManyField.
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, datalive_auth, datalive_cust_veh, datalive_defects, datalive_vehicle_check, sessions
+Running migrations:
+  Applying datalive_auth.0012_auto_20171103_1823.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-10-23 17:43:38.610923) while time zone support is active.
+  RuntimeWarning)
+/Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-04 18:23:49.470900) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0013_auto_20171103_2240.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-04 22:40:06.867492) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0014_auto_20171110_1426... OK
+  Applying datalive_auth.0015_auto_20171112_2340.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-13 23:40:14.530358) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0016_auto_20171113_1810.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-14 18:10:25.087469) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0017_auto_20171113_1812.../Users/jamesfletcher/Documents/Development/Datalive/datalive-staging/gae-web/datalive/env/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-14 18:12:33.580791) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_cust_veh.0007_auto_20171113_1810... OK
+  Applying datalive_vehicle_check.0001_initial... OK
+
+
+Migrations run on production 20171220
+======================================
+
+
+python manage.py migrate
+System check identified some issues:
+
+WARNINGS:
+datalive_vehicle_check.GateCheckReport.hub_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.tractor_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.trailer_photos: (fields.W340) null has no effect on ManyToManyField.
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, datalive_auth, datalive_cust_veh, datalive_defects, datalive_notifications, datalive_settings, datalive_vehicle_check, datalive_vehicle_help, sessions
+Running migrations:
+  Applying datalive_cust_veh.0008_auto_20171123_0844... OK
+  Applying datalive_auth.0033_auto_20171118_0652.../Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/models/fields/__init__.py:1451: RuntimeWarning: DateTimeField UserResetPasswordToken.expiration_date received a naive datetime (2017-11-16 21:47:11.977626) while time zone support is active.
+  RuntimeWarning)
+ OK
+  Applying datalive_auth.0034_modulepermissionendpoint... OK
+  Applying datalive_auth.0035_dataliveuser_regions... OK
+  Applying datalive_auth.0036_auto_20171123_1823... OK
+  Applying datalive_vehicle_help.0001_initial... OK
+  Applying datalive_cust_veh.0009_liveryview_view_name... OK
+  Applying datalive_cust_veh.0010_auto_20171123_2125... OK
+  Applying datalive_cust_veh.0011_auto_20171124_1331... OK
+  Applying datalive_cust_veh.0012_vehicle_insurance... OK
+  Applying datalive_cust_veh.0013_auto_20171124_1505... OK
+  Applying datalive_cust_veh.0014_auto_20171124_1558... OK
+  Applying datalive_cust_veh.0011_auto_20171127_2322... OK
+  Applying datalive_cust_veh.0015_merge_20171128_1031... OK
+  Applying datalive_cust_veh.0016_depotcontact... OK
+  Applying datalive_cust_veh.0017_auto_20171203_0904... OK
+  Applying datalive_cust_veh.0018_vehiclegroupcontact_archived... OK
+  Applying datalive_cust_veh.0019_insurance_policy_document... OK
+  Applying datalive_cust_veh.0020_auto_20171210_2301... OK
+  Applying datalive_cust_veh.0021_auto_20171211_1241... OK
+  Applying datalive_cust_veh.0022_auto_20171211_2333... OK
+  Applying datalive_cust_veh.0023_auto_20171212_1040... OK
+  Applying datalive_cust_veh.0024_auto_20171212_1334... OK
+  Applying datalive_cust_veh.0025_auto_20171212_1453... OK
+  Applying datalive_cust_veh.0026_auto_20171212_1509... OK
+  Applying datalive_cust_veh.0027_auto_20171212_1533... OK
+  Applying datalive_cust_veh.0028_auto_20171212_1827... OK
+  Applying datalive_cust_veh.0029_auto_20171212_1830... OK
+  Applying datalive_cust_veh.0030_auto_20171212_1906... OK
+  Applying datalive_cust_veh.0031_auto_20171212_1907... OK
+  Applying datalive_cust_veh.0032_auto_20171212_1914... OK
+  Applying datalive_cust_veh.0033_auto_20171212_2024... OK
+  Applying datalive_cust_veh.0034_auto_20171212_2132... OK
+  Applying datalive_cust_veh.0035_auto_20171212_2137... OK
+  Applying datalive_cust_veh.0036_remove_insurance_address... OK
+  Applying datalive_cust_veh.0037_insurance_address... OK
+  Applying datalive_cust_veh.0038_insurance_insurance_accident_phone... OK
+  Applying datalive_cust_veh.0039_auto_20171212_2159... OK
+  Applying datalive_cust_veh.0040_remove_insurance_policy_document_url... OK
+  Applying datalive_cust_veh.0041_auto_20171214_2108... OK
+  Applying datalive_cust_veh.0042_remove_vehicle_service_due_date... OK
+  Applying datalive_cust_veh.0043_vehicle_service_due_date... OK
+  Applying datalive_cust_veh.0044_remove_vehicle_service_due_odo... OK
+  Applying datalive_cust_veh.0045_vehicle_service_due_odo... OK
+  Applying datalive_defects.0010_auto_20171122_2253... OK
+  Applying datalive_defects.0011_auto_20171123_1450... OK
+  Applying datalive_defects.0012_auto_20171123_1625... OK
+  Applying datalive_defects.0013_auto_20171123_1639... OK
+  Applying datalive_defects.0014_auto_20171123_1730... OK
+  Applying datalive_defects.0015_auto_20171123_1736... OK
+  Applying datalive_defects.0016_auto_20171123_1747... OK
+  Applying datalive_defects.0017_auto_20171123_2130... OK
+  Applying datalive_defects.0018_auto_20171123_2139... OK
+  Applying datalive_defects.0019_auto_20171123_2245... OK
+  Applying datalive_defects.0020_auto_20171127_2322... OK
+  Applying datalive_notifications.0001_initial... OK
+  Applying datalive_notifications.0002_notification_source... OK
+  Applying datalive_notifications.0003_notification_message_sid... OK
+  Applying datalive_notifications.0004_auto_20171217_0005... OK
+  Applying datalive_notifications.0005_auto_20171217_0006... OK
+  Applying datalive_notifications.0006_auto_20171217_1056... OK
+  Applying datalive_notifications.0007_notification_notified_by... OK
+  Applying datalive_settings.0001_initial... OK
+  Applying datalive_settings.0002_auto_20171123_2313... OK
+  Applying datalive_settings.0003_auto_20171124_0003... OK
+  Applying datalive_vehicle_check.0002_auto_20171122_2253... OK
+  Applying datalive_vehicle_check.0003_auto_20171123_1739... OK
+  Applying datalive_vehicle_check.0004_auto_20171127_1025... OK
+  Applying datalive_vehicle_check.0005_auto_20171127_1451... OK
+  Applying datalive_vehicle_check.0006_auto_20171127_1452... OK
+  Applying datalive_vehicle_check.0007_damage_fixed_by... OK
+  Applying datalive_vehicle_check.0004_auto_20171127_2322... OK
+  Applying datalive_vehicle_check.0008_merge_20171129_1148... OK
+  Applying datalive_vehicle_check.0009_auto_20171129_1148... OK
+  Applying datalive_vehicle_check.0010_auto_20171129_1617... OK
+  Applying datalive_vehicle_check.0011_auto_20171129_1727... OK
+  Applying datalive_vehicle_check.0012_auto_20171129_1728... OK
+  Applying datalive_vehicle_check.0013_auto_20171201_1002... OK
+  Applying datalive_vehicle_check.0014_auto_20171201_1108... OK
+  Applying datalive_vehicle_check.0015_auto_20171203_0839... OK
+  Applying datalive_vehicle_help.0002_auto_20171124_1505... OK
+  Applying datalive_vehicle_help.0003_auto_20171124_1558... OK
+
+Migrations 20180115
+====================
+
+python manage.py migrate
+System check identified some issues:
+
+WARNINGS:
+?: (django_mysql.W003) The character set is not utf8mb4 for database connection 'default'
+  HINT: The default 'utf8' character set does not include support for all Unicode characters. It's strongly recommended you move to use 'utf8mb4'. See: https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
+datalive_vehicle_check.GateCheckReport.hub_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.tractor_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.trailer_photos: (fields.W340) null has no effect on ManyToManyField.
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, datalive_auth, datalive_cust_veh, datalive_defects, datalive_notifications, datalive_settings, datalive_vehicle_check, datalive_vehicle_help, sessions
+Running migrations:
+  Applying datalive_cust_veh.0046_auto_20180106_2035... OK
+  Applying datalive_cust_veh.0047_auto_20180107_2259... OK
+  Applying datalive_cust_veh.0048_vehicle_gross_vehicle_weight... OK
+  Applying datalive_cust_veh.0049_vehicle_lease_company... OK
+  Applying datalive_cust_veh.0050_remove_vehicle_rear_tyre_size... OK
+  Applying datalive_cust_veh.0051_auto_20180108_1121... OK
+  Applying datalive_cust_veh.0052_auto_20180108_1134... OK
+  Applying datalive_cust_veh.0053_leasecompany_customer... OK
+  Applying datalive_notifications.0008_auto_20171229_1133... OK
+  Applying datalive_vehicle_check.0016_auto_20171229_1201... OK
+  Applying datalive_vehicle_check.0017_remove_auditsurveyreport_date... OK
+  Applying datalive_vehicle_check.0018_auditsurveytemplate_is_default... OK
+
+
+
+
+Migrations 20180206
+====================
+
+
+python manage.py migrate
+System check identified some issues:
+
+WARNINGS:
+?: (django_mysql.W003) The character set is not utf8mb4 for database connection 'default'
+  HINT: The default 'utf8' character set does not include support for all Unicode characters. It's strongly recommended you move to use 'utf8mb4'. See: https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
+datalive_geofence.Geofence.vehicles: (fields.W340) null has no effect on ManyToManyField.
+datalive_geofence.GeofenceGroup.geofences: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.hub_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.tractor_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.trailer_photos: (fields.W340) null has no effect on ManyToManyField.
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, datalive_auth, datalive_cust_veh, datalive_defects, datalive_geofence, datalive_notifications, datalive_vehicle_check, datalive_vehicle_help, sessions
+Running migrations:
+  Applying datalive_cust_veh.0054_auto_20180120_1447... OK
+  Applying datalive_cust_veh.0055_auto_20180121_1606... OK
+  Applying datalive_cust_veh.0056_auto_20180125_0707... OK
+  Applying datalive_vehicle_check.0019_auto_20180125_0707... OK
+  Applying datalive_cust_veh.0057_auto_20180125_0707... OK
+  Applying datalive_cust_veh.0058_auto_20180125_0740... OK
+  Applying datalive_cust_veh.0059_vehiclemanufacturermodel_vehicle_model_contacts... OK
+  Applying datalive_cust_veh.0060_auto_20180125_1245... OK
+  Applying datalive_cust_veh.0061_auto_20180125_1249... OK
+  Applying datalive_cust_veh.0060_auto_20180126_1346... OK
+  Applying datalive_cust_veh.0062_merge_20180127_2029... OK
+  Applying datalive_cust_veh.0054_auto_20180127_1729... OK
+  Applying datalive_cust_veh.0063_merge_20180129_2331... OK
+  Applying datalive_cust_veh.0064_remove_vehicle_odf... OK
+  Applying datalive_cust_veh.0065_auto_20180204_0953... OK
+  Applying datalive_geofence.0001_initial... OK
+  Applying datalive_geofence.0002_auto_20180129_2107... OK
+  Applying datalive_geofence.0003_auto_20180129_2354... OK
+  Applying datalive_geofence.0004_auto_20180130_0640...Traceback (most recent call last):
+  File "manage.py", line 31, in <module>
+    execute_from_command_line(sys.argv)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/__init__.py", line 363, in execute_from_command_line
+    utility.execute()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/__init__.py", line 355, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/base.py", line 283, in run_from_argv
+    self.execute(*args, **cmd_options)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/base.py", line 330, in execute
+    output = self.handle(*args, **options)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/commands/migrate.py", line 204, in handle
+    fake_initial=fake_initial,
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 115, in migrate
+    state = self._migrate_all_forwards(state, plan, full_plan, fake=fake, fake_initial=fake_initial)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 145, in _migrate_all_forwards
+    state = self.apply_migration(state, migration, fake=fake, fake_initial=fake_initial)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 244, in apply_migration
+    state = migration.apply(state, schema_editor)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/migration.py", line 129, in apply
+    operation.database_forwards(self.app_label, schema_editor, old_state, project_state)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/operations/fields.py", line 215, in database_forwards
+    schema_editor.alter_field(from_model, from_field, to_field)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/base/schema.py", line 511, in alter_field
+    "through= on M2M fields)" % (old_field, new_field)
+ValueError: Cannot alter field datalive_geofence.Geofence.vehicles into datalive_geofence.Geofence.vehicles - they are not compatible types (you cannot alter to or from M2M fields, or add or remove through= on M2M fields)
+Jamess-MBP:datalive jamesfletcher$ 
+
+
+
+python manage.py migrate
+System check identified some issues:
+
+WARNINGS:
+?: (django_mysql.W003) The character set is not utf8mb4 for database connection 'default'
+  HINT: The default 'utf8' character set does not include support for all Unicode characters. It's strongly recommended you move to use 'utf8mb4'. See: https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
+datalive_geofence.Geofence.vehicles: (fields.W340) null has no effect on ManyToManyField.
+datalive_geofence.GeofenceGroup.geofences: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.hub_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.tractor_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.trailer_photos: (fields.W340) null has no effect on ManyToManyField.
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, datalive_auth, datalive_cust_veh, datalive_defects, datalive_geofence, datalive_notifications, datalive_vehicle_check, datalive_vehicle_help, sessions
+Running migrations:
+  Applying datalive_geofence.0004_auto_20180130_0640...Traceback (most recent call last):
+  File "manage.py", line 31, in <module>
+    execute_from_command_line(sys.argv)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/__init__.py", line 363, in execute_from_command_line
+    utility.execute()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/__init__.py", line 355, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/base.py", line 283, in run_from_argv
+    self.execute(*args, **cmd_options)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/base.py", line 330, in execute
+    output = self.handle(*args, **options)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/commands/migrate.py", line 204, in handle
+    fake_initial=fake_initial,
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 115, in migrate
+    state = self._migrate_all_forwards(state, plan, full_plan, fake=fake, fake_initial=fake_initial)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 145, in _migrate_all_forwards
+    state = self.apply_migration(state, migration, fake=fake, fake_initial=fake_initial)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 244, in apply_migration
+    state = migration.apply(state, schema_editor)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/migration.py", line 129, in apply
+    operation.database_forwards(self.app_label, schema_editor, old_state, project_state)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/operations/models.py", line 97, in database_forwards
+    schema_editor.create_model(model)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/base/schema.py", line 303, in create_model
+    self.execute(sql, params or None)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/base/schema.py", line 120, in execute
+    cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/utils.py", line 94, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/utils.py", line 63, in execute
+    return self.cursor.execute(sql)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/mysql/base.py", line 101, in execute
+    return self.cursor.execute(query, args)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/MySQLdb/cursors.py", line 205, in execute
+    self.errorhandler(self, exc, value)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+django.db.utils.OperationalError: (1050, "Table 'datalive_geofence_geofecegeofencegroupmap' already exists")
+Jamess-MBP:datalive jamesfletcher$ python manage.py migrate
+System check identified some issues:
+
+WARNINGS:
+?: (django_mysql.W003) The character set is not utf8mb4 for database connection 'default'
+  HINT: The default 'utf8' character set does not include support for all Unicode characters. It's strongly recommended you move to use 'utf8mb4'. See: https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
+datalive_geofence.Geofence.vehicles: (fields.W340) null has no effect on ManyToManyField.
+datalive_geofence.GeofenceGroup.geofences: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.hub_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.tractor_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.trailer_photos: (fields.W340) null has no effect on ManyToManyField.
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, datalive_auth, datalive_cust_veh, datalive_defects, datalive_geofence, datalive_notifications, datalive_vehicle_check, datalive_vehicle_help, sessions
+Running migrations:
+  Applying datalive_geofence.0004_auto_20180130_0640...Traceback (most recent call last):
+  File "manage.py", line 31, in <module>
+    execute_from_command_line(sys.argv)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/__init__.py", line 363, in execute_from_command_line
+    utility.execute()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/__init__.py", line 355, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/base.py", line 283, in run_from_argv
+    self.execute(*args, **cmd_options)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/base.py", line 330, in execute
+    output = self.handle(*args, **options)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/commands/migrate.py", line 204, in handle
+    fake_initial=fake_initial,
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 115, in migrate
+    state = self._migrate_all_forwards(state, plan, full_plan, fake=fake, fake_initial=fake_initial)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 145, in _migrate_all_forwards
+    state = self.apply_migration(state, migration, fake=fake, fake_initial=fake_initial)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 244, in apply_migration
+    state = migration.apply(state, schema_editor)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/migration.py", line 129, in apply
+    operation.database_forwards(self.app_label, schema_editor, old_state, project_state)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/operations/fields.py", line 86, in database_forwards
+    field,
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/mysql/schema.py", line 48, in add_field
+    super(DatabaseSchemaEditor, self).add_field(model, field)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/base/schema.py", line 412, in add_field
+    if field.many_to_many and field.remote_field.through._meta.auto_created:
+AttributeError: 'unicode' object has no attribute '_meta'
+Jamess-MBP:datalive jamesfletcher$ python manage.py migrate
+System check identified some issues:
+
+WARNINGS:
+?: (django_mysql.W003) The character set is not utf8mb4 for database connection 'default'
+  HINT: The default 'utf8' character set does not include support for all Unicode characters. It's strongly recommended you move to use 'utf8mb4'. See: https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
+datalive_geofence.Geofence.vehicles: (fields.W340) null has no effect on ManyToManyField.
+datalive_geofence.GeofenceGroup.geofences: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.hub_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.tractor_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.trailer_photos: (fields.W340) null has no effect on ManyToManyField.
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, datalive_auth, datalive_cust_veh, datalive_defects, datalive_geofence, datalive_notifications, datalive_vehicle_check, datalive_vehicle_help, sessions
+Running migrations:
+  Applying datalive_geofence.0004_auto_20180130_0640...Traceback (most recent call last):
+  File "manage.py", line 31, in <module>
+    execute_from_command_line(sys.argv)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/__init__.py", line 363, in execute_from_command_line
+    utility.execute()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/__init__.py", line 355, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/base.py", line 283, in run_from_argv
+    self.execute(*args, **cmd_options)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/base.py", line 330, in execute
+    output = self.handle(*args, **options)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/commands/migrate.py", line 204, in handle
+    fake_initial=fake_initial,
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 115, in migrate
+    state = self._migrate_all_forwards(state, plan, full_plan, fake=fake, fake_initial=fake_initial)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 145, in _migrate_all_forwards
+    state = self.apply_migration(state, migration, fake=fake, fake_initial=fake_initial)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 244, in apply_migration
+    state = migration.apply(state, schema_editor)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/migration.py", line 129, in apply
+    operation.database_forwards(self.app_label, schema_editor, old_state, project_state)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/operations/fields.py", line 154, in database_forwards
+    schema_editor.remove_field(from_model, from_model._meta.get_field(self.name))
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/base/schema.py", line 457, in remove_field
+    return self.delete_model(field.remote_field.through)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/base/schema.py", line 324, in delete_model
+    "table": self.quote_name(model._meta.db_table),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/base/schema.py", line 120, in execute
+    cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/utils.py", line 94, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/mysql/base.py", line 101, in execute
+    return self.cursor.execute(query, args)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/MySQLdb/cursors.py", line 205, in execute
+    self.errorhandler(self, exc, value)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+django.db.utils.OperationalError: (1051, "Unknown table 'datalive.datalive_geofence_geofence_vehicles'")
+Jamess-MBP:datalive jamesfletcher$ python manage.py migrate
+System check identified some issues:
+
+WARNINGS:
+?: (django_mysql.W003) The character set is not utf8mb4 for database connection 'default'
+  HINT: The default 'utf8' character set does not include support for all Unicode characters. It's strongly recommended you move to use 'utf8mb4'. See: https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
+datalive_geofence.Geofence.vehicles: (fields.W340) null has no effect on ManyToManyField.
+datalive_geofence.GeofenceGroup.geofences: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.hub_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.tractor_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.trailer_photos: (fields.W340) null has no effect on ManyToManyField.
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, datalive_auth, datalive_cust_veh, datalive_defects, datalive_geofence, datalive_notifications, datalive_vehicle_check, datalive_vehicle_help, sessions
+Running migrations:
+  Applying datalive_geofence.0004_auto_20180130_0640...Traceback (most recent call last):
+  File "manage.py", line 31, in <module>
+    execute_from_command_line(sys.argv)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/__init__.py", line 363, in execute_from_command_line
+    utility.execute()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/__init__.py", line 355, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/base.py", line 283, in run_from_argv
+    self.execute(*args, **cmd_options)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/base.py", line 330, in execute
+    output = self.handle(*args, **options)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/commands/migrate.py", line 204, in handle
+    fake_initial=fake_initial,
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 115, in migrate
+    state = self._migrate_all_forwards(state, plan, full_plan, fake=fake, fake_initial=fake_initial)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 145, in _migrate_all_forwards
+    state = self.apply_migration(state, migration, fake=fake, fake_initial=fake_initial)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 244, in apply_migration
+    state = migration.apply(state, schema_editor)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/migration.py", line 119, in apply
+    operation.state_forwards(self.app_label, project_state)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/operations/fields.py", line 72, in state_forwards
+    state.models[app_label, self.model_name_lower].fields.append((self.name, field))
+KeyError: ('datalive_geofence', u'geofencevehiclemap')
+Jamess-MBP:datalive jamesfletcher$ python manage.py migrate
+System check identified some issues:
+
+WARNINGS:
+?: (django_mysql.W003) The character set is not utf8mb4 for database connection 'default'
+  HINT: The default 'utf8' character set does not include support for all Unicode characters. It's strongly recommended you move to use 'utf8mb4'. See: https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
+datalive_geofence.Geofence.vehicles: (fields.W340) null has no effect on ManyToManyField.
+datalive_geofence.GeofenceGroup.geofences: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.hub_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.tractor_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.trailer_photos: (fields.W340) null has no effect on ManyToManyField.
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, datalive_auth, datalive_cust_veh, datalive_defects, datalive_geofence, datalive_notifications, datalive_vehicle_check, datalive_vehicle_help, sessions
+Running migrations:
+  Applying datalive_geofence.0004_auto_20180130_0640...Traceback (most recent call last):
+  File "manage.py", line 31, in <module>
+    execute_from_command_line(sys.argv)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/__init__.py", line 363, in execute_from_command_line
+    utility.execute()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/__init__.py", line 355, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/base.py", line 283, in run_from_argv
+    self.execute(*args, **cmd_options)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/base.py", line 330, in execute
+    output = self.handle(*args, **options)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/management/commands/migrate.py", line 204, in handle
+    fake_initial=fake_initial,
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 115, in migrate
+    state = self._migrate_all_forwards(state, plan, full_plan, fake=fake, fake_initial=fake_initial)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 145, in _migrate_all_forwards
+    state = self.apply_migration(state, migration, fake=fake, fake_initial=fake_initial)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/executor.py", line 244, in apply_migration
+    state = migration.apply(state, schema_editor)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/migration.py", line 129, in apply
+    operation.database_forwards(self.app_label, schema_editor, old_state, project_state)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/migrations/operations/fields.py", line 86, in database_forwards
+    field,
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/mysql/schema.py", line 48, in add_field
+    super(DatabaseSchemaEditor, self).add_field(model, field)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/base/schema.py", line 413, in add_field
+    return self.create_model(field.remote_field.through)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/base/schema.py", line 303, in create_model
+    self.execute(sql, params or None)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/base/schema.py", line 120, in execute
+    cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/utils.py", line 65, in execute
+    return self.cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/utils.py", line 94, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/utils.py", line 63, in execute
+    return self.cursor.execute(sql)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/db/backends/mysql/base.py", line 101, in execute
+    return self.cursor.execute(query, args)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/MySQLdb/cursors.py", line 205, in execute
+    self.errorhandler(self, exc, value)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+django.db.utils.OperationalError: (1050, "Table 'datalive_geofence_geofence_vehicles' already exists")
+Jamess-MBP:datalive jamesfletcher$ python manage.py migrate
+System check identified some issues:
+
+WARNINGS:
+?: (django_mysql.W003) The character set is not utf8mb4 for database connection 'default'
+  HINT: The default 'utf8' character set does not include support for all Unicode characters. It's strongly recommended you move to use 'utf8mb4'. See: https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
+datalive_geofence.Geofence.vehicles: (fields.W340) null has no effect on ManyToManyField.
+datalive_geofence.GeofenceGroup.geofences: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.hub_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.tractor_photos: (fields.W340) null has no effect on ManyToManyField.
+datalive_vehicle_check.GateCheckReport.trailer_photos: (fields.W340) null has no effect on ManyToManyField.
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, datalive_auth, datalive_cust_veh, datalive_defects, datalive_geofence, datalive_notifications, datalive_vehicle_check, datalive_vehicle_help, sessions
+Running migrations:
+  Applying datalive_geofence.0004_auto_20180130_0640... OK
+Jamess-MBP:datalive jamesfletcher$ 
+
+
+
+
+
+  

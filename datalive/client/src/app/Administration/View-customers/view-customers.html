@@ -1,0 +1,147 @@
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+
+  <div class="sidenav-user c-slide-panel c-slide-panel--in-toolbar">
+    <mat-sidenav-container class="c-slide-panel__container">
+      <mat-sidenav align="end" #sidenavUsers mode="side" class="mat-sidenav c-slide-panel__sidenav">
+
+         <div class="c-slide-panel__head">
+            <h4 class="c-slide-panel__title">{{selectedCustomer.name }} Details</h4>
+            <button mat-icon-button (click)="sidenavUsers.close()">
+              <mat-icon class="mat-24" >close</mat-icon>
+            </button>
+        </div>
+
+        <div class="user-details-activity c-slide-panel__body">
+              <form name="form" class="example-form" (ngSubmit)="sendFormCustomer(formUpdateAddCustomer.value)" #formUpdateAddCustomer="ngForm" novalidate>
+                <p>
+                  <mat-input-container class="example-full-width">
+                    <input matInput placeholder="Customer name" name="name" [(ngModel)]="selectedCustomer.name" #name="ngModel" required>
+                    <mat-hint [hidden]="name.valid || name.untouched">
+                      <div *ngIf="name.errors && name.errors.required" class="error_field">Customer name is required</div>
+                    </mat-hint>
+                  </mat-input-container>
+                </p>
+                <p>
+                  <mat-input-container class="example-full-width">
+                    <input matInput placeholder="Address" name="address" [(ngModel)]="selectedCustomer.address" #address="ngModel">
+                    <mat-hint [hidden]="address.valid || address.untouched">
+                      <div *ngIf="address.errors && address.errors.required" class="error_field">Address is required</div>
+                    </mat-hint>
+                  </mat-input-container>
+                </p>
+                <!--<address-component></address-component>-->
+                <p>
+                  <mat-input-container class="example-full-width">
+                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" matInput placeholder="Email" name="email" [(ngModel)]="selectedCustomer.email" #email="ngModel">
+                    <mat-hint [hidden]="email.valid || email.untouched">
+                      <div *ngIf="email.errors && email.errors.required" class="error_field">Email is required</div>
+                      <div *ngIf="email.errors && email.errors.pattern" class="error_field">Email is invalid</div>
+                    </mat-hint>
+                  </mat-input-container>
+                </p>
+                <p>
+                  <mat-input-container class="example-full-width">
+                    <input matInput placeholder="Telephone" name="phone" [(ngModel)]="selectedCustomer.phone" #phone="ngModel">
+                    <mat-hint [hidden]="phone.valid || phone.untouched">
+                      <div *ngIf="phone.errors && phone.errors.required" class="error_field">Telephone is required</div>
+                    </mat-hint>
+                  </mat-input-container>
+                </p>
+
+                <div class="details-update-user c-slide-panel__footer">
+                  <button mat-raised-button *ngIf="updateBtn" [disabled]="disableSend">Update customer</button>
+                  <button mat-raised-button *ngIf="!updateBtn" [disabled]="disableSend">Add customer</button>
+                </div>
+              </form>
+
+        </div>
+      </mat-sidenav>
+
+       <mat-toolbar class="title-users c-title-toolbar">
+          <h1 class="c-title-toolbar__heading">Customers</h1>
+          <div class="func-button-users c-title-toolbar__action-buttons">
+            <button mat-raised-button *ngIf="!hiddenBtn" (click)="sidenavUsers.open(); addNewCustomer(formUpdateAddCustomer)">Add new</button>
+            <button mat-raised-button *ngIf="!hiddenBtn" (click)="removeCustomer()">Delete</button>
+          </div>
+      </mat-toolbar>
+    </mat-sidenav-container>
+  </div>
+
+
+  <div class="c-grid-list__row c-grid-list__row--header">
+      <div class="c-grid-list__cell c-grid-list__cell--check-box" *ngIf="!hiddenBtn"></div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-20">
+        <span>Customer </span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-22">
+        <span>Address</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-20">
+        <span>Email</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-20">
+        <span>Telephone</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-15">
+        <span>Created</span>
+      </div>
+  </div>
+<section class="o-scrollable--with-toolbar o-scrollable--with-shadow">
+  <div>
+  <div class="users-list view-user-list c-grid-list">
+    
+
+    <div class="row-users">
+      <div class="c-grid-list__row c-grid-list__row--hover" (click)="selectUser(customer)" *ngFor="let customer of customers">
+        <div class="c-grid-list__cell c-grid-list__cell--check-box" *ngIf="!hiddenBtn">
+          <span><mat-checkbox class="example-margin" (click)="checkCustomer(customer.id)"></mat-checkbox></span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-20" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ customer.name }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-22" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ customer.address }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-20" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ customer.email }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-20" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ customer.phone }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-15" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ customer.creation_datetime | date }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+
+  <!--<div class="users-list view-customer-list">
+
+
+    <div class="row-users">
+      <div class="users-list-item" (click)="selectUser(customer)" *ngFor="let customer of customers">
+        <div class="user-list-categ users-list-check" *ngIf="!hiddenBtn">
+          <p><mat-checkbox class="example-margin" (click)="checkCustomer(customer.id)"></mat-checkbox></p>
+        </div>
+        <div class="user-list-categ users-list-name" (click)="hiddenBtn ? null : sidenavUsers.open()">
+
+        </div>
+        <div class="user-list-categ users-list-address" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <p>{{ customer.address }}</p>
+        </div>
+        <div class="user-list-categ users-list-nickname" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <p></p>
+        </div>
+        <div class="user-list-categ users-list-email" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <p>{{ customer.phone }}</p>
+        </div>
+        <div class="user-list-categ users-list-created" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <p>{{ customer.creation_datetime | date }}</p>
+        </div>
+      </div>
+    </div>
+  </div>-->

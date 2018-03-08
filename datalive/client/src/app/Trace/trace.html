@@ -1,0 +1,181 @@
+<section class="wrapper-administration o-content">
+  <aside class="admin-navigation o-content__sidebar c-sidebar" [ngClass]="{'o-content__sidebar--hidden': !sidemenuOpen}">
+    <div class="d-context-panel__head flex-direction--column">
+      <img class="d-context-panel__head-img" src="{{ img }}trace-gray-icon.png" alt="Trace icon">
+        <h4 class="d-context-panel__title">Trace</h4>
+    </div>
+
+    <search-vehicle-trace-app (outputVehicleName)="this.vehicleName=$event"
+                              (outputVehicleId)="this.vehicleId=$event"
+                              (outputStartDateTime)="this.startDateTime=$event"
+                              (outputEndDateTime)="this.endDateTime=$event"
+                              (outputShowPage)="this.calcNewChartAxis(); this.loadNewTrace(); this.debug($event, 'showPage');"
+                              (outputApiIsLoading)="this.isLoading=$event; this.debug($event, 'isLoading');">
+    </search-vehicle-trace-app>
+
+    <button (click)="sidemenuOpen = !sidemenuOpen" class="c-title-toolbar__toggle-btn" [ngClass]="{'sidemenu-is-hidden': !sidemenuOpen}">
+      <mat-icon class="icon--16 c-title-toolbar__toggle-btn-icon">chevron_left</mat-icon>
+    </button>
+  </aside>
+
+  <main class="wrapper-admin-content o-content__main ">
+
+      <mat-toolbar class="c-title-toolbar">
+        <h1 class="c-title-toolbar__heading">
+          <span>Trace Report</span>
+          <mat-icon class="mat-icon--16">chevron_right</mat-icon>
+          <span class="c-title-toolbar__heading__meta">
+            {{ vehicleName }}
+            <mat-icon class="mat-icon--16">chevron_right</mat-icon>
+
+            {{ startDateTime | date:'dd.MM.yyyy' }}
+            <mat-icon class="mat-icon--16">date_range</mat-icon>
+          </span>
+      	</h1>
+      </mat-toolbar>
+
+	  <div class="map-wrapper-trace" [ngClass]="{'is-loading': (isLoading || isFetchingTraceData)}">
+
+    <!-- Doesn't overlay map but appears above it, so knock whole layout out of kilter, fit into title instead
+    <div *ngIf="trace.length === 0 && !isLoading && !isFetchingTraceData" class="c-message c-message--no-data">
+      <h3 class="c-message__header">There is no Trace data for those dates</h3>
+      <div class="c-message__text">
+        <p>Please choose a vehilce and a date to Retrieve Trace data.</p>
+      </div>
+    </div>
+    -->
+
+		<!-- this creates a google map on the page with the given lat/lng from -->
+		<!-- the component as the initial center of the map: -->
+		<!-- [latitude]="lat" [longitude]="lng" -->
+		<agm-map style="height:100%;width:100%" [styles]="styles" [fitBounds]="this.mapBounds" [mapTypeControl]="true">
+
+			<!--
+
+      <agm-marker *ngFor="let tp of trace" [latitude]="tp.lat" [longitude]="tp.lon">
+      </agm-marker>
+			-->
+			<!-- "let tp of trackPoints; let i = index" -->
+		  <div *ngIf="trace.length > 0">
+
+        <agm-polyline [clickable]="false" [strokeColor]="'#e6b3d1'" [strokeOpacity]="'0.5'" [strokeWeight]="'4'">
+          <agm-polyline-point *ngFor="let tp of trace; let i = index" [latitude]="tp.lat" [longitude]="tp.lon"></agm-polyline-point>
+        </agm-polyline>
+
+   		  <agm-snazzy-info-window *ngFor="let tp of trace; let i = index" [isOpen]="true" [latitude]="tp.lat" [longitude]="tp.lon" [closeWhenOthersOpen]="false" [closeOnMapClick]="false" [showCloseButton]="false" [shadow]="false" [pointer]="false" [border]="false">
+          <ng-template>
+
+
+              <div class="map__trace_marker_wrapper" (mouseenter)="traceMarkerHover($event, tp)" (mouseleave)="traceMarkerHover($event, tp)">
+                <img src="{{ img }}{{tp.traceIcon}}" class="map__trace_marker_icon" alt="marker"/>
+                <span class="map__trace_marker_tooltip" [ngClass]="{'map__trace_marker_tooltip_hidden': !tp.chartHover}">
+                  {{tp.traceToolTipText}}
+                </span>
+              </div>
+
+
+          </ng-template>
+    		</agm-snazzy-info-window>
+
+  	  </div>
+
+		</agm-map>
+    <!--If not trace markers-->
+     <div class="c-message--trace-wrapper" *ngIf="trace.length === 0 && !isLoading && !isFetchingTraceData">
+        <div class="c-message c-message--no-data">
+          <mat-icon class="mat-icon--48">sentiment_dissatisfied</mat-icon>
+          <h3 class="c-message__header">There is no Trace data for those dates</h3>
+          <div class="c-message__text">
+            <p>Please choose a vehicle and a date to retrieve Trace data.</p>
+          </div>
+        </div>
+
+     </div>
+      <mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+	  </div>
+
+    <div class="trace__chart_wrapper">
+      <div #chartDiv class="trace__chart_zone">
+        <svg class="trace__chart_svg_zone" (mousemove)="chartMouseMove($event)" (mouseup)="chartMouseEnd($event)" (mouseleave)="chartMouseEnd($event)">
+
+          <svg:defs>
+            <svg:g id="chevron-left">
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="#FFFFFF"/>
+              <path d="M0 0h24v24H0z" fill-opacity="0"/>
+            </svg:g>
+            <svg:g id="chevron-right">
+              <svg:path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#FFFFFF"/>
+              <svg:path d="M0 0h24v24H0z" fill-opacity="0"/>
+            </svg:g>
+          </svg:defs>
+
+          <!-- Don't render until we have some trace data -->
+          <svg:g *ngIf="!isLoading">
+
+            <!-- Y Axis markers and labels -->
+            <svg:line *ngFor="let l of chartYLabels" [attr.x1]="l.x1" [attr.y1]="l.y1" [attr.x2]="l.x2" [attr.y2]="l.y2" [attr.stroke-dasharray]="l.stroke_dash" style="stroke:rgb(180,180,180);stroke-width:1"/>
+            <svg:text *ngFor="let l of chartYLabels" [attr.x]="l.x1 - (this.chartFontSize*2)" [attr.y]="l.y1 + (this.chartFontSize/3)" class="trace__chart_axis_label">{{l.text}}</text>
+
+            <!-- Y Axis speed limit marker -->
+            <svg:line [attr.x1]="chartSpeedLimit.x1" [attr.y1]="chartSpeedLimit.y1" [attr.x2]="chartSpeedLimit.x2" [attr.y2]="chartSpeedLimit.y2" [attr.stroke-dasharray]="chartSpeedLimit.stroke_dash" style="stroke:rgb(255,0,0);stroke-width:1"/>
+
+            <!-- Y Axis title -->
+            <svg:text [attr.transform]="chartYAxisTitleTransform" class="trace__chart_axis_title">{{chartYAxisTitleText}}</text>
+
+            <!-- X Axis markers and labels -->
+            <svg:line *ngFor="let l of chartXLabels" [attr.x1]="l.x1" [attr.y1]="l.y1" [attr.x2]="l.x2" [attr.y2]="l.y2" [attr.stroke-dasharray]="l.stroke_dash" style="stroke:rgb(110,110,110);stroke-width:1"/>
+            <svg:text *ngFor="let l of chartXLabels" [attr.x]="l.x1 - (this.chartFontSize)" [attr.y]="l.y1 + (this.chartFontSize*2.2)" class="trace__chart_axis_label">{{l.dateTime | date:'HH:mm'}}</text>
+
+            <!-- X Axis Date line -->
+            <svg:line [attr.x1]="chartDateLineAxis.x1" [attr.y1]="chartDateLineAxis.y1" [attr.x2]="chartDateLineAxis.x2" [attr.y2]="chartDateLineAxis.y2" style="stroke:rgb(110,110,110);stroke-width:1"/>
+            <svg:line *ngFor="let l of chartDateLineLabels" [attr.x1]="l.x1" [attr.y1]="l.y1" [attr.x2]="l.x2" [attr.y2]="l.y2" style="stroke:rgb(110,110,110);stroke-width:1"/>
+            <svg:text *ngFor="let l of chartDateLineLabels" [attr.x]="l.x1 - (this.chartFontSize*2)" [attr.y]="l.y1 + (this.chartFontSize*1.2)" class="trace__chart_axis_label">{{l.text}}</text>
+
+          </svg:g>
+
+          <svg:g *ngIf="trace.length > 0">
+
+
+            <!-- Date line zoom poly's -->
+            <svg:polygon [attr.points]="chartDateLineZoomPolyTop.pointsString" fill="#080" fill-opacity="0.25"/>
+            <svg:polygon [attr.points]="chartDateLineZoomPolyBottom.pointsString" fill="#0f0" class="trace__chart_draggable" (mousedown)="dateLineStartDrag($event)"/>
+
+            <svg:use xlink:href="#chevron-left" [attr.x]="this.chartDateLineZoomPolyBottom.x1 - 6" [attr.y]="this.chartDateLineZoomPolyBottom.y1 - 3" class="trace__chart_resizeable" (mousedown)="dateLineLeftStartResize($event)"/>
+
+            <svg:use xlink:href="#chevron-right" [attr.x]="this.chartDateLineZoomPolyBottom.x4 - 18" [attr.y]="this.chartDateLineZoomPolyBottom.y4 - 3" class="trace__chart_resizeable" (mousedown)="dateLineRightStartResize($event)"/>
+
+            <!-- Speed Data -->
+            <svg:g *ngFor="let tp of trace">
+              <svg:line *ngIf="tp.chartSegment.x1 > 0" [attr.x1]="tp.chartSegment.x1" [attr.y1]="tp.chartSegment.y1" [attr.x2]="tp.chartSegment.x2" [attr.y2]="tp.chartSegment.y2" style="stroke:rgb(255,255,255);stroke-width:1"/>
+              <svg:circle [attr.cx]="tp.chartSegment.x2" [attr.cy]="tp.chartSegment.y2" [attr.r]="tp.mapHover ? 7 : 3" [attr.fill]="(((tp.speed/1.6) >= this.traceSpeedLimit) ? 'red' : 'white')"/>
+            </svg:g>
+
+            <!-- Activity Data -->
+            <svg:g *ngFor="let s of chartActivitySegments">
+              <svg:g [ngSwitch]="s.ec">
+                <svg:rect *ngSwitchCase="3" [attr.x]="s.x1" [attr.y]="s.y1" [attr.width]="s.w" [attr.height]="s.h" fill="brown"/>
+                <svg:rect *ngSwitchCase="4" [attr.x]="s.x1" [attr.y]="s.y1" [attr.width]="s.w" [attr.height]="s.h" fill="blue"/>
+                <svg:rect *ngSwitchCase="5" [attr.x]="s.x1" [attr.y]="s.y1" [attr.width]="s.w" [attr.height]="s.h" fill="black"/>
+                <svg:rect *ngSwitchDefault [attr.x]="s.x1" [attr.y]="s.y1" [attr.width]="s.w" [attr.height]="s.h" fill="green"/>
+              </svg:g>
+            </svg:g>
+
+            <!-- Render anything that needs to be on top of chart - green circle for selected point and hover detect rects -->
+            <svg:g *ngFor="let tp of trace">
+              <svg:circle *ngIf="tp.mapHover" [attr.cx]="tp.chartSegment.x2" [attr.cy]="tp.chartSegment.y2" r="7" fill="green"fill-opacity="0.8"/>
+              <!-- bounding rect for hover detection -->
+              <!-- [attr.width]="tp.chartSegment.x2 - tp.chartSegment.x1" -->
+              <svg:rect *ngIf="tp.chartSegment.x2 > 0" [attr.x]="tp.chartSegment.x2" y="0" [attr.width]="this.chartWidth" [attr.height]="this.chartYBase + 20" fill="black" fill-opacity="0" stroke="black" stroke-opacity="0" (mouseenter)="chartGraphHover($event, tp)" (mouseleave)="chartGraphHover($event, tp)"/>
+            </svg:g>
+
+
+          </svg:g>
+
+        </svg>
+
+      </div>
+    </div>
+
+  </main>
+
+</section>

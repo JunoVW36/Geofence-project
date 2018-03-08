@@ -1,0 +1,6 @@
+<ul>
+  <li *ngFor="let node of reportData">
+    {{node.name}}
+    <item-report [reportData]="node.subnodes"></item-report>
+  </li>
+</ul>

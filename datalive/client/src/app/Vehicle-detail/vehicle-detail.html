@@ -1,0 +1,187 @@
+<section class="o-content">
+
+    <main class="o-content__main ">
+
+        <div class="" [ngClass]="{'is-loading': (isLoading || isFetchingData)}">
+            <section class="o-scrollable">
+
+            <div class="o-grid o-grid--no-padding o-grid--no-margin">
+
+                   <div class="o-grid__col-1-3 d-vehicle-info-block veh-detail-stats-section">
+                        <!--<figure class="d-vehicle-info-block__schematic" *ngIf="livery">-->
+                        <figure class="d-vehicle-info-block__schematic">
+                            <!--<img src="{{img}}schematics/DPDNew_Merc_Sprinter_DriverSide.jpg" alt="vehicle schematic image">-->
+                            <img src="{{img}}schematics/DPD_Peugeot_Partner_DriverSide.png" alt="vehicle schematic image">
+                            <img class="show-on-mobile rear" src="{{img}}schematics/DPD_Peugeot_Partner_FrontSide.png" alt="vehicle schematic image">
+                           
+                        </figure>
+                        <div class="content-padding">
+                            <div class="multi-column d-vehicle-info-block-stats">
+                                <div class="d-vehicle-info-block-stats__item"><span class="d-vehicle-info-block-stats__value">{{vehicleDetail.type ? vehicleDetail.type : '-'}}</span><span class="d-vehicle-info-block-stats__label">Type</span> </div>
+                                <div class="d-vehicle-info-block-stats__item"><span class="d-vehicle-info-block-stats__value">{{vehicleDetail.fleet_id ? vehicleDetail.fleet_id : '-'}}</span><span class="d-vehicle-info-block-stats__label">Fleet ID</span> </div>
+                                <div class="d-vehicle-info-block-stats__item"><span class="d-vehicle-info-block-stats__value">{{vehicleDetail.vin ? vehicleDetail.vin : '-'}}</span><span class="d-vehicle-info-block-stats__label">VIN</span></div>
+                                <div class="d-vehicle-info-block-stats__item"><span class="d-vehicle-info-block-stats__value">{{vehicleDetail.mot_date ? vehicleDetail.mot_date : '-'}}</span><span class="d-vehicle-info-block-stats__label">MOT Expiry</span></div>
+                                <div class="d-vehicle-info-block-stats__item"><span class="d-vehicle-info-block-stats__value">{{vehicleDetail.ved ? vehicleDetail.ved : '-'}}</span><span class="d-vehicle-info-block-stats__label">VED</span></div>
+                                <div class="d-vehicle-info-block-stats__item"><span class="d-vehicle-info-block-stats__value">{{vehicleDetail.odf ? 'Yes' : 'No'}}</span><span class="d-vehicle-info-block-stats__label">ODF</span></div>
+                                <div class="d-vehicle-info-block-stats__item"><span class="d-vehicle-info-block-stats__value">{{vehicleDetail.latest_odometer_reading ? vehicleDetail.latest_odometer_reading : '-'}} </span>
+                                <span class="d-vehicle-info-block-stats__label">ODO <button mat-icon-button [matMenuTriggerFor]="odoMenu" *ngIf="latest_odometer_reading">
+                                    <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #odoMenu="matMenu">
+                                    <button mat-menu-item>
+                                        <mat-icon>access_time</mat-icon>
+                                        <small>Last date updated:</small>
+                                        <span>{{latest_odometer_date}}</span>
+                                    </button>
+                                    <button mat-menu-item disabled>
+                                        <mat-icon>voicemail</mat-icon>
+                                        <small>ODO Source:</small>
+                                        <div [ngSwitch]="latest_odometer_source">
+                                            <span *ngSwitchCase="GPS">From tracker GPS</span>
+                                            <span *ngSwitchCase="OBD">From tracker on OBD</span>
+                                            <span *ngSwitchCase="CAN">From tracker on J1939 CAN Bus</span>
+                                            <span *ngSwitchDefault>Driver manually entered</span>
+                                        </div>
+                                    </button>
+                                </mat-menu></span> 
+                                </div>
+                                 <div class="d-vehicle-info-block-stats__item"><span class="d-vehicle-info-block-stats__value">{{vehicleDetail.load_capacity ? vehicleDetail.load_capacity : '-'}} </span><span class="d-vehicle-info-block-stats__label">Load capacity (ton)</span></div>
+                                 <div class="d-vehicle-info-block-stats__item"><span class="d-vehicle-info-block-stats__value" *ngIf="vehicleDetail.fuel_type == 'PET'">{{vehicleDetail.fuel_type ? 'Petrol' : '-'}}</span><span class="d-vehicle-info-block-stats__label">Fuel type</span></div>
+                                 <div class="d-vehicle-info-block-stats__item"><span class="d-vehicle-info-block-stats__value" *ngIf="vehicleDetail.fuel_type == 'DEI'">{{vehicleDetail.fuel_type ? 'Diesel' : '-'}}</span><span class="d-vehicle-info-block-stats__label">Fuel type</span></div>
+                                 <div class="d-vehicle-info-block-stats__item"><span class="d-vehicle-info-block-stats__value">{{vehicleDetail.front_tyre_pressure ? vehicleDetail.front_tyre_pressure : '-'}} psi</span><span class="d-vehicle-info-block-stats__label">Tyre pressure (front)</span></div>
+                                 <div class="d-vehicle-info-block-stats__item"><span class="d-vehicle-info-block-stats__value">{{vehicleDetail.rear_tyre_pressure ? vehicleDetail.rear_tyre_pressure : '-'}} psi</span><span class="d-vehicle-info-block-stats__label">Tyre pressure (rear)</span></div>
+                                 <div class="d-vehicle-info-block-stats__item"><span class="d-vehicle-info-block-stats__value">{{vehicleDetail.front_tyre_size ? vehicleDetail.front_tyre_size : '-'}}</span><span class="d-vehicle-info-block-stats__label">Tyre size (front)</span></div>
+                                 <div class="d-vehicle-info-block-stats__item"><span class="d-vehicle-info-block-stats__value">{{vehicleDetail.rear_tyre_size ? vehicleDetail.rear_tyre_size : '-'}}</span><span class="d-vehicle-info-block-stats__label">Tyre size (rear)</span></div>
+                                 
+                            </div>
+                           
+                        </div>
+
+                    </div>
+
+                <div class="o-grid__col-2-3 veh-detail-help-section">
+                    <mat-toolbar class="c-title-toolbar">
+                        <h1 class="c-title-toolbar__heading c-title-toolbar__heading--no-context-menu">
+                            {{vehicleDetail.registration}}
+                        </h1>  
+                    </mat-toolbar>
+                    <mat-tab-group>
+                    <mat-tab label="Help & FAQ's">
+
+                         <!--If no vehicle FAQ -->
+                        <div class="c-message--trace-wrapper" *ngIf="!vehicleDetail && !isLoading">
+                            <div class="c-message c-message--no-data">
+                                <mat-icon class="mat-icon--48">sentiment_dissatisfied</mat-icon>
+                                <h3 class="c-message__header">There is no vehicle data for this ID</h3>
+
+                            </div>
+                        </div>
+                        <mat-accordion class="c-accordian c-accordian--body-padding" *ngIf="faqs">
+                            <mat-expansion-panel *ngFor="let faq of faqs; let iteration = index">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        {{faq.title}}
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                              
+                                <div *ngFor="let desc of faq.faq_description; let iteration = index">
+                                    <p>{{desc.description}}</p>
+                                    <ul>
+                                        <li *ngFor="let act of desc.faq_actions; let iteration = index">
+                                            <a *ngIf="act.action_type == 'WEB'" href="{{act.action_value}}">{{act.action_display_name}}</a>
+                                            <a *ngIf="act.action_type == 'TEL'" href="tel:{{act.action_value}}">{{act.action_value}}</a>
+                                            <a *ngIf="act.action_type == 'EMAIL'" href="mailto:{{act.action_value}}">{{act.action_value}}</a>
+                                            
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <!--<pre>faq: {{faqs | json}}</pre>-->
+                        <div *ngIf="!faqs">   
+                            <div class="c-message c-message--no-data">
+                                <mat-icon class="mat-icon--48">sentiment_dissatisfied</mat-icon>
+                                <h3 class="c-message__header">There are no FAQ's for this customer</h3>
+                               
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Depot Contacts">
+                         <div *ngIf="!depotContacts" class="content-padding">   
+                            <div class="c-message c-message--no-data">
+                                <mat-icon class="mat-icon--48">sentiment_dissatisfied</mat-icon>
+                                <h3 class="c-message__header">There are no Depot contacts for this customer</h3>
+                            </div>
+                        </div>
+                        <div class="content-padding" *ngIf="depotContacts">                    
+                        
+                        <div class="" *ngFor="let contact of depotContacts; let iteration = index">
+                            <div class="c-depot-contact" >
+                              <h3 class="c-depot-contact__name">{{contact.name}}</h3>
+                                <address class="c-depot-contact__address">
+                                    {{contact.address1}}<br>
+                                    {{contact.address2}}<br *ngIf="contact.address2">
+                                    {{contact.city}}<br>
+                                    {{contact.county}}<br>
+                                    {{contact.postcode}}
+                                     </address>
+                                     <ul class="unstyled-list c-depot-contact-action-list">
+                                        <li><small class="c-depot-contact-action-list__label">Tel:</small> <a href="tel:{{contact.phone1}}">{{contact.phone1}}</a></li>
+                                        <li *ngIf="contact.phone2"><small class="c-depot-contact-action-list__label">Tel (other):</small> <a href="tel:{{contact.phone2}}">{{contact.phone2}}</a></li>
+                                        <li><small class="c-depot-contact-action-list__label">Email:</small> <a href="mailto:{{contact.email}}">{{contact.email}}</a></li>
+                                        <li><small class="c-depot-contact-action-list__label">Web:</small> <a href="tel:{{contact.web_url}}">{{contact.web_url}}</a></li>
+                                     </ul>
+                            </div>
+                             <div class="c-divider"><hr></div>
+                        </div>
+                       </div>
+                    </mat-tab>
+                    <mat-tab label="Insurance" >
+                        <div *ngIf="!insurance" class="content-padding">   
+                            <div class="c-message c-message--no-data">
+                                <mat-icon class="mat-icon--48">sentiment_dissatisfied</mat-icon>
+                                <h3 class="c-message__header">There are no FAQ's for this customer</h3>
+                               
+                            </div>
+                        </div>
+                        <div class="content-padding" *ngIf="insurance">
+                        <h3>{{insurance.name}}</h3>
+                            <div class="">
+                             <div [innerHTML]="insurance.description"></div>
+                             </div>
+                            <div class="c-divider"><hr></div>
+                            <div class="">
+                                <!--<p>{{insurance.description}}</p>-->  
+                                <address>  
+                                    {{insurance.address}}
+                                </address>
+                                <a href="tel:{{insurance.phone}}">{{insurance.phone}}</a>
+                            </div>
+                            <div class="c-divider"><hr></div>
+                            <div class="padding-top--small">
+                                <ul>
+                                    <li><strong>Policy Number:</strong> {{insurance.policy_number}}</li>
+                                    <li><a href="{{insurance.policy_document_url}}" title="View the policy document">Policy document</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                      
+                    </mat-tab>
+                    </mat-tab-group>
+
+                    </div>
+                 
+                </div>
+
+
+               
+                <mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+            </section>
+        </div>
+
+
+    </main>
+
+</section>

@@ -1,0 +1,116 @@
+
+
+.map-wrapper-trace {
+    height: calc(100vh - #{$header-bar-height} - #{$toolbar-height} - #{$trace-chart-height});
+    width: 100%;
+}
+
+
+.trace__chart_wrapper {
+	height: #{$trace-chart-height};
+	width: 100%;
+}
+
+.trace__chart_zone {
+	height: 100%;
+	width: 100%;
+	background-color: #323232;
+}
+
+.trace__chart_svg_zone {
+	height: 100%;
+	width: 100%;
+	background-color: #323232;
+}
+
+/* SVG Chart styling */
+
+.trace__chart_axis_label {
+	fill: white;
+	font-size: 10px;
+}
+
+.trace__chart_axis_title {
+	fill: white;
+	font-size: 10px;
+}
+
+.trace__chart_draggable {
+	opacity: 0.25;
+	cursor: grab;
+}
+
+.trace__chart_draggable:hover {
+	opacity: 0.7;
+	stroke: "#0f0"; // svg only style????
+	stoke-width: 3;
+}
+
+.trace__chart_resizeable {
+	opacity: 1;
+	cursor: col-resize;
+}
+
+.trace__chart_resizeable:hover {
+	opacity: 1; // Hidden by cursor, so no point in changing this
+}
+
+
+
+
+.map__trace_marker_wrapper {
+	position: relative;
+	top: 10px; // 1/2 icon height, set as %?
+	//font-size: 18px;
+	//text-align: center;
+}
+
+.map__trace_marker_icon {
+	position: relative;
+	width: 20px;
+	height: 20px;
+}
+
+.map__trace_marker_bottom_of_stack {
+	z-index: 100090; /* two below tooltips*/
+}
+
+.map__trace_marker_top_of_stack {
+	z-index: 100099; /* one below tooltips*/
+}
+
+/* trace marker tooltip and it's marker arrow */
+.map__trace_marker_tooltip {
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -60px;
+    font-size: 11px;
+    z-index: 100100;
+}
+
+.map__trace_marker_tooltip_hidden {
+	visibility: hidden;
+}
+
+.map__trace_marker_tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.map__trace_marker_wrapper:hover .map__trace_marker_tooltip {
+    visibility: visible;
+}
+

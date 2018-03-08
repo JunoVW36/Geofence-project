@@ -1,0 +1,102 @@
+.c-site-header .mat-sidenav-container {
+    overflow: inherit;
+}
+.c-sidenav {
+    width: $sidenav-width;
+    height: 100vh !important;
+    background: rgba($sidenav-bg-color,0.92);
+    text-align: center;
+    color: $color-text--overlay;
+}
+.c-sidenav__header {
+    display: flex;
+}
+.c-sidenav__home-btn{
+    width: 70px;
+    border-left: 1px solid #000;
+    margin-top: 2px;
+    background: rgba($sidenav-bg-color,0.92);
+    .mat-icon {
+        color: #fff;
+    }
+    &:hover {
+        background: lighten(#000000, 15);//rgba(0,0,0,.2);
+        .mat-icon {
+            color: #fff;
+        }
+    }
+}
+.c-sidenav__heading {
+    color: $color-text--overlay;
+    @include font-size(21px);
+    padding: 0 $spacing-unit--base;
+    margin:0;
+    line-height: $header-height;
+    height:$header-height;
+    border-bottom: 1px solid  darken($sidenav-bg-color,5);
+    flex: 1 1 auto;
+}
+.c-sidenav-list {
+    @extend .unstyled-list;
+    display: flex;
+    width: $sidenav-width;
+    flex-wrap: wrap;
+    padding: $spacing-unit--base;
+}
+
+.c-sidenav-list__item {
+    flex: 1 1 48%;
+   
+    margin: 3px 1%;
+    border-radius: 4px;
+    
+    img {
+        max-width: 70px;
+        max-height: 70px;
+    }
+}
+
+.c-sidenav-list__link {
+    color: $color-text--overlay;
+    padding: $spacing-unit--base;
+    display: block;
+    background: lighten(#000000, 9);
+    transition: background 0.3s ease;
+    border-radius: 6px;
+    @include font-size(14px);
+    &:hover {
+        background: lighten(#000000, 15);//rgba(0,0,0,.2);
+        color: #fff;
+    }
+}
+.c-sidenav-list__link--disabled {
+    color: lighten($color-text--overlay,10);
+    padding: $spacing-unit--base;
+    display: block;
+    background: transparent;
+    pointer-events: none;
+    &:hover {
+        background: transparent;
+        cursor:default;
+        
+    }
+    img, figcaption {
+        opacity: 0.4;
+    }
+    figcaption {
+        line-height: 1.1;
+    }
+
+}
+    
+
+
+.c-sidenav__toggle {
+    color: $color-brand;
+}
+
+.hr-under-sidenav {
+    hr {
+        border-color: lighten(#000000, 5);
+    }
+}

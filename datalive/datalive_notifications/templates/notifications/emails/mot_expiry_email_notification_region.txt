@@ -1,0 +1,5 @@
+MOT Expiry notification. Region Name: {{ region_name }}. Date: {{ report_date|date:"d/m/Y" }}
+
+{% for vehicle in vehicles %}
+Vehicle Reg number: {{ vehicle.registration }}. MOT expiry date: {{ vehicle.mot_date|date:"d/m/Y" }}.
+{% endfor %}

@@ -1,0 +1,15 @@
+
+
+
+
+// highcharts credits
+.highcharts-credits {
+  display: none;
+}
+
+// axis lines
+.highcharts-xaxis {
+    .highcharts-axis-line, .highcharts-tick {
+        stroke: $chart-axis-line-color;
+    }
+}

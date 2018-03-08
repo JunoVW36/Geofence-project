@@ -1,0 +1,31 @@
+<section class="o-content wrapper--audit-survey-detail">
+    <main class="o-content__main">
+      <div class="wrapper-asd-content">
+        <div style="margin: 50px">
+          <h1>Create report:</h1>
+
+          <div *ngIf="!templateId">
+            Select template:
+            <select [(ngModel)]="auditSurveyReport.template" (change)="processSelectedTemplate()">
+              <option *ngFor="let template of templates" [value]="template.id">{{template.name}}</option>
+            </select>
+          </div>
+
+          <div>
+            Depot:
+            <select [(ngModel)]="auditSurveyReport.depot">
+              <option *ngFor="let vehicleGroup of vehicleGroups" [value]="vehicleGroup.id">{{vehicleGroup.name}}</option>
+            </select>
+
+            <div>
+              <div *ngFor="let surveyItem of selectedTemplate.template | orderBy:'order'">
+                <item-preview [surveyItem]="surveyItem" [allowBinds]="true"></item-preview>
+              </div>
+            </div>
+
+          </div>
+          <button (click)="saveReport()">Save</button>
+        </div>
+      </div>
+    </main>
+</section>

@@ -1,0 +1,47 @@
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+<section class="o-content wrapper--login">
+<main class="o-content__main">
+  <mat-card class="c-login-panel" [ngClass]="{'transition': pageLoaded === true}">
+    <mat-card-content>
+    <div class="c-login-panel__logo" [ngClass]="{'transition': pageLoaded === true}">
+      <img src="{{img}}datalive-logo.png" class="logo" alt="datalive logo">
+      </div>
+      <form name="form" class="c-login-panel__form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+
+        <p>
+          <mat-input-container class="c-login-panel__input">
+            <!--<input matInput type="email" placeholder="Email" pattern="^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z0-9_\-\.])+$" name="email" [(ngModel)]="model.email" #email="ngModel" required />-->
+            <input matInput type="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email" [(ngModel)]="model.email" #email="ngModel" required />
+            <mat-hint [hidden]="email.valid || email.untouched">
+              <div *ngIf="email.errors && email.errors.required">Email is required</div>
+              <div *ngIf="email.errors && email.errors.pattern">Email is invalid</div>
+            </mat-hint>
+          </mat-input-container>
+        </p>
+
+        <p>
+          <mat-input-container class="c-login-panel__input">
+            <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+            <mat-hint [hidden]="password.valid || password.untouched">
+              <div *ngIf="password.errors && password.errors.required">Password is required</div>
+              <div *ngIf="password.errors && password.errors.pattern">Password is invalid</div>
+            </mat-hint>
+          </mat-input-container>
+        </p>
+
+        <p *ngIf="!loading">{{ error }}</p>
+
+        <p>
+          <button type="submit" class="c-btn c-login-panel__button">Login</button>
+        </p>
+
+      </form>
+
+      <div class="c-login-panel__forgot-pass">
+      <a class="c-login-panel__forgot-pass-link" [routerLink]="['/forgot-password']">Forgotten password</a>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</main>
+</section>

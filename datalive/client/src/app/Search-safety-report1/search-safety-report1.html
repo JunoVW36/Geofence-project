@@ -1,0 +1,102 @@
+<form name="form" *ngIf="showPage" (ngSubmit)="searchForDay ? searchOnDay(formSearch.value) : mainSearch(formSearch.value)" #formSearch="ngForm" class="example-form" novalidate>
+
+    <div class="d-context-panel__row ">
+      <div class="search-field-group">
+       
+
+        <!--<div class="ui-registratio margin-bottom--small" title="{{selectedVehicle.registration}}">
+         
+          <span>{{selectedVehicleGroup | json}}</span>
+         
+        </div>-->
+
+          <div class="search-field-input c-vehicle-group-list-wrapper" [ngClass]="{'is-loading': isLoading }">
+            <mat-input-container class="c-vehicle-group-list__filter">
+              <mat-icon class="icon--16 margin-top--tiny" matPrefix>search</mat-icon><input type="search" #searchVehicle matInput placeholder="Filter vehicles..." />
+            </mat-input-container>
+            <div class="c-vehicle-group-list" [ngClass]="{'is-loading': isLoading}">
+            <ul class="c-vehicle-group-list__list">
+              <li class="c-vehicle-group-list__list-item" *ngFor="let group of userVehicleGroupList | vehicleGroupListFilter: searchVehicle.value; let grpIndex = index" (click)="selectVehicle(group)">
+                <div class="c-vehicle-group-list-folder-row">
+                    <mat-icon class="mat-24 c-vehicle-group-list__list-item-icon">folder_open</mat-icon> 
+                    <span class="mat-line c-vehicle-group-list-vehicle-text c-checkbox c-radio--right">
+                          <input type="radio" id="radVehicleGrp-{{ grpIndex }}-{{ i }}" name="vehicle-{{ grpIndex }}" class="c-vehicle-group-list-vehicle-radio" [checked]="selectedVehicleGroup.id == group.id ? true : false">
+                          <label for="radVehicle-{{ grpIndex }}-{{ i }}">{{group.name}}</label></span>
+                  </div>
+                  <ul class="c-vehicle-group-list__list">
+                    <li class="c-vehicle-group-list__list-item c-vehicle-group-list__list-item--vehicle" *ngFor="let vehicle of group.vehicles; let i = index"
+                         [ngClass]="{'c-vehicle-group-list__list-item--selected': selectedVehicleGroup.id == group.id}">
+                        <span class="mat-line c-vehicle-group-list-vehicle-text c-checkbox">
+                          <input type="radio" id="radVehicle-{{ grpIndex }}-{{ i }}" name="vehicle-{{ grpIndex }}-{{ i }}" class="c-vehicle-group-list-vehicle-radio" [checked]="selectedVehicleGroup.id == group.id ? true : false">
+                          <label for="radVehicle-{{ grpIndex }}-{{ i }}">{{ vehicle.registration }}</label></span>
+                         <span class="c-vehicle-group-list__list-item-icon">
+                           <img src="{{ img }}icons/car-icon.svg" alt="Vehicle type - Car" *ngIf="vehicle.type == 'CAR'" class="" />
+                            <img src="{{ img }}icons/van-icon.svg" alt="Vehicle type - Van" *ngIf="vehicle.type == 'VAN'" class="" />
+                            <img src="{{ img }}icons/str-icon.svg" alt="Vehicle type - Str" *ngIf="vehicle.type == 'STR'" class="" />
+                            <img src="{{ img }}icons/bik-icon.svg" alt="Vehicle type - Bike" *ngIf="vehicle.type == 'BIK'" class="" />
+                         </span>
+                    </li>
+                  </ul>
+              </li>
+            </ul>
+          </div>
+          <!--<mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>-->
+          </div>
+      </div>
+
+    </div>
+
+  <div class="d-context-panel__row d-context-panel__date-field date-day">
+    <div class="time input-prefix box" *ngIf="!searchForDay">
+      <mat-form-field>
+        <input matInput (ngModelChange)="changeField($event, 'week')" [readonly]="true" [matDatepicker]="startAtPicker" [(ngModel)]="timeWeek" placeholder="Period" name="week"
+            [disabled]="customFunctionality('week')">
+        <mat-datepicker-toggle matSuffix [for]="startAtPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startAtPicker [touchUi]="touch" [disabled]="datepickerDisabled"></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="container-date-option">
+      <div *ngIf="!searchForDay" class="date-option">
+        <button type="button" class="date-button" [disabled]="customFunctionality('week')" mat-raised-button (click)="toggleWeek(-1)">-1w</button>
+        <button type="button" class="date-button" [disabled]="customFunctionality('week')" mat-raised-button (click)="toggleWeek(+1)">+1w</button>
+        <mat-input-container>
+          <mat-select name="date-option-week" [(ngModel)]="dropdownTimesheetsSelect" (ngModelChange)="changeDateWeekOption($event)">
+            <mat-option *ngFor="let option of dropdownTimesheets" [value]="option.value">
+              {{ option.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-input-container>
+      </div>
+    </div>
+
+    <div class="time input-prefix box" *ngIf="searchForDay">
+      <mat-form-field>
+        <input matInput [matDatepicker]="startAtPicker" [readonly]="true" [(ngModel)]="day" placeholder="Select a date" name="day"
+            [disabled]="customFunctionality('day')">
+        <mat-datepicker-toggle matSuffix [for]="startAtPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startAtPicker [touchUi]="touch"></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="container-date-option">
+      <div *ngIf="searchForDay" class="date-option">
+        <button type="button" class="date-button" [disabled]="customFunctionality('day')" mat-raised-button (click)="toggleDay(-1)">-1d</button>
+        <button type="button" class="date-button" [disabled]="customFunctionality('day')" mat-raised-button (click)="toggleDay(1)">+1d</button>
+        <mat-input-container class="dropdown-for-day">
+          <mat-select name="date-option-day" [(ngModel)]="dropdownTripsStopsSelect" (ngModelChange)="changeDateDayOption($event)">
+            <mat-option *ngFor="let option of dropdownTripsStops" [value]="option.value">
+              {{ option.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-input-container>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="search-field-send d-context-panel__row">
+    <button type="submit" class="c-btn d-context-panel__search-btn" [disabled]="validSearch(!formSearch.valid, !vehicleCtrl.valid)">Search</button>
+  </div>
+
+</form>

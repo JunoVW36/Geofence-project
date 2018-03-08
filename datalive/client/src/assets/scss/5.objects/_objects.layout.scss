@@ -1,0 +1,135 @@
+
+.o-layout {
+    margin:  0;
+    padding: 0;
+    list-style: none;
+    margin-left: -$spacing-unit--base;
+}
+
+    .o-layout__item {
+        display: inline-block;
+        padding-left: $spacing-unit--base;
+    }
+
+.o-header{
+    height: $header-height;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+.o-content {
+  //  position: absolute;
+    width: 100%;
+    height: calc(100vh - #{$header-height});
+    left: 0;
+    margin-top: $header-height;
+    position: relative;
+}
+
+.o-content__dialog{
+  width: 55%;
+  position: absolute;
+  right: 0;
+  top:0;
+  bottom: 0;
+  transition: $sidemenu-transition;
+}
+.o-content__dialog--hidden {
+    transform: translate3d(100%,0,0);
+}
+.right-panel_close {
+  cursor: pointer;
+  width: 50px;
+  text-align: center;
+  height: 50px;
+  font-size: 30px;
+  background: white;
+  color: #9590BB;
+  border: 1px solid #9590BB;
+  line-height: 50px;
+  position: absolute;
+  left: -65px;
+  top: 15px;
+}
+.o-content__dialog--hidden .right-panel_close{
+  display: none;
+}
+
+.o-content__sidebar{
+    width: $lh-sidebar-width;
+    position: absolute;
+    left: 0;
+    top:0;
+    bottom: 0;
+    transition: $sidemenu-transition;
+}
+.o-content__main {
+    overflow-y: hidden;//auto;
+    overflow-x: hidden;
+    position: absolute;
+    left: 0;
+    top:0;
+    bottom: 0;
+    right:0;
+    transition: $sidemenu-transition;
+}
+.o-content__sidebar + .o-content__main {
+    left: $lh-sidebar-width;
+}
+.o-content__sidebar.o-content__sidebar--hidden + .o-content__main {
+    left: 0;
+}
+.o-content__sidebar--hidden {
+    transform: translate3d(-100%,0,0);
+}
+.o-scrollable {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left:0;
+    right:0;
+    overflow-y: auto;
+    z-index: 0;
+}
+.o-scrollable--with-toolbar {
+    position: absolute;
+    top: $toolbar-height;
+    bottom: 0;
+    left:0;
+    right:0;
+    overflow-y: auto;
+    z-index: 0;
+}
+.o-scrollable--without-toolbar{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left:0;
+  right:0;
+  overflow-y: auto;
+  z-index: 0;
+}
+.o-scrollable--with-shadow{
+    box-shadow: $o-content-scollable-shadow;
+    margin: ($spacing-unit--large + 20px) $spacing-unit--large $spacing-unit--large $spacing-unit--large;
+}
+.o-content--scrollable {
+    overflow-y: auto;
+}
+.o-content--has-footer-totals {
+    bottom: 20px;
+}
+
+.vehicle-image__block {
+  position: relative;
+  text-align: center;
+  background-color: #E9E9E9;
+  img {
+    max-height: 300px;
+  }
+}
+.vehicle-image__damage-image {
+
+}

@@ -1,0 +1,38 @@
+.c-preference.o-scrollable--with-toolbar {
+    margin: 0;
+    box-shadow: none;
+}
+
+.c-preference-halo {
+   // @extend .bg-datalive-gradient;
+    background-color: $color-grey--lighter;
+    padding: 50px;
+   // color: $color-text--overlay;
+    text-align: center;
+}
+.c-preference-halo__profile-pic{
+    border: 1px solid $color-brand--shadow;
+    background-color: $color-brand;//$color-grey--light;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    margin: $spacing-unit--small auto;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    .mat-icon {
+        @include font-size(96px);
+        width: 96px;
+        height:96px;
+        color: $color-brand--shadow;
+    }
+}
+
+.c-preference-halo__name {
+    margin: 0 $spacing-unit--base 0 0;
+}
+.c-preference-halo-name-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

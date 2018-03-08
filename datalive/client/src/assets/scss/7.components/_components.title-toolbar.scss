@@ -1,0 +1,100 @@
+
+
+.mat-toolbar{
+
+
+    &.c-title-toolbar {
+        height: $toolbar-height;
+        z-index: 1;
+        position: relative;
+       // background-color: $toolbar-bg-color;
+        background-color: $color-grey--lightest;
+        border-bottom: 1px solid $color-ui;
+        padding: 0 $spacing-unit--base 0 0;
+    }
+    .trips-stops-switch{
+      margin-left: auto;
+      margin-right: $spacing-unit--tiny;
+      padding-right: $spacing-unit--tiny;
+      border-right:  1px solid $color-ui; 
+    }
+    .c-title-toolbar__heading{
+        flex: 1 1 auto;
+        padding: 0 10px 0 57px;
+        display: flex;
+        align-items: center;
+        text-transform: capitalize;
+
+        .mat-icon{
+          line-height: 1.2;
+        }
+        .timesheet-navigation{
+          text-decoration: none;
+        }
+        .c-title-toolbar__heading__meta{
+          font-size: 16px;
+          line-height: 1.2;
+          @extend .font-family--light;
+          .mat-icon{
+            position: relative;
+            top: 2px;
+          }
+        }
+        
+        .smaller-font{
+          font-size: 18px;
+        }
+    }
+    .c-title-toolbar__heading--no-context-menu{
+        padding-left: $spacing-unit--base;
+    }
+    .c-title-toolbar__action-buttons{
+        margin-left: auto;
+        a {
+            font-size: 13px;
+            padding: 5px 10px;
+        }
+    }
+
+}
+ 
+
+.c-title-toolbar__toggle-btn {
+    position: absolute;
+    top: 0;
+    right: -40px;
+    z-index: 50;
+    height: $toolbar-height - 1;
+    background-color: rgba($toolbar-bg-color, 0.95);
+   // align-self: stretch;
+    border:none;
+    border-right: 1px solid $color-grey--light;
+    border-bottom: 1px solid $color-grey--light;
+
+    &:hover{
+        background-color: darken($toolbar-bg-color, 4);
+    }
+}
+.c-title-toolbar__toggle-btn-icon {
+    color:$color-grey;
+    vertical-align: text-bottom;
+    transition: $sidemenu-transition;
+    transition-delay: 0.3s;
+}
+
+// when sidebar hidden
+.sidemenu-is-hidden {
+     .c-title-toolbar__toggle-btn-icon {
+        transform: rotate(180deg);
+    }
+}
+
+
+.c-title-toolbar__print {
+    z-index: 10;
+    position: relative;
+    padding: 5px 8px;
+    .mat-icon {
+        font-size: 16px;
+    }
+}

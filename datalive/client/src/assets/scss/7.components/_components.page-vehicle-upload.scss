@@ -1,0 +1,21 @@
+
+.c-upload {
+    position: relative;
+}
+.c-upload__input {
+    position: absolute;
+    left: -99993em;
+}
+
+.row--update {
+  background-color: lighten($color-warning, 10);
+ // background-color: #FFF9A5;
+}
+.row--create {
+  background-color: $color-success;
+  //background-color: #E2FFD8;
+}
+.row--error {
+  background-color: $color-error;
+  //background-color: #FFD8D8;
+}

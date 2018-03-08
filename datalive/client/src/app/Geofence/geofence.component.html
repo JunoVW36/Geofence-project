@@ -1,0 +1,101 @@
+<style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 500px;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+<section class="wrapper-administration o-content">
+  <aside class="admin-navigation o-content__sidebar c-sidebar" [ngClass]="{'o-content__sidebar--hidden': !sidemenuOpen}">
+    <div class="d-context-panel__head flex-direction--column">
+      <img class="d-context-panel__head-img" src="{{ img }}trips-stops-gray-icon.png" alt="Trips and stops icon">
+        <h4 class="d-context-panel__title">Geofence</h4>
+    </div>
+    <button (click)="sidemenuOpen = !sidemenuOpen" class="c-title-toolbar__toggle-btn" [ngClass]="{'sidemenu-is-hidden': !sidemenuOpen}">
+      <mat-icon class="icon--16 c-title-toolbar__toggle-btn-icon">chevron_left</mat-icon>
+    </button>
+    <!-- Geofence item list here -->
+    <div class="right-side__item" *ngFor="let geofence of geofenceList;let i = index;">
+      <div (click)="setCurrentGeofence(i)" >{{geofence['id']}}</div>
+    </div>
+  </aside>
+
+  <main class="wrapper-admin-content o-content__main flex-box">
+      <div class="left-sidebar">
+        <div id="map"></div>
+      </div>
+      <mat-sidenav-container class="right-sidebar">
+        <mat-sidenav #sidenav mode="side">Sidenav</mat-sidenav>
+        <mat-sidenav-content>
+         <div class="">
+           <div class="right-sidebar__item">
+            <h4>Add / Edit new Geofence</h4>
+           </div>
+
+           <div class="right-sidebar__item">
+              <div class="input-group">
+                <div class="input-group__addon">
+                  <i class="fa fa-search"></i>
+                </div>
+                <input type="text" placeholder="Search for city, postcode" class="right-sidebar__input" [(ngModel)]="searchKey" (enter)="searchResult()" />
+              </div>
+           </div>
+
+           <div class="right-sidebar__item">
+             <span>Geofence Name</span>
+             <input type="text" class="form-control" [(ngModel)]="curGeofenceName" />
+           </div>
+           <form class="right-sidebar__item">
+             <fieldset>
+              <legend>Select Geofence Group</legend>
+                <div *ngFor="let group of geofenceGroups;" class="flex-box">
+                  <span>
+                    <i class="fa fa-folder"></i>
+                  </span>
+                  <span (click)="getCurrentGeofenceGroup(group.id)">{{group.name}}</span>
+                  <div>
+                    <label for="cb" class="group-check"></label>
+                    <input type="checkbox" />
+                  </div>
+               </div>
+             </fieldset>
+          </form>
+           <div class="right-sidebar__item">
+              <div class="input-group">
+                <div class="input-group__addon no-border m-r-10">
+                  <i class="fa fa-plus"></i>
+                </div>
+                <a  href="javascript:void(0)" mat-raised-button class="" (click)="createGeofenceGroup()">Add a new Geofence Group</a>
+              </div>
+           </div>
+           <div class="right-sidebar__item">
+             <select id="categoryBoxId" [(ngModel)]="curCategoryName" (change)="updateCategoryName($event)">
+               <option *ngFor="let category of categories;" [ngValue]="category.name">
+                  {{category.name}}
+               </option>
+             </select>
+           </div>
+           <div class="right-sidebar__item">
+            <div class="input-group">
+              <div class="input-group__addon no-border m-r-10">
+                <i class="fa fa-plus"></i>
+              </div>
+              <a  [routerLink]="" class="" (click)="createCategory()">manage categories</a>
+            </div>
+          </div>
+          <div class="right-sidebar__item">
+            <button type="button" (click)="createGeofence()">Finish Geofence</button>
+          </div>
+         </div>
+        </mat-sidenav-content>
+     </mat-sidenav-container>
+       
+  </main>
+</section>
+      

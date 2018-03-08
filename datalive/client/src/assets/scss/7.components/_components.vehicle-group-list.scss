@@ -1,0 +1,298 @@
+
+.c-vehicle-group-list-wrapper {
+   // border-top: 1px solid $color-grey--light;
+    //border-bottom: 1px solid $color-grey--light;
+    //margin: 0 $spacing-unit--base $spacing-unit--base;
+    @extend .box;
+}
+
+.c-vehicle-group-list {
+    height: 200px;
+    overflow-y: auto;
+   // border: 1px solid $color-grey--light;
+   &.c-vehicle-group-list--depots{
+     height: calc(100vh - 147px);
+   }
+}
+
+.c-vehicle-group-list--depots{
+  input[type="radio"]{
+    display: none;
+  }
+  .c-vehicle-group-list-folder-row{
+    overflow: hidden;
+    background: $color-grey--lightest;
+    z-index: 3;
+    position: relative;
+    span{
+      padding-left: 6px;
+    }
+  }
+  .c-vehicle-group-list__list{
+    .c-vehicle-group-list__list-item{
+      cursor: pointer;
+      .c-vehicle-group-list-folder-row{
+        border-top: none;
+      }
+
+    }
+  }
+  .c-vehicle-group-list-vehicle-text{
+    padding-left: 30px;
+    position: relative;
+    &:before{
+      content: ' ';
+      position: absolute;
+      top: 12px;
+      left: 8px;
+      width: 14px;
+      height: 1px;
+      background: $color-grey--medium;
+    }
+
+  }
+  .c-vehicle-group-list__list-item--vehicle{
+    position: relative;
+    &:after{
+      content: ' ';
+      position: absolute;
+      top: -15px;
+      bottom: 0;
+      left: 17px;
+      height: 30px;
+      width: 1px;
+      background: $color-grey--medium;
+    }
+  }
+}
+
+.c-vehicle-group-list-long {
+    height: 500px;
+    overflow-y: auto;
+   // border: 1px solid $color-grey--light;
+
+}
+
+.c-vehicle-group-list__list {
+    margin: 0;//2px $spacing-unit--tiny 0 $spacing-unit--tiny;
+    padding: 0;
+
+}
+.c-vehicle-group-list__list-item {
+    padding: 0;
+    border-bottom: 1px solid $color-grey--lightest;
+}
+.c-vehicle-group-list__list-item--selected {
+    //color: $color-brand;
+    background-color: $color-grey--lightest;
+}
+.c-vehicle-group-list-folder-row {
+    padding: 4px $spacing-unit--small;
+    line-height: 20px;
+    display: inline-flex;
+    align-items: center;
+    width:100%;
+    border-top: 1px solid $color-grey--lighter;
+    @extend .truncate-text;
+    color: $color-grey--medium;
+    .c-vehicle-group-list__list-item-icon.mat-icon {
+       // display: inline-block;
+        font-size: 22px;
+        height:22px;
+        width: 20px;
+        margin-right: 4px;
+    }
+    .c-vehicle-group-list-vehicle-text {
+        @include font-size(15px);
+    }
+    // checkbox style in a header row
+    .c-checkbox, .c-radio {
+        margin: 0;
+         label {
+            cursor: pointer;
+            display: inherit;
+            padding: $spacing-unit--tiny ($chk-width + $spacing-unit--small) $spacing-unit--tiny 0;
+
+            &:before {
+                top: 8px;
+                left: auto;
+                right:2px;
+
+            }
+            &:after {
+                top: 12px;
+                left: auto;
+                right: 4px;
+
+            }
+        }
+    }
+    .c-radio--right {
+        &:after {
+            right: 5px;
+            
+        }
+    }
+}
+.c-vehicle-group-list__list-item-icon {
+   // font-size: 16px;
+   // width: 16px;
+   // height: 16px;
+    flex-shrink: 0;
+}
+
+
+.c-vehicle-group-list__list-item--vehicle {
+    display: flex;
+    align-items: center;
+    @include font-size(14px);
+
+    border-top:1px solid lighten($color-grey--lighter, 6);
+    padding: 2px $spacing-unit--small 2px $spacing-unit--small;
+   // color: $color-link;
+
+    &:hover {
+        color: $color-link;
+        cursor: pointer;
+        background-color: $color-grey--lightest;
+    }
+}
+.c-vehicle-group-list-vehicle-text {
+    flex: 1 1 auto;
+    margin:0;
+    @extend .truncate-text;
+    .c-checkbox {
+        margin:0;
+    }
+    label {
+        @extend .truncate-text;
+        display: block;
+    }
+}
+
+.c-vehicle-group-list-vehicle-radio {
+    margin-right: 7px;
+    position: relative;
+    top: 1px;
+    width: 16px;
+}
+
+.c-vehicle-group-list__filter {
+
+    .mat-input-element {
+       // color: $color-grey--light;
+        @include font-size(14px);
+    }
+    .mat-input-wrapper {
+        padding-bottom: 0;
+    }
+    .mat-icon{
+        font-size: 18px;
+        width: 18px;
+        height: 20px !important;
+        color: $color-grey--light;
+    }
+    .mat-input-infix {
+        overflow: hidden;
+        border-top-width: 0;
+    }
+    .mat-input-infix {
+        @include font-size(14px);
+    }
+    .mat-input-underline {
+        bottom:0;
+    }
+    .mat-focused {
+        .mat-input-placeholder {
+            transform: translateY(-4px);
+            top:0;
+        }
+    }
+}
+
+.c-vehicle-group-list__selected-vehicle {
+    display: flex;
+    align-items: center;
+}
+.c-vehicle-group-list__selected-vehicle-icon {
+    margin-right: $spacing-unit--tiny;
+}
+
+.c-vehicle-group-list__selected-vehicle-text {
+    @extend .truncate-text;
+}
+
+
+
+
+
+$reg-gb-width: 30px;
+$reg-height:  48px;
+
+.ui-registration {
+	background: linear-gradient(to bottom, #f8d038 0%,#f5ca2e 100%);
+	padding: 0 0 0 $reg-gb-width;
+	font-weight: bold;
+	border-radius: 5px;
+	border: 1px solid #000;
+    border-color: #EED85B #EED85B #B8AD70;
+    border-radius: 4px 4px 4px 4px;
+    border-width: 1px;
+	box-shadow: 1px 1px 1px #ddd;
+	position: relative;
+    height: $reg-height;
+    display: flex;
+    align-items: center;
+}
+.ui-registration__reg{
+    flex: 1 1 auto;
+    padding: $spacing-unit--tiny $spacing-unit--small;
+    text-align: center;
+    @include font-size(21px);
+    color:$color-grey-dark;
+    text-shadow: 0 1px 0 #ffe940;
+    @extend .truncate-text;
+    &:before {
+        content: 'GB';
+        display: block;
+        width: $reg-gb-width;
+        height: 100%;
+        background: #063298;
+        position: absolute;
+        top: 0;
+        left:0;
+        border-radius: 4px 0 0 4px;
+        line-height: $reg-height + ($reg-height / 2) ;
+        color: #f8d038;
+        font-size: 0.5em;
+        text-shadow: none;
+    }
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 7px;
+        left: 6px;
+        width: 18px;
+        height: 18px;
+        border-radius: 30px;
+        border: 1px dashed #f8d038;
+    }
+}
+
+.ui-registration__vehicle-icon {
+    width: 42px;
+    padding: 3px;
+    border-left: 1px solid darken(#f8d038, 16);
+    text-align: center;
+    flex-shrink: 0;
+    //align-self: stretch;
+
+    img {
+        width: 100%;
+    }
+}
+
+.region-depot__name.selected {
+  color: #B95992;
+}

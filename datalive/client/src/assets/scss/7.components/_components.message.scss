@@ -1,0 +1,19 @@
+.c-message {
+    color: $color-grey--medium;
+    text-align: center;
+}
+
+.c-message--no-data {
+    width:330px;
+    margin: $spacing-unit--small auto;
+
+    padding: 60px 0;
+}
+.c-message__header {
+    @include font-size(18px);
+    margin: 0 0 $spacing-unit--small 0;
+}
+
+.c-message__text {
+    @include font-size(16px);
+}

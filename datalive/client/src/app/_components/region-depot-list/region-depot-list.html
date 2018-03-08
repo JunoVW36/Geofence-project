@@ -1,0 +1,41 @@
+<form name="form" (ngSubmit)="searchOnDay(formSearch.value)" #formSearch="ngForm" class="example-form" novalidate>
+
+  <div class="">
+    <div class="search-field-group">
+
+      <!-- <h3 class="search-field-group--heading">Regions & Depots</h3> -->
+      <div class="search-field-input c-vehicle-group-list-wrapper-no-bg" [ngClass]="{'is-loading': isLoading }">
+        <mat-input-container class="c-vehicle-group-list__filter hidden">
+          <mat-icon class="icon--16 margin-top--tiny" matPrefix>search</mat-icon>
+          <input type="search" #searchVehicle matInput placeholder="Filter Regions/Depots..."/>
+        </mat-input-container>
+        <div class="c-vehicle-group-list c-vehicle-group-list--depots" [ngClass]="{'is-loading': isLoading}">
+          <ul class="c-vehicle-group-list__list">
+            <li class="c-vehicle-group-list__list-item"
+                *ngFor="let region of groupedDepotList">
+              <div class="c-vehicle-group-list-folder-row">
+                <mat-icon class="mat-24 c-vehicle-group-list__list-item-icon">folder_open</mat-icon>
+                <span class="region-depot__name"
+                      [ngClass]="{'selected': isRegionSelected(region)}"
+                      (click)="selectRegion(region)">{{region.name}}</span>
+              </div>
+              <ul class="c-vehicle-group-list__list">
+                <!--(click)="selectItemInList(vehicle)" -->
+                <!--[ngClass]="{'c-vehicle-group-list__list-item--selected': selectedVehicleId == vehicle.id}"-->
+                <!--| vehicleGroupListFilter: searchVehicle.value-->
+                <li class="c-vehicle-group-list__list-item c-vehicle-group-list__list-item--vehicle"
+                    *ngFor="let vehicle_group of region.vehicle_groups">
+                        <span class="mat-line c-vehicle-group-list-vehicle-text region-depot__name"
+                              [ngClass]="{'selected': isDepotSelected(vehicle_group)}"
+                              (click)="selectVehicleGroup(vehicle_group)">{{vehicle_group.name}}</span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+      </div>
+    </div>
+  </div>
+
+</form>

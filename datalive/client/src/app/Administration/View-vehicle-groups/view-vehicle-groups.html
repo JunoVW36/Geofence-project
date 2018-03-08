@@ -1,0 +1,228 @@
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+
+
+  <div class="sidenav-user c-slide-panel c-slide-panel--in-toolbar">
+    <mat-sidenav-container class="c-slide-panel__container">
+      <mat-sidenav align="end" #sidenavVG mode="over" class="mat-sidenav c-slide-panel__sidenav">
+        <div class="c-slide-panel__head">
+          <h4 class="c-slide-panel__title">{{ selectedVehiclesGroups.name }} Details</h4>
+          <button mat-icon-button (click)="sidenavVG.close()">
+            <mat-icon class="mat-24" >close</mat-icon>
+          </button>
+        </div>
+
+        <div class="user-details-activity c-slide-panel__body">
+              <form name="form" (ngSubmit)="sendFormVehicleGroups(formUpdateAddVehicleGroups.value, selectedVehiclesGroups.id)" #formUpdateAddVehicleGroups="ngForm" novalidate>
+
+                <p class="before-select">
+                  <mat-input-container class="example-full-width">
+                    <input matInput placeholder="Vehicle group name" name="name" [(ngModel)]="selectedVehiclesGroups.name" #name="ngModel" required>
+                    <mat-hint [hidden]="name.valid || name.untouched">
+                      <div *ngIf="name.errors && name.errors.required" class="error_field">Vehicle group name is required</div>
+                    </mat-hint>
+                  </mat-input-container>
+                </p>
+
+                <!--<p class="users-multiple">
+                    <mat-input-container class="example-full-width">
+                    <mat-select (change)="changeUser(userName)" [ngClass]="{'touched': touchedUser}" multiple name="users" [(ngModel)]="userName" placeholder="Assign users to this Vehicle Group" required #users="ngModel">
+                      <div class="demo-select-header">
+                        <input matInput
+                              [(ngModel)]="search_user"
+                              name="search_user"
+                              type="search"
+                              placeholder="Filter users..."
+                              class="demo-header-searchbox mat-text">
+                      </div>
+                      <mat-option *ngFor="let user of allUsers | searchFilter:search_user" [value]="user">
+                        {{user}}
+                      </mat-option>
+                    </mat-select>
+                    </mat-input-container>
+                </p>-->
+                <!--{{users | json}}-->
+                <p class="users-multiple">
+                    <mat-input-container class="example-full-width">
+                    <mat-select [ngClass]="{'touched': touchedUser}" multiple name="users" [(ngModel)]="selectedVehiclesGroups.users" placeholder="Assign users to this Vehicle Group" required #users="ngModel" [compareWith]="compareUser">
+                     <mat-select-trigger *ngIf="selectedVehiclesGroups.users">
+                      {{selectedVehiclesGroups.users[0] != undefined ? (selectedVehiclesGroups.users[0].first_name +' ' + selectedVehiclesGroups.users[0].last_name) : ''}}
+                      <span *ngIf="selectedVehiclesGroups.users.length > 1" class="example-additional-selection">
+                        (+{{selectedVehiclesGroups.users.length - 1}} others)
+                      </span>
+                     </mat-select-trigger>
+                      <mat-option *ngFor="let user of allUsers" [value]="user">
+                        {{user.first_name}} {{user.last_name}}
+                      </mat-option>
+                    </mat-select>
+                     <small *ngIf="selectedVehiclesGroups.users.length">{{selectedVehiclesGroups.users.length}} users selected</small>
+                    </mat-input-container>
+                </p>
+
+                <p class="between-select">
+                  <mat-input-container class="example-full-width">
+                    <mat-select (change)="changeCust(selectedVehiclesGroups.customer.name)" [ngClass]="{'touched': touchedCust}" name="customer" [(ngModel)]="selectedVehiclesGroups.customer.name" #customer="ngModel" placeholder="Customer" required>
+                      <mat-option *ngFor="let cust of customers" [value]="cust.name">
+                        {{cust.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-input-container>
+                </p>
+                <!--<p class="tags" [ngClass]="{'tags-touched': touchedCust}">-->
+                  <!--<tag-input (onAdd)="changeCust(selectedVehiclesGroups.customers)"-->
+                             <!--(onRemove)="changeCust(selectedVehiclesGroups.customers)"-->
+                             <!--placeholder="Add new customer"-->
+                             <!--secondaryPlaceholder="Add new customer*"-->
+                             <!--name="customers"-->
+                             <!--[(ngModel)]="selectedVehiclesGroups.customers"-->
+                             <!--#customers="ngModel"-->
+                             <!--[onlyFromAutocomplete]="true"-->
+                             <!--[identifyBy]="'id'"-->
+                             <!--[displayBy]="'name'"-->
+                             <!--required>-->
+                    <!--<tag-input-dropdown-->
+                      <!--placeholder="Add new customer"-->
+                      <!--secondaryPlaceholder="Add new customer"-->
+                      <!--[showDropdownIfEmpty]="true"-->
+                      <!--[autocompleteObservable]="requestAutocompleteItemsFake"-->
+                      <!--[identifyBy]="'id'"-->
+                      <!--[displayBy]="'name'">-->
+                    <!--</tag-input-dropdown>-->
+                  <!--</tag-input>-->
+                <!--</p>-->
+                <p class="before-select">
+                  <mat-input-container class="example-full-width">
+                    <textarea matInput placeholder="Description" name="description" [(ngModel)]="selectedVehiclesGroups.description" #description="ngModel" required></textarea>
+                    <mat-hint [hidden]="description.valid || description.untouched">
+                      <div *ngIf="description.errors && description.errors.required" class="error_field">Description is required</div>
+                    </mat-hint>
+                  </mat-input-container>
+                </p>
+                
+                <!--<mat-input-container class="example-full-width">
+                    <mat-select (change)="changeUser(userName)" [ngClass]="{'touched': touchedUser}" multiple name="vehicles" [(ngModel)]="selectedVehiclesGroups.vehicles" placeholder="Add vehicles" required #vehicles="ngModel">
+                     
+                      <mat-option *ngFor="let vehicle of vehicles" [value]="vehicle">
+                        {{vehicle.registration}}
+                      </mat-option>
+                    </mat-select>
+                </mat-input-container>-->
+               <p class="users-multiple">
+                    <mat-input-container class="example-full-width">
+                    <mat-select [ngClass]="{'touched': touchedUser}" multiple name="vehicles" [(ngModel)]="selectedVehiclesGroups.vehicles" placeholder="Add vehicles to this Vehicle Group" required #vehicles="ngModel" [compareWith]="compareVehicle">
+                       <mat-select-trigger *ngIf="selectedVehiclesGroups.vehicles">
+                      {{selectedVehiclesGroups.vehicles[0] != undefined ? selectedVehiclesGroups.vehicles[0].registration : ''}}
+                      <span *ngIf="selectedVehiclesGroups.vehicles.length > 1" class="example-additional-selection">
+                        (+{{selectedVehiclesGroups.vehicles.length - 1}} others)
+                      </span>
+                     </mat-select-trigger>
+                      <mat-option *ngFor="let vehicle of allVehicles" [value]="vehicle">
+                        {{vehicle.registration}}
+                      </mat-option>
+                    </mat-select>
+                    <small *ngIf="selectedVehiclesGroups.vehicles.length">{{selectedVehiclesGroups.vehicles.length}} vehicles selected</small>
+                    </mat-input-container>
+                </p>
+                <!--<div class="tags" [ngClass]="{'tags-touched': touchedVehicle}">
+                 <div class="example-full-width mat-input-container">
+                   <div class="mat-input-wrapper mat-form-field-wrapper">
+                    <tag-input (onAdd)="changeVehicle(selectedVehiclesGroups.vehicles)"
+                              (onRemove)="changeVehicle(selectedVehiclesGroups.vehicles)"
+                              placeholder="Add new vehicle"
+                              secondaryPlaceholder="Add new vehicle*"
+                              name="vehicles"
+                              [(ngModel)]="selectedVehiclesGroups.vehicles"
+                              #vehicles="ngModel"
+                              [onlyFromAutocomplete]="true"
+                              [identifyBy]="'id'"
+                              [displayBy]="'registration'"
+                              required>
+                      <tag-input-dropdown
+                        placeholder="Add new vehicle"
+                        secondaryPlaceholder="Add new vehicle"
+                        [showDropdownIfEmpty]="true"
+                        [autocompleteObservable]="requestAutocompleteItemsFake"
+                        [identifyBy]="'id'"
+                        [displayBy]="'registration'">
+                      </tag-input-dropdown>
+                    </tag-input>
+                   </div>
+                 </div>
+                </div>-->
+                <!--<pre>{{ selectedVehiclesGroups.vehicles | json }}</pre>-->
+                <div class="details-update-user c-slide-panel__footer">
+                  <button type="submit" *ngIf="updateBtn" class="c-btn c-btn-submit" [disabled]="disableSend">Update vehicle group</button>
+                  <button type="submit" *ngIf="!updateBtn" class="c-btn c-btn-submit" [disabled]="disableSend">Add vehicle group</button>
+                </div>
+            </form>
+
+        </div>
+      </mat-sidenav>
+
+      <mat-toolbar class="title-users c-title-toolbar">
+        <h1 class="c-title-toolbar__heading">Vehicle Groups</h1>
+        <div class="func-button-users c-title-toolbar__action-buttons">
+          <button mat-raised-button *ngIf="!hiddenBtn" (click)="sidenavVG.open(); addNewVehiclesGroups(formUpdateAddVehicleGroups)">Add new</button>
+          <button mat-raised-button *ngIf="!hiddenBtn" (click)="removeVehiclesGroups()">Delete</button>
+        </div>
+      </mat-toolbar>
+    </mat-sidenav-container>
+  </div>
+
+<div class="c-grid-list__row c-grid-list__row--header">
+      <div class="c-grid-list__cell c-grid-list__cell--check-box" *ngIf="!hiddenBtn"></div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-20">
+        <span>Name</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-14">
+        <span>Users</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-13">
+        <span>Customer</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-30" [ngClass]="{'c-grid-list__cell--width-33': hiddenBtn}">
+        <span>Description</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-10">
+        <span>Vehicles</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-10">
+        <span>Created</span>
+      </div>
+</div>
+
+<section class="o-scrollable--with-toolbar o-scrollable--with-shadow">
+<div [ngClass]="{'is-loading': isLoading}">
+  <div class="users-list view-user-list c-grid-list">
+  
+    <div class="row-users">
+      <div class="c-grid-list__row c-grid-list__row--hover" (click)="selectVehiclesGroups(vehicleGr)" *ngFor="let vehicleGr of vehiclesGroups">
+        <div class="c-grid-list__cell c-grid-list__cell--check-box" *ngIf="!hiddenBtn">
+          <span><mat-checkbox class="example-margin" (click)="checkVehicle(vehicleGr.id)"></mat-checkbox></span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-20" (click)="hiddenBtn ? null : sidenavVG.open()">
+          <span>{{ vehicleGr.name }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-14" (click)="hiddenBtn ? null : sidenavVG.open()">
+          <span>{{ vehicleGr.users.length }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-13" (click)="hiddenBtn ? null : sidenavVG.open()">
+          <span>{{ vehicleGr.customer.name }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-30" [ngClass]="{'c-grid-list__cell--width-33': hiddenBtn}" (click)="hiddenBtn ? null : sidenavVG.open()">
+          <span>{{ vehicleGr.description }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-10" (click)="hiddenBtn ? null : sidenavVG.open()">
+          <span>{{ vehicleGr.vehicles.length }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-10" (click)="hiddenBtn ? null : sidenavVG.open()">
+          <span>{{ vehicleGr.creation_datetime | date }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+</div>
+
+ 
+</section>

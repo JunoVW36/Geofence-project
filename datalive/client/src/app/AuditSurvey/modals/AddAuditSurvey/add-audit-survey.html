@@ -1,0 +1,17 @@
+<div *ngIf="isReady">
+  <mat-form-field>
+    <input [(ngModel)]="name" matInput placeholder="Name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select [(ngModel)]="userId" placeholder="User">
+      <mat-option *ngFor="let user of users" [value]="user.id" >
+        {{user.first_name}} {{user.last_name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="button-row">
+    <button (click)="addAuditSurvey()" mat-raised-button color="primary">Add</button>
+  </div>
+</div>
+

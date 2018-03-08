@@ -1,0 +1,184 @@
+<section class="o-content wrapper--home">
+<main class="o-content__main o-content--scrollable">
+  <h1 class="c-home-header">Hello <a href="/administration" title="Go to user administration page">{{userInfo.first_name}} <mat-icon class="c-home-header__icon">more_vert</mat-icon></a></h1>
+
+    <div class="c-home-quick-menu">
+      <h3 class="c-home-quick-menu__heading">Quick Menu</h3>
+      <nav class="c-home-quick-menu__nav o-wrapper">
+        
+        <ul class="c-home-quick-menu-list unstyled-list">
+          <li class="c-home-quick-menu-list__item">
+             <ng-template *ngxPermissionsOnly="['Track']; else elseBlockTrack; then thenBlockTrack"></ng-template>
+              <ng-template #elseBlockTrack>
+                <span class="c-home-quick-menu-list__link" title="You do not have permissions to view the Track module">
+                  <figure>
+                    <img src="{{img}}track-icon.png" alt="track" class="c-home-quick-menu-list__image">
+                  </figure>
+                  <figcaption class="c-home-quick-menu-list__text">Track</figcaption>
+                </span>
+              </ng-template>
+               <ng-template #thenBlockTrack>
+                 <a [routerLink]="['/track']" class="c-home-quick-menu-list__link" title="Go to the Track module">
+                  <figure>
+                    <img src="{{img}}track-icon.png" alt="track" class="c-home-quick-menu-list__image">
+                  </figure>
+                  <figcaption class="c-home-quick-menu-list__text">Track</figcaption>
+                </a>
+               </ng-template>
+            
+          </li>
+          <li class="c-home-quick-menu-list__item" > 
+            <div *ngxPermissionsOnly="['Trace']; else elseBlockTrace; then thenBlockTrace"></div>
+            <ng-template #elseBlockTrace>
+
+                <span class="c-home-quick-menu-list__link c-home-quick-menu-list__link--diabled" title="You do not have permissions to view the Trace module">
+                  <figure>
+                    <img src="{{img}}trace-icon.png" alt="trace" class="c-home-quick-menu-list__image">
+                  </figure>
+                <figcaption class="c-home-quick-menu-list__text">Trace</figcaption>
+              </span>
+            </ng-template>
+            <ng-template #thenBlockTrace>
+                <a [routerLink]="['/trace']" class="c-home-quick-menu-list__link" title="Go to the Trace module">
+                  <figure>
+                    <img src="{{img}}trace-icon.png" alt="trace" class="c-home-quick-menu-list__image">
+                  </figure>
+                  <figcaption class="c-home-quick-menu-list__text">Trace</figcaption>
+                </a>
+            </ng-template>     
+          </li>
+          <li class="c-home-quick-menu-list__item" >
+            <a [routerLink]="['/geofence']" class="c-home-quick-menu-list__link" title="Go to the geofenec module">
+              <span class="c-home-quick-menu-list__link c-home-quick-menu-list__link--diabled" title="Geofence module coming soon">
+              <figure>
+                <img src="{{img}}geofence-icon.png" alt="geofence" class="c-home-quick-menu-list__image">
+              </figure>
+              <figcaption class="c-home-quick-menu-list__text">Geofence</figcaption></span>
+            </a>
+          </li>
+
+          <li class="c-home-quick-menu-list__item">
+             <div *ngxPermissionsOnly="['Timesheet']; else elseBlockTimesheets; then thenBlockTimesheets"></div>
+             <ng-template #elseBlockTimesheets>
+                 <span class="c-home-quick-menu-list__link c-home-quick-menu-list__link--diabled" title="You do not have permissions to view the Timesheets module">
+                  <figure>
+                    <img src="{{img}}time-shets-icon.png" alt="timesheets icon" class="c-home-quick-menu-list__image">
+                  </figure>
+                  <figcaption class="c-home-quick-menu-list__text">Timesheets</figcaption>
+                </span>
+              </ng-template>
+              <ng-template #thenBlockTimesheets>
+                  <a [routerLink]="['/timesheet']" class="c-home-quick-menu-list__link" title="Go to the Timesheets module">
+                  <figure>
+                    <img src="{{img}}time-shets-icon.png" alt="timesheets icon" class="c-home-quick-menu-list__image">
+                  </figure>
+                  <figcaption class="c-home-quick-menu-list__text">Timesheets</figcaption></a>
+              </ng-template>
+           
+          </li>
+          <li class="c-home-quick-menu-list__item">
+            <div *ngxPermissionsOnly="['Trips']; else elseBlockTrips; then thenBlockTrips"></div>
+             <ng-template #elseBlockTrips>
+              <span class="c-home-quick-menu-list__link c-home-quick-menu-list__link--diabled" title="You do not have permissions to view the Trips and Stops module">
+                <figure>
+                  <img src="{{ img }}trips-stops-icon.png" alt="trips stops" class="c-home-quick-menu-list__image">
+                </figure>
+                <figcaption class="c-home-quick-menu-list__text">Trips/Stops</figcaption>
+              </span>
+            </ng-template>
+            <ng-template #thenBlockTrips>
+              <a [routerLink]="['/trip']" class="c-home-quick-menu-list__link" title="Go to the Trips and Stops module">
+                <figure>
+                  <img src="{{ img }}trips-stops-icon.png" alt="trips stops" class="c-home-quick-menu-list__image">
+                </figure>
+                <figcaption class="c-home-quick-menu-list__text">Trips/Stops</figcaption></a>
+            </ng-template>
+          </li>
+          <li class="c-home-quick-menu-list__item">
+            <div *ngxPermissionsOnly="['Vehicle Check']; else elseBlockVehCheck; then thenBlockVehCheck"></div>
+             <ng-template #elseBlockVehCheck>
+                <span class="c-home-quick-menu-list__link c-home-quick-menu-list__link--diabled" title="You do not have permissions to view the Vehicle Check module">
+                  <figure>
+                    <img src="{{img}}vehicle-check-icon--white.png" alt="Vehicle Check" class="c-home-quick-menu-list__image">
+                  </figure>
+                  <figcaption class="c-home-quick-menu-list__text">Vehicle Check</figcaption>
+                </span>
+            </ng-template>
+            <ng-template #thenBlockVehCheck>
+              <a [routerLink]="['/vehiclecheck/region']" class="c-home-quick-menu-list__link" title="Go to the Vehicle Check module">
+                <figure>
+                  <img src="{{img}}vehicle-check-icon--white.png" alt="Vehicle Check" class="c-home-quick-menu-list__image">
+                </figure>
+                <figcaption class="c-home-quick-menu-list__text">Vehicle Check</figcaption>
+              </a>
+            </ng-template>
+          </li>
+           <li class="c-home-quick-menu-list__item">
+              <div *ngxPermissionsOnly="['Mobileye ADAS']; else elseBlockMobileye; then thenBlockMobileye"></div>
+                <ng-template #elseBlockMobileye>
+                <span class="c-home-quick-menu-list__link c-home-quick-menu-list__link--diabled" title="You do not have permissions to view the Mobileye driver behaviour module">
+                  <figure>
+                    <img src="{{img}}mobileye-icon--white1.png" alt="Mobileye ADAS" class="c-home-quick-menu-list__image">
+                  </figure>
+                  <figcaption class="c-home-quick-menu-list__text">Mobileye ADAS</figcaption>
+                </span>
+              </ng-template>
+              <ng-template #thenBlockMobileye>
+                 <a [routerLink]="['/safety/mobileye']" class="c-home-quick-menu-list__link" title="Go to the Mobileye driver behaviour module">
+                  <figure>
+                    <img src="{{img}}mobileye-icon--white1.png" alt="Mobileye ADAS" class="c-home-quick-menu-list__image">
+                  </figure>
+                  <figcaption class="c-home-quick-menu-list__text">Mobileye ADAS</figcaption>
+                </a>
+              </ng-template>
+          </li>
+          <li class="c-home-quick-menu-list__item">
+            <div *ngxPermissionsOnly="['Driver Behaviour']; else elseBlockBehave; then thenBlockBehave"></div>
+              <ng-template #elseBlockBehave>
+              <span class="c-home-quick-menu-list__link c-home-quick-menu-list__link--diabled" title="You do not have permissions to view the driver behaviour module">
+                <figure>
+                  <img src="{{img}}driver-behaviour-icon--white.png" alt="Driver Behaviour" class="c-home-quick-menu-list__image">
+                </figure>
+                <figcaption class="c-home-quick-menu-list__text">Driver Behaviour</figcaption>
+              </span>
+            </ng-template>
+            <ng-template #thenBlockBehave>
+              <a [routerLink]="['/safety/abc']" class="c-home-quick-menu-list__link" title="Go to the driver behaviour module">
+              <figure>
+                <img src="{{img}}driver-behaviour-icon--white.png" alt="Driver Behaviour" class="c-home-quick-menu-list__image">
+              </figure>
+              <figcaption class="c-home-quick-menu-list__text">Driver Behaviour</figcaption>
+            </a>
+            </ng-template>
+          </li>
+          <!--<li class="c-home-quick-menu-list__item">
+              <div *ngxPermissionsOnly="['Audit']; else elseBlock; then thenBlock"></div>
+              <ng-template #elseBlock>
+                <span class="c-home-quick-menu-list__link c-home-quick-menu-list__link--diabled" title="You do not have permissions to view the Audit/Surveys module">
+                  <figure>
+                    <img src="{{img}}driver-behaviour-icon--white.png" alt="audit surveys" class="c-home-quick-menu-list__image">
+                  </figure>
+                  <figcaption class="c-home-quick-menu-list__text">Audit/Surveys</figcaption>
+                 
+                </span>
+              </ng-template>
+              <ng-template #thenBlock>
+                <a [routerLink]="['/audit_survey']" class="c-home-quick-menu-list__link" title="Go to the Audit/Surveys module">
+                  <figure>
+
+                    <img src="{{img}}driver-behaviour-icon--white.png" alt="audit surveys" class="c-home-quick-menu-list__image">
+                  </figure>
+                  <figcaption class="c-home-quick-menu-list__text">Audit/Surveys</figcaption>
+                </a>
+              </ng-template>
+
+          </li>-->
+        </ul>
+      </nav>
+
+    </div>
+    <div class="o-wrapper">
+      <p class="c-home-intro">Hint: Many new features coming soon, watch this space.</p>
+    </div>
+</main>
+</section>

@@ -1,0 +1,97 @@
+<section class="o-content wrapper--audit-survey-report">
+  <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+  <main class="o-content__main">
+    <mat-toolbar>
+      <button (click)="navigateAuditSurveyPage()" class="c-title-toolbar__print c-btn">
+        <mat-icon class="">navigate_before</mat-icon>
+      </button>
+      <h1 class="c-title-toolbar__heading">
+        Audit Survey Report
+      </h1>
+      <div class="func-button-users c-title-toolbar__action-buttons">
+        <button mat-raised-button (click)="navigateCreateReportPage()">Create new report</button>
+      </div>
+      <div class="func-button-users c-title-toolbar__action-buttons">
+        <button mat-raised-button (click)="openDialog()">Delete</button>
+      </div>
+    </mat-toolbar>
+    <section class="o-scrollable--with-toolbar">
+      <div class="wrapper-asr-content">
+        <table class="c-table" *ngIf="reports">
+          <tr>
+            <th></th>
+            <th>User</th>
+            <th>Depot</th>
+            <th>Date/Time</th>
+          </tr>
+          <tr *ngFor="let report of reports" (click)="getReportDetail(report.id)">
+            <td (click)="$event.stopPropagation();">
+              <mat-checkbox class="report-select" [(ngModel)]="report.selected"></mat-checkbox>
+            </td>
+            <td>{{ report.user_name }}</td>
+            <td>{{ report.depot_name }}</td>
+            <td>{{ report.added | date: 'dd/MM/yyyy' }}</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+  </main>
+  <aside class="o-content__dialog c-sidebar right-panel_container d-slide-dialog as"
+         [ngClass]="{'o-content__dialog--hidden': !showSlideIn}">
+    <div class="right-panel_close" (click)="closeSlideIn()">
+      X
+    </div>
+    <div class="wrapper-asr-sidebar">
+      <table class="c-table">
+        <tr>
+          <th>Survey</th>
+          <th>User</th>
+          <th>Depot</th>
+        </tr>
+        <tr>
+          <td colspan="3" *ngIf="!selectedReport">Nothing to show</td>
+        </tr>
+        <tr *ngIf="selectedReport">
+          <td>Depot Inspection Report</td>
+          <td>{{ selectedReport.user_name }}</td>
+          <td>{{ selectedReport.depot_name }}</td>
+        </tr>
+      </table>
+
+      <table class="c-table report-table" *ngIf="selectedReport">
+        <ng-container *ngFor="let row of selectedReport.data">
+          <tr class="report-table--row" *ngIf="row?.text && row?.value">
+            <td class="report-table--column__text">{{ row.text }}</td>
+            <td class="report-table--column__value">{{ row.value }}</td>
+          </tr>
+          <ng-container *ngIf="row?.text && row?.items">
+            <tr class="report-table--row">
+              <td class="report-table--column__title" colspan="2">{{ row.text }}</td>
+            </tr>
+            <ng-container *ngFor="let item of row?.items">
+              <tr class="report-table--row" *ngIf="isLabel(item)">
+                <td class="report-table--column__label">{{ item.text }}</td>
+                <td class="report-table--column__value"></td>
+              </tr>
+              <tr class="report-table--row" *ngIf="isPair(item)">
+                <td class="report-table--column__text">{{ item.text }}</td>
+                <td class="report-table--column__value">{{ item.value }}</td>
+              </tr>
+              <tr class="report-table--row" *ngIf="isComment(item)">
+                <td class="report-table--column__text">
+                  <p>{{ item.text }}</p>
+                  <p class="column__text--comment"><span>Comment: </span><span class="column__text--comment-value">{{ item.comment }}</span>
+                  </p>
+                </td>
+                <td class="report-table--column__value">{{ item.value }}</td>
+              </tr>
+            </ng-container>
+          </ng-container>
+
+        </ng-container>
+      </table>
+    </div>
+  </aside>
+</section>
+
+

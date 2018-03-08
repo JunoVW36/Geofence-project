@@ -1,0 +1,52 @@
+<!--TODO: change inline styles to classes everywhere-->
+<section class="o-content wrapper--audit-survey-detail">
+    <main class="o-content__main">
+      <div class="wrapper-asd-content">
+        <div style="float: left; width: 45%">
+          <h4>Edit:</h4>
+
+          <div *ngIf="customers.length > 1">
+            Select a customer:
+            <select [(ngModel)]="auditSurvey.customer">
+              <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
+            </select>
+          </div>
+
+          <div>
+            Name:
+            <input type="text" [(ngModel)]="auditSurvey.name">
+          </div>
+
+          <div>
+            Set as default:
+            <input type="checkbox" [(ngModel)]="auditSurvey.is_default">
+          </div>
+
+        <div *ngFor="let surveyItem of auditSurvey.template | orderBy:'order'">
+          <div style="float: right" (click)="deleteItem(surveyItem)">
+            <b>X</b>
+          </div>
+          <item-builder [surveyItem]="surveyItem" (surveyItemEmitter)="updateEntries($event, surveyItem)"></item-builder>
+        </div>
+
+
+
+          <div>
+            <button (click)="commonService.addAuditSurveyField(auditSurvey.template)">Add field</button>
+          </div>
+
+          <hr>
+
+          <button style="width: 100%;" (click)="saveAuditSurvey()">Save</button>
+        </div>
+
+        <div style="float: right; width: 45%">
+          <h4>Results:</h4>
+
+          <div *ngFor="let surveyItem of auditSurvey.template | orderBy:'order'">
+            <item-preview [surveyItem]="surveyItem"></item-preview>
+          </div>
+        </div>
+      </div>
+    </main>
+</section>

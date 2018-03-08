@@ -1,0 +1,57 @@
+@import '../node_modules/angular2-toaster/toaster.css';
+
+#toast-container {
+    
+     > div {
+         box-shadow: $box-shadow;
+         background: #fff;
+         color: $color-text;
+         border-width: 1px;
+         border-style: solid;
+         @include font-size(14px);
+     }
+
+}
+
+.toast-title {
+  font-weight: normal;
+}
+.toast-message {
+  -ms-word-wrap: break-word;
+  word-wrap: break-word;
+  line-height: 1rem;
+}
+
+.toast-success {
+  border-color: $color-success;
+}
+.toast-error {
+  border-color: $color-error;
+}
+.toast-info {
+  border-color: $color-brand;
+}
+.toast-wait {
+  border-color: $color-brand;
+}
+.toast-warning {
+  border-color: $color-warning;
+}
+
+.toaster-icon {
+
+    background-color: $color-grey--light;
+    background-position: 50% 50%;
+}
+.icon-error {
+    color: $color-error;
+    background-color: $color-error;
+}
+.icon-success {
+    color: $color-success;
+     background-color:  $color-success;
+}
+.icon-warning {
+    color: $color-warning;
+     background-color:  $color-warning;
+}

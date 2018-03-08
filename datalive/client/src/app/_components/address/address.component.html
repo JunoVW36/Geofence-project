@@ -1,0 +1,28 @@
+<div>
+  <p>
+  <mat-input-container class="example-full-width">
+    <input matInput placeholder="Display name" name="display_name" [(ngModel)]="address.display_name" #displayname="ngModel">
+    <!--<mat-hint [hidden]="address.valid || address.untouched">
+      <div *ngIf="address.errors && address.errors.required" class="error_field">Address is required</div>
+    </mat-hint>-->
+  </mat-input-container>
+</p>  
+<p>
+  <mat-input-container class="example-full-width">
+    <input matInput placeholder="Address" name="address" [(ngModel)]="address.address1" #address1="ngModel">
+    <!--<mat-hint [hidden]="address.valid || address.untouched">
+      <div *ngIf="address.errors && address.errors.required" class="error_field">Address is required</div>
+    </mat-hint>-->
+  </mat-input-container>
+</p>
+
+  <!--public id: number;
+    public display_name: string; // required with minimum 5 chracters
+    public address1: string;
+    public address2: string;
+    public city: string;
+    public county: string;
+    public postcode: string;
+    public country: string;-->
+
+</div>

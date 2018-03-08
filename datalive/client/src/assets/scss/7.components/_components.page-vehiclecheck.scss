@@ -1,0 +1,230 @@
+.chart-text {
+  font: 16px/1.4em 'Naste Regular', Helvetica, Arial, sans-serif;
+  fill: $color-grey;
+  @extend .font-family--light;
+  transform: translateY(0.20em);
+}
+.chart-label {
+  font-size: 0.2em;
+  text-transform: uppercase;
+  text-anchor: middle;
+ @extend .font-family--light;
+  transform: translateY(0.7em);
+}
+.chart-number {
+  font-size: 0.6em;
+  line-height: 1;
+  text-anchor: middle;
+  @extend .font-family--light;
+  transform: translateY(-0.25em);
+}
+.vehicle-ckeck-top-section{
+ 
+  float: left;
+  
+
+  .vehicle-ckeck-top--inner{
+    max-width: 1100px;
+    margin: auto;
+    width: 100%;
+  }
+  .third{
+    text-align: center;
+    padding: 0 20px;
+  }
+  svg{
+    max-width: 150px;
+  }
+
+  h2{
+    @include font-size(17px);
+    @extend .font-family--light;
+    margin: 10px 0 5px 0;
+  }
+  .vehicle-ckeck-top-section--left-pane{
+    width: 80%;
+    float: left;
+    padding: 26px 60px 30px;
+  }
+  .vehicle-ckeck-top-section--right-pane{
+    width: 20%;
+    float: left;
+    border-left: 2px solid $color-grey--lighter;
+    min-height: 402px;
+  }
+}
+.averages-text {
+  @include font-size(14px);
+}
+.vehicle-ckeck-top-section--right-pane{
+  text-align: right;
+  padding: $spacing-unit--base 40px $spacing-unit--base $spacing-unit--base;
+
+}
+.other-totals-list {
+    //@extend .unstyled-list;
+    margin-top: 30px;
+    li{
+      text-align: right;
+      text-transform: uppercase;
+      font-weight: 200;
+      @extend .font-family--light;
+    }
+    span{
+      display: block;
+      @include font-size(20px);
+    }
+}
+
+.chart-stats-bar {
+  display: flex;
+  border-bottom: 1px solid $color-ui;
+  align-items: center;
+}
+.chart-stats-bar__item {
+  padding:$spacing-unit--base ($spacing-unit--base + 10);
+  text-align: center;
+  @extend .font-family--light;
+}
+.chart-stats-bar__item--margin-auto-left {margin-left: auto;}
+.chart-stats-bar__title {
+  flex: 1 1 auto;
+  text-align: left;
+  h1 {
+    margin: 0;
+  }
+}
+.chart-stats-bar__input-label{
+  @include font-size($base-font-size - 3);
+  display: block; 
+  margin-bottom: 1px;
+}
+.chart-stats-bar__value {
+  @include font-size(26px);
+}
+
+.col-big{
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.flex-grid-thirds {
+  display: flex;
+ // justify-content: space-between;
+  flex-wrap: wrap;
+
+}
+.flex-grid-thirds.two .col{
+  width: 48%;
+}
+
+
+.vehicle-ckeck-bottom-section{
+  background: $color-grey--lightest;
+  padding: 30px 40px;
+  width: 100%;
+  float: left;
+  min-height: 60vh;
+  h1 span{
+    padding-right: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid $color-grey;
+  }
+}
+
+@media screen and (min-width: 1500px) {
+  .vehicle-ckeck-top-section .vehicle-ckeck-top-section--left-pane{
+    width: 60%;
+    h2{
+      font-size: 1em;
+    }
+  }
+  .vehicle-ckeck-top-section .vehicle-ckeck-top-section--right-pane{
+    padding-top: 100px;
+    width: 40%;
+    li{
+      float: left;
+      display: block;
+      width: 50%;
+    }
+  }
+}
+
+
+.c-depot-card {
+  width: 23%;
+  margin: $spacing-unit--small 1%;
+  background: #fff;
+  padding: $spacing-unit--base;
+  box-shadow: $box-shadow;
+ 
+  transition: all .35s ease-in-out;
+   &:hover{
+     box-shadow: 0px 3px 29px -2px rgba(148,148,148,0.8);
+   }
+
+   ul{
+     list-style: none;
+     padding: 0;
+     margin: 10px 0 $spacing-unit--base;
+     span{
+      float: right;
+     }
+     li {
+       margin: 0;
+       padding: 3px;
+     }
+   }
+
+  @media only screen 
+    and (max-width: 1024px) {
+       width: 31%;
+  }
+  @media only screen 
+    and (max-width: 800px) {
+       width: 48%;
+  }
+}
+.c-depot-card__heading {
+  @include font-size(18px);
+  @extend .font-family--light;
+}
+.c-depot-card__btn {
+  background-color: transparent;
+  border: 1px solid lighten($color-heading-text, 5);
+  border-bottom: 2px solid $color-heading-text;
+  color: $color-heading-text;
+  width: 100%;
+  box-shadow: none;
+  &:hover {
+    border-color: $color-brand;
+  }
+}
+
+// Chart /stats section 
+.chart-top-section {
+  background: $color-vehichlecheck;
+  width: 100%;
+  float: left;
+  @extend .font-family--light;
+  border-bottom: 1px solid $color-ui;
+  padding-bottom: $spacing-unit--base;
+}
+
+.reports__container {
+  border-top: 1px solid $color-grey--lighter;
+  padding-top: $spacing-unit--small;
+}
+
+
+.depot-report-table--std {
+  tr td, tr th {
+    &:last-child, &:nth-last-child(2) {
+      display: none;
+    }
+  }
+}
+
+

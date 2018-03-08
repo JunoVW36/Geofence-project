@@ -1,0 +1,41 @@
+.c-sidebar{
+    background-color: $sidebar-bg;
+    border-right: $sidebar-right-border;
+    z-index: 5;
+}
+
+
+.c-sidebar-link-list{
+    @extend .unstyled-list;
+}
+.c-sidebar-link-list__item {
+
+}
+.c-sidebar-link-list__link{
+    line-height: $link-list-item-height;
+    height: $link-list-item-height;
+    display: block;
+    color: $link-list-text-color;
+    @extend .truncate-text;
+    padding: $link-list-item-padding;
+
+    transition: background 0.3s ease;
+    &:hover, &.active {
+        color: $color-brand;
+        background-color: darken($sidebar-bg, 3);
+    }
+}
+.c-sidebar-link-list__item--separator {
+    border-top: 1px solid $color-ui;
+}
+.c-sidebar-link-list__heading {
+    @include font-size($link-list-heading-font-size);
+    line-height: $link-list-item-height;
+    height: $link-list-item-height;
+    color: $link-list-heading-color;
+    @extend .font-family--light;
+    padding: $link-list-item-padding;
+    border-bottom: 1px solid $color-ui;
+    margin-bottom: $spacing-unit--small;
+    background-color: darken($sidebar-bg, 4);
+}

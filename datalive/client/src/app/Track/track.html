@@ -1,0 +1,133 @@
+<section class="wrapper-administration o-content">
+  <aside class="admin-navigation o-content__sidebar c-sidebar" [ngClass]="{'o-content__sidebar--hidden': !sidemenuOpen}">
+    <div class="d-context-panel__head">
+      <img class="d-context-panel__head-img" src="{{ img }}track-gray-icon.png" alt="Track icon">
+        <h4 class="d-context-panel__title">Track</h4>
+    </div>
+    <search-vehicle-track-app (outputShowPage)="this.showPage=$event"
+                                      (outputVehicleGroupsReady)="this.uniqueVehicleList=$event; this.fitMapToSelectedVehicles();"
+                                      (outputApiIsLoading)="this.isLoading=$event">
+    </search-vehicle-track-app>
+    <button (click)="sidemenuOpen = !sidemenuOpen" class="c-title-toolbar__toggle-btn" [ngClass]="{'sidemenu-is-hidden': !sidemenuOpen}">
+      <mat-icon class="icon--16 c-title-toolbar__toggle-btn-icon">chevron_left</mat-icon>
+    </button>
+  </aside>
+
+  <main class="wrapper-admin-content o-content__main ">
+
+      <!--<mat-toolbar class="c-title-toolbar">
+
+
+        <h1 class="c-title-toolbar__heading">
+          <span>Track Report</span>
+      	</h1>
+      </mat-toolbar>-->
+
+	  <div class="map-wrapper">
+
+	<agm-map style="height:100%;width:100%" [styles]="styles" [fitBounds]="this.mapBounds" [mapTypeControl]="true">
+
+			<!-- These markers just to get location of labels correct, comment out once sorted -->
+      
+		  <!--<agm-marker *ngFor="let tp of uniqueVehicleList" [latitude]="tp.lat" [longitude]="tp.lon">
+		  </agm-marker>-->
+      
+
+ 		<agm-snazzy-info-window *ngFor="let tp of uniqueVehicleList; let i = index" [isOpen]="tp.selected" [latitude]="tp.lat" [longitude]="tp.lon" [closeWhenOthersOpen]="false" [closeOnMapClick]="false" [showCloseButton]="false" [shadow]="false" [pointer]="false" [border]="false" [panOnOpen]="true" [openOnMarkerClick]="false">
+
+    	<ng-template>
+
+              <div (click)="mapMarkerClick(tp, $event)" class="c-map-marker" [ngClass]="{'c-map-marker--open': !tp.shortLabel}">
+                <div class="c-map-marker-inner">
+                  <div class="c-map-marker__header">
+                    <div class="c-map-marker__status" [ngSwitch]="tp.eventCode" >
+                      <img *ngSwitchCase="3" class="c-map-marker__status-icon" src="{{ img }}track-trace-icons/vehicle-status-idle.svg">
+                      <img *ngSwitchCase="4" class="c-map-marker__status-icon" src="{{ img }}track-trace-icons/vehicle-status-key-on.svg">
+                      <img *ngSwitchCase="5" class="c-map-marker__status-icon" src="{{ img }}track-trace-icons/vehicle-status-stationary.svg">
+                      <img *ngSwitchCase="19" class="c-map-marker__status-icon" src="{{ img }}track-trace-icons/vehicle-status-stationary.svg">
+                      <img *ngSwitchDefault class="c-map-marker__status-icon" src="{{ img }}track-trace-icons/vehicle-status-go.svg">
+                    </div>
+                    <span class="c-map-marker__reg">{{tp.registration}}</span>
+
+                  </div>
+
+                <div class="c-map-marker-details">
+
+
+                  <ul class="c-map-marker__stats-list unstyled-list">
+                    <li class="c-map-marker__stats-list__item c-map-marker__stats-list__item--colum" title="Location">
+                      <strong class="c-map-marker__stats-list__item__label c-map-marker__stats-list__item__label--full-widt"><mat-icon class="">place</mat-icon></strong>{{tp.locationName}}</li>
+                    <li class="c-map-marker__stats-list__item" title="Last updated">
+                      <strong class="c-map-marker__stats-list__item__label"><mat-icon class="">update</mat-icon> </strong>{{tp.dateTime | date:'dd MMM, HH:mm:ss'}}</li>
+                    <li class="c-map-marker__stats-list__item" title="Odometer reading">
+                        <strong class="c-map-marker__stats-list__item__label"><mat-icon class="">slow_motion_video</mat-icon> </strong>{{tp.odo | miles:0}} </li>
+                  </ul>
+                  <div class="c-map-marker__bottom-section">
+                    <div *ngIf="!tp.displayMessageConfirm" class="c-map-marker__bottom-section--right">
+                      <h3 class="c-map-marker__driver-id">{{ tp.driverName ? tp.driverName : 'Driver ID' }}</h3>
+
+                      <div [ngSwitch]="tp.type" class="c-map-marker__vehicle-type">
+                        <img *ngIf="tp.type == 'VAN'" class="c-map-marker__vehicle_icon" src="{{ img }}icons/van-icon.svg" alt="Vehicle type is a Van">
+                        <img *ngIf="tp.type == 'CAR'" class="c-map-marker__vehicle_icon" src="{{ img }}icons/car-icon.svg">
+                        <img *ngIf="tp.type == 'STR'" class="c-map-marker__vehicle_icon" src="{{ img }}icons/str-icon.svg">
+                        <img *ngIf="tp.type == 'BIK'" class="c-map-marker__vehicle_icon" src="{{ img }}icons/bik-icon.svg">
+                      </div>
+                       <ul class="c-map-marker__export-btns unstyled-list">
+                          <li class="c-map-marker__export-btns__item" (click)="trackMessageIconClick($event, tp)"><img class="message-icon" src="{{ img }}track-trace-icons/mail-icon-grey.svg"/>
+                            <span *ngIf="(tp.messageStatus == 1) || (tp.messageStatus == 2)" class="c-badge-notification c-badge-notification--red"></span>
+                            <span *ngIf="(tp.messageStatus == 3)" class="c-badge-notification c-badge-notification--green"></span>
+                          </li>
+                          <!--<li class="c-map-marker__export-btns__item c-map-marker__export-btns__item"><img src="{{ img }}track-trace-icons/cursor-icon-grey1.svg"/></li>
+                          <li class="c-map-marker__export-btns__item c-map-marker__export-btns__item"><img src="{{ img }}track-trace-icons/connect-icon-grey.svg"/></li>-->
+                          
+                          <li class="c-map-marker__export-btns__item c-map-marker__export-btns__item">
+                           <mat-menu #menu="matMenu" yPosition="above">
+                              <button mat-menu-item (click)="traceThisVehicle($event,tp)">
+                                <img src="{{img}}trace-icon-purple-mini.png" alt="trace icon" class="small-image">
+                                <span>Trace this vehicle</span>
+                              </button>
+                            </mat-menu>
+                            <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" (click)="$event.stopPropagation();">
+                              more options<mat-icon>more_vert</mat-icon>
+                            </button>
+                            
+                          </li>
+                          
+                      </ul>
+                    </div>
+                    <div *ngIf="tp.displayMessageConfirm" class="c-map-marker__bottom-section--right">
+                    <div class="text--center">
+                        <strong>Message Vehicle?</strong>
+                      <br>
+                      <button class="c-btn" (click)="trackMessageYesClick($event, tp)">Yes</button>
+                      <button class="c-btn" (click)="trackMessageNoClick($event, tp)">No</button>
+                    </div>
+                    </div>
+                    <div class="c-map-marker-speed">
+                        <div class="c-map-marker-speed__compass">
+                        </div>
+                        <span class="c-map-marker-speed__speed-value">{{this.Math.round(tp.speed / 1.609)}}</span>
+                        <span class="c-map-marker-speed__speed-value">{{tp.speed | miles:0:true}}</span>
+                        <span class="c-map-marker-speed__speed-label">MPH</span>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+              </div>
+
+
+			</ng-template>
+  		</agm-snazzy-info-window>
+
+
+
+		</agm-map>
+
+	  </div>
+
+  </main>
+
+</section>

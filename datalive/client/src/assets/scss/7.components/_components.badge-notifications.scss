@@ -1,0 +1,15 @@
+.c-badge-notification {
+    width: $badge-size;
+    height: $badge-size;
+    background-color: $badge-bg-color;
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.c-badge-notification--red {
+    background-color: $badge-bg-color--red;
+}
+.c-badge-notification--green {
+    background-color: $badge-bg-color--green;
+}

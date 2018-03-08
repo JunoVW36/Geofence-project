@@ -1,0 +1,109 @@
+
+
+.c-checkbox, .c-radio {
+    
+	margin: 0 0 $spacing-unit--tiny;
+	position: relative;
+    input[type=checkbox], input[type=radio] {
+        position: absolute;
+        left: -8999px;
+    }
+    label {
+        cursor: pointer;
+        padding-left: $chk-width + $spacing-unit--tiny;
+        &:before {
+            content: '';
+            position: absolute;
+            width: $chk-width;
+            height: $chk-height;
+            top: 4px;
+            left: 0;
+            background: $chk-bg-color;
+            border: $chk-border;
+        }
+        &:after {
+            opacity: 0.1;
+            content: '';
+            position: absolute;
+            width: 9px;
+            height: 5px;
+            background: transparent;
+            top: 8px;
+            left: 4px;
+            border: 2px solid $chk-select-color;
+            border-top: none;
+            border-right: none;
+
+            transform: rotate(-45deg);
+        }
+        &:hover {
+            &:after {
+                opacity: 0.5;
+            }
+        }
+    }
+    // checked styled
+    input[type=checkbox]:checked + label, input[type=radio]:checked + label {
+        &:before {
+            opacity: 1;
+            border-color: $chk-select-color;
+        }
+        &:after {
+            opacity: 1;
+        }
+    }
+}
+
+
+
+.c-radio {
+    label {
+        &:before {
+            border-radius: 50%;
+            
+        }
+        &:after {
+            width: $chk-width - 8px;
+            height: $chk-height - 8px;
+            top: 8px;
+            left: 4px;
+            border-radius: 50%;
+            border:none;
+        }
+        &:hover {
+            &:after {
+                 background-color: rgba($chk-select-color, 0.3);
+            }
+        }
+    }
+    input[type=radio]:checked + label{
+        &:before {
+            opacity: 1;
+            background-color: #f3f3f3;
+            border-color: darken($chk-border-color,5);
+            //border-color: $chk-select-color;
+        }
+        &:after {
+            opacity: 1;
+            background-color: $chk-select-color;
+            transform: none;
+        }
+    }
+}
+
+.c-radio--right {
+     label {
+        padding-left: 0;
+        padding-right: $chk-width + $spacing-unit--tiny;
+        &:before {
+            left: auto;
+            right: 0;
+            
+        }
+        &:after {
+            left:auto;
+            right: 4px;
+            
+        }
+     }
+}

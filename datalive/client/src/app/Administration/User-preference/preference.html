@@ -1,0 +1,137 @@
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+
+
+
+  <div class="sidenav-use pref-sidenav c-slide-panel">
+    <mat-sidenav-container class="c-slide-panel__container">
+      <mat-sidenav align="end" #sidenavUsers mode="side" class="mat-sidenav c-slide-panel__sidenav">
+
+        <div class="c-slide-panel__head">
+          <h4 class="c-slide-panel__title">Details</h4>
+            <button mat-icon-button (click)="sidenavUsers.close()">
+            <mat-icon class="mat-24" >close</mat-icon>
+          </button>
+        </div>
+
+        <div class="user-details-activity c-slide-panel__body">
+
+              <form (ngSubmit)="formUpdateUser.form.valid && updateUser(formUpdateUser.value)" name="form" #formUpdateUser="ngForm" class="example-form user-pref-form" novalidate>
+                <p>
+                  <mat-input-container class="example-full-width">
+                    <input type="text" matInput placeholder="First name" name="first_name" [(ngModel)]="userInfo.first_name" #first_name="ngModel" required>
+                    <mat-hint [hidden]="first_name.valid || first_name.untouched">
+                      <div *ngIf="first_name.errors && first_name.errors.required" class="error_field">First name is required</div>
+                    </mat-hint>
+                  </mat-input-container>
+                </p>
+                <p>
+                  <mat-input-container class="example-full-width">
+                    <input type="text" matInput placeholder="Last name" name="last_name" [(ngModel)]="userInfo.last_name" #last_name="ngModel" required>
+                    <mat-hint [hidden]="last_name.valid || last_name.untouched">
+                      <div *ngIf="last_name.errors && last_name.errors.required" class="error_field">Last name is required</div>
+                    </mat-hint>
+                  </mat-input-container>
+                </p>
+                <p>
+                  <mat-input-container class="example-full-width">
+                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" matInput placeholder="Email" name="email" [(ngModel)]="userInfo.email" #email="ngModel" required>
+                    <mat-hint [hidden]="email.valid || email.untouched">
+                      <div *ngIf="email.errors && email.errors.required" class="error_field">Email is required</div>
+                      <div *ngIf="email.errors && email.errors.pattern" class="error_field">Email is invalid</div>
+                    </mat-hint>
+                  </mat-input-container>
+                </p>
+                <p>
+                  <mat-input-container class="example-full-width">
+                    <input matInput placeholder="Address" name="address" [(ngModel)]="userInfo.address" #address="ngModel">
+                  </mat-input-container>
+                </p>
+                <p>
+                  <mat-input-container class="example-full-width">
+                    <input matInput placeholder="Telephone" name="telephone" [(ngModel)]="userInfo.telephone" #telephone="ngModel">
+                  </mat-input-container>
+                </p>
+                <p class="before-select">
+                  <mat-input-container class="example-full-width">
+                    <input matInput placeholder="Timezone" name="time_zone" [(ngModel)]="userInfo.prefs.time_zone" #time_zone="ngModel">
+                  </mat-input-container>
+                </p>
+                <p>
+                  <mat-input-container class="example-full-width">
+                    <mat-select name="units_volume" [(ngModel)]="userInfo.prefs.units_volume" placeholder="Volume units">
+                      <mat-option *ngFor="let volume of volumeUnits" [value]="volume.full">
+                        {{volume.full}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-input-container>
+                </p>
+                <p>
+                <mat-input-container class="example-full-width">
+                  <mat-select name="units_distance" [(ngModel)]="userInfo.prefs.units_distance" placeholder="Distance units">
+                    <mat-option *ngFor="let distance of distanceUnits" [value]="distance.full">
+                      {{distance.full}}
+                    </mat-option>
+                  </mat-select>
+                </mat-input-container>
+                </p>
+                <p>
+                <mat-input-container class="example-full-width">
+                  <mat-select name="units_fuel_econ" [(ngModel)]="userInfo.prefs.units_fuel_econ" placeholder="Fuel econ">
+                    <mat-option *ngFor="let fuel of fuelEcon" [value]="fuel.full">
+                      {{fuel.full}}
+                    </mat-option>
+                  </mat-select>
+                </mat-input-container>
+                </p>
+
+                <div class="details-update-user c-slide-panel__footer">
+                  <button type="submit" mat-raised-button [disabled]="disableUpdate">Update user</button>
+                </div>
+              </form>
+
+        </div>
+      </mat-sidenav>
+        <mat-toolbar class="title-users c-title-toolbar">
+          <h1 class="c-title-toolbar__heading">User Preferences</h1>
+        <div class="func-button-users c-title-toolbar__action-buttons">
+          <button mat-raised-button (click)="sidenavUsers.toggle();">Edit</button>
+
+        </div>
+      </mat-toolbar>
+    </mat-sidenav-container>
+  </div>
+
+<section class="o-scrollable--with-toolbar o-scrollable--with-shadow c-preference">
+
+  <div class="content-padding">
+
+    <div class="box box--centered ">
+      <div class="c-preference-halo">
+        <!--<figure class="c-preference-halo__profile-pic">
+          <mat-icon class="mat-48">face</mat-icon>
+        </figure>-->
+
+
+        <div class="c-preference-halo-name-row">
+          <h1 class="c-preference-halo__name">{{userInfo.first_name}} {{userInfo.last_name}} </h1>
+
+        </div>
+      </div>
+      <div class="box--padding">
+      <h3>User Profile</h3>
+      <p *ngIf="userInfo.email"><strong>Email</strong> {{ userInfo.email }}</p>
+      <p *ngIf="userInfo.address"><strong>Address</strong> {{ userInfo.address }}</p>
+      <p *ngIf="userInfo.telephone"><strong>Telephone</strong> {{ userInfo.telephone }}</p>
+
+      <div><hr></div>
+
+       <h3>User Preferences</h3>
+      <p *ngIf="userInfo.prefs.time_zone"><strong>Timezone</strong> {{ userInfo.prefs.time_zone }}</p>
+      <p *ngIf="userInfo.prefs.units_volume"><strong>Volume unit</strong> {{ userInfo.prefs.units_volume }}</p>
+      <p *ngIf="userInfo.prefs.units_distance"><strong>Distance unit</strong> {{ userInfo.prefs.units_distance }}</p>
+      <p *ngIf="userInfo.prefs.units_fuel_econ"><strong>Fuel economy</strong> {{ userInfo.prefs.units_fuel_econ }}</p>
+      </div>
+    </div>
+
+  </div>
+</section>

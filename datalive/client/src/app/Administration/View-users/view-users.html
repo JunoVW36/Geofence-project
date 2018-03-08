@@ -1,0 +1,217 @@
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+
+  <div class="sidenav-user c-slide-panel c-slide-panel--in-toolbar">
+    <mat-sidenav-container class="c-slide-panel__container">
+      <mat-sidenav align="end" #sidenavUsers mode="over" class="mat-sidenav c-slide-panel__sidenav">
+        <div class="c-slide-panel__head">
+          <h4 class="c-slide-panel__title">{{ myForm.controls.first_name.value ? myForm.controls.first_name.value : 'New User\'s' }}  Details</h4>
+          <button mat-icon-button (click)="sidenavUsers.close()">
+            <mat-icon class="mat-24" >close</mat-icon>
+          </button>
+
+        </div>
+<form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm.value, myForm.valid)" [ngClass]="{'is-loading': isLoading}">
+        <div class="user-details-activity c-slide-panel__body">
+          
+<p>
+<mat-input-container class="example-full-width">
+  <input matInput placeholder="Firstname" name="first_name" formControlName="first_name" required>
+  <mat-hint [hidden]="myForm.controls.first_name.valid || (myForm.controls.first_name.pristine && !submitted)">
+    <div class="error_field" *ngIf="myForm.controls.first_name.valid">Firstname is required (minimum 2 and maximum of 90 characters)</div>
+    <!--<div class="error_field" *ngIf="myForm.controls.first_name.errors.pattern">Only valid letters are allowed</div>-->
+  </mat-hint>
+</mat-input-container>
+</p>
+<p>
+<mat-input-container class="example-full-width">
+  <input matInput placeholder="Lastname" name="last_name" formControlName="last_name" required>
+  <mat-hint [hidden]="myForm.controls.last_name.valid || (myForm.controls.last_name.pristine && !submitted)">
+    <div class="error_field">Lastname is required (minimum 2 and maximum 90 characters)</div>
+  </mat-hint>
+</mat-input-container>
+</p>
+<p>
+<mat-input-container class="example-full-width">
+  <input matInput placeholder="Nickname" name="short_name" formControlName="short_name" required>
+  <mat-hint [hidden]="myForm.controls.short_name.valid || (myForm.controls.short_name.pristine && !submitted)">
+    <div class="error_field">Nickname required (minimum 2 and maximum 90 characters)</div>
+  </mat-hint>
+</mat-input-container>
+</p>
+
+<p>
+<mat-input-container class="example-full-width">
+  <input matInput placeholder="Email" name="email" formControlName="email" required>
+  <mat-hint [hidden]="myForm.controls.email.valid || (myForm.controls.email.pristine && !submitted)">
+    <div *ngIf="myForm.controls['email'].errors?.required" class="error_field">Email is required</div>
+     <div *ngIf="myForm.controls['email'].errors?.email" class="error_field">Enter a valid email</div>
+  </mat-hint>
+</mat-input-container>
+</p>
+<p>
+<mat-input-container class="example-full-width">
+  <input matInput placeholder="Address" name="address" formControlName="address">
+</mat-input-container>
+</p>
+
+<p>
+<mat-input-container class="example-full-width">
+  <input matInput placeholder="Telephone" name="telephone" formControlName="telephone">
+  <mat-hint [hidden]="myForm.controls.telephone.valid || (myForm.controls.telephone.pristine && !submitted)">
+    <div *ngIf="myForm.controls['telephone'].errors?.minlength || myForm.controls['telephone'].errors?.maxlength" class="error_field">Telephone is not valid! Must include the country code and be between 12-13 characters in length.</div>
+    
+  </mat-hint>
+</mat-input-container>
+</p>
+
+  <p>
+  <mat-input-container class="example-full-width">
+    <mat-select placeholder="Customers" multiple [formControl]="myForm.controls.customers" [compareWith]="compareFn" required>
+      <mat-select-trigger *ngIf="myForm.controls.customers.value">
+      {{myForm.controls.customers.value[0] != undefined ? myForm.controls.customers.value[0].name : ''}}
+      <span *ngIf="myForm.controls.customers.value[0] != undefined && myForm.controls.customers.value.length > 1" class="example-additional-selection">
+        (+{{myForm.controls.customers.value.length - 1}} others)
+      </span>
+      </mat-select-trigger>
+        <mat-option *ngFor="let customer of customerObservable" [value]="customer">{{customer.name}}</mat-option>
+    </mat-select>
+    <mat-hint [hidden]="myForm.controls.customers.valid || (myForm.controls.customers.pristine && !submitted)">
+       <div class="error_field">A customer is required</div>
+    </mat-hint>
+    <small *ngIf="myForm.controls.customers.value && myForm.controls.customers.value.length > 1">{{myForm.controls.customers.value.length }} customers selected</small>
+  </mat-input-container>
+  </p>
+  <p>
+    <mat-input-container class="example-full-width">
+        <mat-select placeholder="Vehicle groups" multiple [formControl]="myForm.controls.vehicle_groups" [compareWith]="compareVgFn" required>
+          <mat-select-trigger *ngIf="myForm.controls.vehicle_groups.value">
+          {{myForm.controls.vehicle_groups.value[0] != undefined ? myForm.controls.vehicle_groups.value[0].name : ''}}
+          <span *ngIf="myForm.controls.vehicle_groups.value.length > 1" class="example-additional-selection">
+            (+{{myForm.controls.vehicle_groups.value.length - 1}} others)
+          </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let group of vehicleGroup" [value]="group">{{group.name}}</mat-option>
+        </mat-select>
+        <mat-hint [hidden]="myForm.controls.vehicle_groups.valid || (myForm.controls.vehicle_groups.pristine && !submitted)">
+          <div class="error_field">At least one vehicle group is required</div>
+        </mat-hint>
+        <small *ngIf="myForm.controls.vehicle_groups.value && myForm.controls.vehicle_groups.value.length > 1">{{myForm.controls.vehicle_groups.value.length}} vehicle groups selected</small>
+      </mat-input-container>
+  </p>
+  
+
+<p *ngIf="userPerm.is_global_admin"> 
+      <mat-input-container class="example-full-width">
+          <mat-select placeholder="User role/permission" formControlName="permission" [compareWith]="comparePermsFn" required>
+            <mat-option *ngFor="let permName of permissionName" [value]="permName.name">{{permName.name}}</mat-option>
+          </mat-select>
+         <mat-hint [hidden]="myForm.controls.permission.valid || (myForm.controls.permission.pristine && !submitted)">
+          <div class="error_field">Please select a user role</div>
+        </mat-hint>
+      </mat-input-container>  
+  </p>
+  
+  <p *ngIf="userPerm.is_global_admin"> 
+      <mat-input-container class="example-full-width">
+          <mat-select placeholder="Module permmisions" multiple formControlName="modules" [compareWith]="compareFn" required>
+            <mat-select-trigger *ngIf="myForm.controls.modules.value">
+              {{myForm.controls.modules.value[0] != undefined ? myForm.controls.modules.value[0].name : ''}}
+              <span *ngIf="myForm.controls.modules.value.length > 1" class="example-additional-selection">
+                (+{{myForm.controls.modules.value.length - 1}} others)
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let module of modulePermissions" [value]="module">{{module.name}}</mat-option>
+          </mat-select>
+           <mat-hint [hidden]="myForm.controls.modules.valid || (myForm.controls.modules.pristine && !submitted)">
+            <div class="error_field">Please select a module permission</div>
+          </mat-hint>
+        <small *ngIf="myForm.controls.modules.value && myForm.controls.modules.value.length > 1">{{myForm.controls.modules.value.length}} modules selected</small>
+          
+      </mat-input-container>
+      
+    </p>
+               
+   
+  
+<!--Debugging-->
+<!--<div class="margin-20">
+      <div>myForm details:-</div>
+      <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>
+      <pre>Is myForm submitted?: <br>{{submitted | json}}</pre>
+    </div>
+Form changes:
+<div *ngFor="let event of events">
+    <pre> {{ event | json }} </pre>
+</div>-->
+               
+            <div class="details-update-user c-slide-panel__footer">
+               <small class="error_field" *ngIf="!myForm.valid">Please complete all required fields</small>
+                <button type="submit" class="c-btn c-btn-submit" [disabled]="!myForm.valid || isLoading" >{{updateBtn ? 'Update User': 'Add New User' }}</button>
+            </div>
+
+        </div>
+         <mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+        </form>
+      </mat-sidenav>
+
+      <mat-toolbar class="title-users c-title-toolbar">
+        <h1 class="c-title-toolbar__heading">Users</h1>
+        <div class="func-button-users c-title-toolbar__action-buttons">
+          <button mat-raised-button *ngIf="!hiddenBtn" (click)="sidenavUsers.open(); addNewUser(formUpdateAddUser)">Add new</button>
+          <button mat-raised-button *ngIf="!hiddenBtn" (click)="removeUser()">Delete</button>
+        </div>
+      </mat-toolbar>
+    </mat-sidenav-container>
+  </div>
+
+  <div class="c-grid-list__row c-grid-list__row--header">
+      <div class="c-grid-list__cell c-grid-list__cell--check-box" *ngIf="!hiddenBtn"></div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-14">
+        <span>User name</span>
+      </div>
+      
+      <div class="c-grid-list__cell c-grid-list__cell--width-10">
+        <span title="Roles/permissions">Roles</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-10">
+        <span title="Customers">Customers</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-10">
+        <span title="Vehicle groups">Vehicle groups</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-7 text--right">
+        <span>Created</span>
+      </div>
+  </div>
+<section class="o-scrollable--with-toolbar o-scrollable--with-shadow">
+
+<div [ngClass]="{'is-loading': isLoading}">
+  <div class="users-list view-user-list c-grid-list" >
+    <div class="row-users">
+      <div class="c-grid-list__row c-grid-list__row--hover" (click)="selectUser(user, i)" [class.active]="i == selectedRow" *ngFor="let user of users | orderBy: 'created_date'; let i = index">
+        <div class="c-grid-list__cell c-grid-list__cell--check-box" *ngIf="!hiddenBtn">
+          <span><mat-checkbox class="example-margin" *ngIf="!user.is_admin" (click)="checkUser(user.id)"></mat-checkbox></span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-14" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ user.first_name }} {{ user.last_name }}</span>
+        </div>
+       
+        <div class="c-grid-list__cell c-grid-list__cell--width-10" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span *ngIf="user.permission">{{ user.permission.name }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-10" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ user.customers.length }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-10" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ user.vehicle_groups.length }}</span>
+        </div>
+        <div class="c-grid-list__cell users-list-created c-grid-list__cell--width-7 text--right" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ user.created_date | date }}</span>
+        </div>
+      </div>
+    </div>
+
+  <mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+  </div>
+</div>
+</section>

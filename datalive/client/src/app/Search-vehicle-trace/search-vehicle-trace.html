@@ -1,0 +1,87 @@
+<form name="form" *ngIf="showPage" (ngSubmit)="searchOnDay(formSearch.value)" #formSearch="ngForm" class="example-form" novalidate>
+
+    <div class="d-context-panel__row ">
+      <div class="search-field-group">
+
+        <div class="ui-registration margin-bottom--small" title="{{selectedVehicle.registration}}">
+          <span class="ui-registration__reg">{{selectedVehicle.registration}}</span>
+          <div class="ui-registration__vehicle-icon">
+            <img src="{{ img }}icons/car-icon.svg" alt="Vehicle type - Car" *ngIf="selectedVehicle.type == 'CAR'" />
+            <img src="{{ img }}icons/van-icon.svg" alt="Vehicle type - Van" *ngIf="selectedVehicle.type == 'VAN'" />
+            <img src="{{ img }}icons/str-icon.svg" alt="Vehicle type - Str" *ngIf="selectedVehicle.type == 'STR'" />
+            <img src="{{ img }}icons/bik-icon.svg" alt="Vehicle type - Bike" *ngIf="selectedVehicle.type == 'BIK'" class="" />
+          </div>
+        </div>
+
+          <div class="search-field-input c-vehicle-group-list-wrapper" [ngClass]="{'is-loading': isLoading }">
+            <mat-input-container class="c-vehicle-group-list__filter">
+              <mat-icon class="icon--16 margin-top--tiny" matPrefix>search</mat-icon><input type="search" #searchVehicle matInput placeholder="Filter vehicles..." />
+            </mat-input-container>
+            <div class="c-vehicle-group-list" [ngClass]="{'is-loading': isLoading}">
+            <ul class="c-vehicle-group-list__list">
+              <li class="c-vehicle-group-list__list-item" *ngFor="let group of userVehicleGroupList | vehicleGroupListFilter: searchVehicle.value">
+                <div class="c-vehicle-group-list-folder-row">
+                    <mat-icon class="mat-24 c-vehicle-group-list__list-item-icon">folder_open</mat-icon> <span>{{group.name}}</span>
+                  </div>
+                  <ul class="c-vehicle-group-list__list">
+                    <li class="c-vehicle-group-list__list-item c-vehicle-group-list__list-item--vehicle" *ngFor="let vehicle of group.vehicles"
+                        (click)="selectVehicle(vehicle)" [ngClass]="{'c-vehicle-group-list__list-item--selected': selectedVehicleId == vehicle.id}">
+                        <span class="mat-line c-vehicle-group-list-vehicle-text"><input type="radio" class="c-vehicle-group-list-vehicle-radio" [checked]="selectedVehicleId == vehicle.id ? true : false">{{ vehicle.registration }}</span>
+                         <span class="c-vehicle-group-list__list-item-icon">
+                          <img src="{{ img }}icons/car-icon.svg" alt="Vehicle type - Car" *ngIf="vehicle.type == 'CAR'" class="" />
+                          <img src="{{ img }}icons/van-icon.svg" alt="Vehicle type - Van" *ngIf="vehicle.type == 'VAN'" class="" />
+                          <img src="{{ img }}icons/str-icon.svg" alt="Vehicle type - Str" *ngIf="vehicle.type == 'STR'" class="" />
+                          <img src="{{ img }}icons/bik-icon.svg" alt="Vehicle type - Bike" *ngIf="vehicle.type == 'BIK'" class="" />
+                         </span>
+                    </li>
+                  </ul>
+              </li>
+            </ul>
+          </div>
+          <mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+          </div>
+      </div>
+
+    </div>
+
+  <div class="d-context-panel__row d-context-panel__date-field date-day">
+    <div class="time input-prefix box">
+      <mat-form-field>
+        <input matInput [matDatepicker]="startAtPicker" [readonly]="true" [(ngModel)]="day" placeholder="Select a date" name="day"
+            [disabled]="customFunctionality('day')">
+        <mat-datepicker-toggle matSuffix [for]="startAtPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startAtPicker [touchUi]="touch"></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="container-date-option">
+      <div class="date-option">
+        <button type="button" class="date-button" [disabled]="customFunctionality('day')" mat-raised-button (click)="toggleDay(-1)">-1d</button>
+        <button type="button" class="date-button" [disabled]="customFunctionality('day')" mat-raised-button (click)="toggleDay(1)">+1d</button>
+        <mat-input-container class="dropdown-for-day">
+          <mat-select name="date-option-day" [(ngModel)]="dropdownTripsStopsSelect" (ngModelChange)="changeDateDayOption($event)">
+            <mat-option *ngFor="let option of dropdownTripsStops" [value]="option.value">
+              {{ option.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-input-container>
+      </div>
+    </div>
+
+    <!--<div class="time input-prefix box">
+      <mat-input-container>
+        <mat-icon matPrefix>date_range</mat-icon>
+        <input (ngModelChange)="changeField($event, 'day')" type="date" matInput max="2999-W10" name="day" [(ngModel)]="day" #dayWeek="ngModel" required>
+        <mat-hint [hidden]="dayWeek.valid || dayWeek.untouched">
+            <div *ngIf="dayWeek.errors && dayWeek.errors.required" class="error_field">Day is required</div>
+        </mat-hint>
+      </mat-input-container>
+
+    </div>-->
+  </div>
+
+  <div class="search-field-send d-context-panel__row">
+    <button  type="submit" class="c-btn d-context-panel__search-btn" [disabled]="validSearch(!formSearch.valid, !vehicleCtrl.valid)">Search</button>
+  </div>
+
+</form>

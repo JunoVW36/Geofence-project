@@ -1,0 +1,53 @@
+$progress-spinner-width:            40px;
+$progress-spinner-height:           $progress-spinner-width;
+$progress-spinner-stroke-width:   4px;
+$progress-spinner-color:            $color-brand;
+
+
+.c-progress-spinner{
+    &.mat-progress-spinner {
+       width: $progress-spinner-width !important;
+       height: $progress-spinner-height !important;
+        svg {
+            width: $progress-spinner-width !important;
+            height: $progress-spinner-height !important;
+        }
+        circle {
+            stroke-width: $progress-spinner-stroke-width !important;
+            stroke: $progress-spinner-color;
+       }
+    }
+    
+}
+
+ // when is laoding is active
+.is-loading {
+    position: relative;
+    height: 100%;
+    &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        
+        z-index: 1;
+        background-color: rgba(255,255,255,0.65);
+    }
+    .mat-progress-spinner {
+        position: absolute;
+        top: 50%;
+        left:50%;
+      
+        margin-left: -($progress-spinner-width / 2);
+        margin-top: -($progress-spinner-height / 2);
+        z-index: 2;
+        
+    }
+
+    &.box {
+        min-height: 200px;
+    }
+}

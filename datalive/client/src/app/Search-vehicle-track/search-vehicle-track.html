@@ -1,0 +1,50 @@
+<form name="form" *ngIf="showPage" (ngSubmit)="searchForDay ? searchOnDay(formSearch.value) : mainSearch(formSearch.value)" #formSearch="ngForm" class="example-form" novalidate>
+
+    <div class="d-context-panel__row ">
+      <div class="search-field-group">
+
+          <div class="search-field-input c-vehicle-group-list-wrapper" [ngClass]="{'is-loading': isLoading }">
+            <mat-input-container class="c-vehicle-group-list__filter">
+              <mat-icon class="icon--16 margin-top--tiny" matPrefix>search</mat-icon><input type="search" #searchVehicle matInput placeholder="Filter vehicles..." />
+            </mat-input-container>
+            <div class="c-vehicle-group-list-long" [ngClass]="{'is-loading': isLoading}">
+            <ul class="c-vehicle-group-list__list">
+              <li class="c-vehicle-group-list__list-item" *ngFor="let group of userVehicleGroupList | vehicleGroupListFilter: searchVehicle.value; let grpIndex = index">
+
+                <div class="c-vehicle-group-list-folder-row" (click)="selectVehicleGroup(group)">
+                    <mat-icon class="mat-24 c-vehicle-group-list__list-item-icon">folder_open</mat-icon> <span class="c-checkbox c-vehicle-group-list-vehicle-text"><input type="checkbox" class="c-vehicle-group-list-vehicle-radio" [checked]="group.selected"><label>{{group.name}}</label></span>
+                </div>
+
+                  <ul class="c-vehicle-group-list__list">
+
+                    <li class="c-vehicle-group-list__list-item c-vehicle-group-list__list-item--vehicle" *ngFor="let vehicle of group.vehicles" (click)="selectVehicle(vehicle)"
+                         [ngClass]="{'c-vehicle-group-list__list-item--selected': uniqueVehicleList[vehicle.uniqueListIndex].selected}">
+
+                        <span class="mat-line c-vehicle-group-list-vehicle-text c-checkbox">
+                            <input type="checkbox" class="c-vehicle-group-list-vehicle-radio"
+                            [checked]="uniqueVehicleList[vehicle.uniqueListIndex].selected" >
+                            <label >{{ vehicle.registration }}</label>
+                        </span>
+
+                         <span class="c-vehicle-group-list__list-item-icon">
+                           <img src="{{ img }}icons/car-icon.svg" alt="Vehicle type - Car" *ngIf="vehicle.type == 'CAR'" class="" />
+                           <img src="{{ img }}icons/van-icon.svg" alt="Vehicle type - Van" *ngIf="vehicle.type == 'VAN'" class="" />
+                           <img src="{{ img }}icons/str-icon.svg" alt="Vehicle type - Str" *ngIf="vehicle.type == 'STR'" class="" />
+                           <img src="{{ img }}icons/bik-icon.svg" alt="Vehicle type - Bike" *ngIf="vehicle.type == 'BIK'" class="" />
+                         </span>
+
+                    </li>
+
+                  </ul>
+              </li>
+            </ul>
+          </div>
+          <mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+          </div>
+      </div>
+
+    </div>
+
+</form>
+
+

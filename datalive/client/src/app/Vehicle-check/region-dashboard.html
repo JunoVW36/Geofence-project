@@ -1,0 +1,210 @@
+<section class="wrapper-administration o-content vehicle-check-page">
+  <aside class="admin-navigation o-content__sidebar c-sidebar"
+         [ngClass]="{'o-content__sidebar--hidden': !sidemenuOpen}">
+    <div class="d-context-panel__head flex-direction--column">
+      <img class="d-context-panel__head-img" src="{{ img }}vehicle-check-icon--grey.png" alt="Trips and stops icon">
+      <h4 class="d-context-panel__title">Vehicle Check</h4>
+    </div>
+    <region-depot-list (outputApiIsLoading)="this.isLoading=$event" [instance]="'region'"></region-depot-list>
+    <button (click)="sidemenuOpen = !sidemenuOpen" class="c-title-toolbar__toggle-btn"
+            [ngClass]="{'sidemenu-is-hidden': !sidemenuOpen}">
+      <mat-icon class="icon--16 c-title-toolbar__toggle-btn-icon">chevron_left</mat-icon>
+    </button>
+
+  </aside>
+
+  <main class="wrapper-admin-content o-content__main ">
+    <!-- <mat-toolbar class="c-title-toolbar">
+
+      <h1 class="c-title-toolbar__heading">
+
+        <span *ngIf="titleTimesheet == true">
+            <a class="timesheet-navigation" [routerLink]="['/timesheet']">Timesheet</a>
+            <mat-icon class="mat-icon--16">chevron_right</mat-icon>
+        </span>
+          <span>Region Name</span>
+          <mat-icon class="mat-icon--16">chevron_right</mat-icon>
+
+          <span class="c-title-toolbar__heading__meta">
+           Depot name
+          <mat-icon class="mat-icon--16">chevron_right</mat-icon>
+            {{ startDateTime | date:'dd.MM.yyyy' }}
+            <mat-icon class="mat-icon--16">date_range</mat-icon>
+          </span>
+
+      </h1>
+     <button onclick="window.print();" class="c-title-toolbar__print c-btn"><mat-icon class="">print</mat-icon></button>
+    </mat-toolbar> -->
+
+    <section class="o-scrollable--without-toolbar">
+
+      <div class="content-time" [ngClass]="{'is-loading': isLoading}">
+
+        <!-- <div *ngIf="trip.trips.length === 0 && !isLoading" class="c-message c-message--no-data">
+           <mat-icon class="mat-icon--48">sentiment_dissatisfied</mat-icon>
+           <h3 class="c-message__header">There is no Region/Depot Vehicle Check data for those dates</h3>
+          <div class="c-message__text">
+            <p>Please choose a Region from the lefthand list to retrieve vehicle check data.</p>
+          </div>
+        </div> -->
+        <div class="vehicle-ckeck-top-section chart-top-section">
+
+          <div class="vehicle-ckeck-top-section--left-pan ">
+            
+            <ul class="chart-stats-bar unstyled-list">
+              <li class="chart-stats-bar__item chart-stats-bar__title "><h1>Region name</h1></li>
+              <li class="chart-stats-bar__item">
+                <span class="chart-stats-bar__value">{{regionStats.total_vehicle_checks}}</span>
+                Vehicle checks
+              </li>
+              <li class="chart-stats-bar__item">
+                <span class="chart-stats-bar__value">{{regionStats.total_handovers}}</span>
+                Handovers
+              </li>
+              <li class="chart-stats-bar__item">
+                <span class="chart-stats-bar__value">{{regionStats.total_audit_checks}}</span>
+                Audit checks
+              </li>
+              <!--<li>-->
+                <!--<span>126</span>-->
+                <!--Gate checks-->
+              <!--</li>-->
+            </ul>
+           
+           <div class="content-padding">
+            <div class="third">
+               <h2>Total damaged vehicles</h2>
+              <svg width="100%" height="100%" viewBox="0 0 42 42" class="donut">
+                <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="#f1f1f1"></circle>
+                <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#d2d3d4"
+                        stroke-width="1"></circle>
+                <circle class="donut-segment"
+                        cx="21"
+                        cy="21"
+                        r="15.91549430918954"
+                        fill="transparent"
+                        [attr.stroke]="colorCode(calculatePercentage(regionStats.total_damaged_vehicles, regionStats.total_vehicles))"
+                        stroke-width="1"
+                        [attr.stroke-dasharray]="calculateDashArray(regionStats.total_damaged_vehicles, regionStats.total_vehicles)"
+                        stroke-dashoffset="0"
+                        stroke-linecap="round"></circle>
+                <g class="chart-text">
+                  <text x="50%" y="50%" class="chart-number">
+                    {{regionStats.total_damaged_vehicles}}
+                  </text>
+                  <text x="50%" y="50%" class="chart-label">
+                    OUT OF {{regionStats.total_vehicles}}
+                  </text>
+                </g>
+              </svg>
+              <p class="averages-text">Avarage damage: {{calculatePercentage(regionStats.total_damaged_vehicles, regionStats.total_vehicles)}} %</p>
+            </div>
+
+            <div class="third">
+               <h2>Damages not fixed</h2>
+              <svg width="100%" height="100%" viewBox="0 0 42 42" class="donut">
+                <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="#f1f1f1"></circle>
+                <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#d2d3d4"
+                        stroke-width="1"></circle>
+                <circle class="donut-segment"
+                        cx="21"
+                        cy="21"
+                        r="15.91549430918954"
+                        fill="transparent"
+                        [attr.stroke]="colorCode(calculatePercentage(regionStats.num_damages_not_fixed, regionStats.total_damages))"
+                        stroke-width="1"
+                        [attr.stroke-dasharray]="calculateDashArray(regionStats.num_damages_not_fixed, regionStats.total_damages)"
+                        stroke-dashoffset="0"
+                        stroke-linecap="round"></circle>
+                <g class="chart-text">
+                  <text x="50%" y="50%" class="chart-number">
+                    {{regionStats.num_damages_not_fixed}}
+                  </text>
+                  <text x="50%" y="50%" class="chart-label">
+                    OUT OF {{regionStats.total_damages}}
+                  </text>
+                </g>
+              </svg>
+              <p class="averages-text">Avarage not fixed: {{calculatePercentage(regionStats.num_damages_not_fixed, regionStats.total_damages)}} %</p>
+            </div>
+
+            <div class="third">
+               <h2>Damages not fixed over 21 days</h2>
+              <svg width="100%" height="100%" viewBox="0 0 42 42" class="donut">
+                <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="#f1f1f1"></circle>
+                <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#d2d3d4"
+                        stroke-width="1"></circle>
+                <circle class="donut-segment"
+                        cx="21"
+                        cy="21"
+                        r="15.91549430918954"
+                        fill="transparent"
+                        [attr.stroke]="colorCode(calculatePercentage(regionStats.num_damages_not_fixed_over_21_days, regionStats.total_damages))"
+                        stroke-width="1"
+                        [attr.stroke-dasharray]="calculateDashArray(regionStats.num_damages_not_fixed_over_21_days, regionStats.total_damages)"
+                        stroke-dashoffset="0"
+                        stroke-linecap="round"></circle>
+                <g class="chart-text">
+                  <text x="50%" y="50%" class="chart-number">
+                    {{regionStats.num_damages_not_fixed_over_21_days}}
+                  </text>
+                  <text x="50%" y="50%" class="chart-label">
+                    OUT OF {{regionStats.total_damages}}
+                  </text>
+                </g>
+              </svg>
+              <p class="averages-text">Avarage not fixed: {{calculatePercentage(regionStats.num_damages_not_fixed_over_21_days, regionStats.total_damages)}} %</p>
+            </div>
+            </div>
+          </div>
+          <!--<div class="vehicle-ckeck-top-section--right-pane">
+            <small>Other totals</small>
+            <ul class="other-totals-list">
+              <li>
+                <span>{{regionStats.total_vehicle_checks}}</span>
+                Vehicle checks
+              </li>
+              <li>
+                <span>{{regionStats.total_handovers}}</span>
+                Handovers
+              </li>
+              <li>
+                <span>{{regionStats.total_audit_checks}}</span>
+                Audit checks
+              </li>
+              
+
+            </ul>
+          </div>-->
+        </div>
+
+
+        <div class="vehicle-ckeck-bottom-section">
+          <h1><span>Depots in region</span></h1>
+
+          <div class="flex-grid-thirds">
+            <div class="col c-depot-card" *ngFor="let regionDepotStat of regionDepotStats; let i = index">
+              <h3 class="c-depot-card__heading">{{regionDepotStat.name}}</h3>
+              <ul>
+                <li>Vehicles: <span>{{regionDepotStat.vehicles}}</span></li>
+                <li>Damaged: <span>{{regionDepotStat.num_damaged_vehicles}}</span></li>
+                <li>Over 21 days: <span>{{regionDepotStat.num_damaged_vehicles_over_21_days}}</span></li>
+              </ul>
+              
+              <button [routerLink]="['/vehiclecheck/depot/',regionDepotStat.id]" class="c-btn c-depot-card__btn">View depot</button>
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+        <mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+      </div>
+
+
+    </section>
+
+  </main>
+</section>

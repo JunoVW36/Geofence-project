@@ -1,0 +1,81 @@
+<!--TODO: change inline styles to classes everywhere-->
+<div style="margin-bottom: 20px; border-bottom: 1px solid black; border-left: 1px dashed black; padding-left: 20px">
+
+  <div>
+    Select field type:
+    <select [(ngModel)]="localSurveyItem.type" (change)="surveyItemChanged()">
+      <option *ngFor="let fieldType of fieldTypes" [value]="fieldType.value">{{fieldType.title}}
+    </select>
+  </div>
+
+  <div>
+    Text:
+    <input type="text" [(ngModel)]="localSurveyItem.text" (change)="surveyItemChanged()">
+  </div>
+
+  <div>
+      Allow comments?
+      <input type="checkbox" [(ngModel)]="localSurveyItem.comments" (change)="surveyItemChanged()">
+  </div>
+
+  <div>
+    Order:
+    <input type="number" min="0" [(ngModel)]="localSurveyItem.order" (change)="surveyItemChanged()">
+  </div>
+
+  <div *ngIf="localSurveyItem.type == 'S'">
+      Max value:
+      <input type="number" [(ngModel)]="localSurveyItem.max" (change)="surveyItemChanged()">
+  </div>
+
+  <div *ngIf="localSurveyItem.type == 'I'">
+    <div>
+      Minimum:
+      <input type="number" [(ngModel)]="localSurveyItem.min" (change)="surveyItemChanged()">
+    </div>
+    <div>
+      Maximum:
+      <input type="number" [(ngModel)]="localSurveyItem.max" (change)="surveyItemChanged()">
+    </div>
+    <div>
+      Default:
+      <input type="number" [(ngModel)]="localSurveyItem.def" (change)="surveyItemChanged()">
+    </div>
+  </div>
+
+  <div *ngIf="localSurveyItem.type == 'L'">
+    Style:
+    <select [(ngModel)]="localSurveyItem.style" (change)="surveyItemChanged()">
+      <option *ngFor="let style of labelStyleList" [value]="style.value">{{style.title}}</option>
+    </select>
+  </div>
+
+  <div *ngIf="localSurveyItem.type == 'D'">
+
+    <div>
+      Style:
+      <select [(ngModel)]="localSurveyItem.style" (change)="surveyItemChanged()">
+        <option *ngFor="let style of dropDownStyleList" [value]="style.value">{{style.title}}</option>
+      </select>
+    </div>
+
+    <div>
+      Allowed values:
+      <textarea (change)="generateAllowedValues(localSurveyItem)"
+                [(ngModel)]="localSurveyItem.allowedValuesString"></textarea>
+    </div>
+  </div>
+
+  <div *ngIf="localSurveyItem.items.length > 0">
+    <div *ngFor="let item of localSurveyItem.items | orderBy:'order'">
+      <div style="float: right" (click)="deleteItem(item)">
+        <b>X</b>
+      </div>
+      <item-builder [surveyItem]="item" (surveyItemEmitter)="updateEntries($event, item)"></item-builder>
+    </div>
+  </div>
+
+  <div>
+    <button (click)="commonService.addAuditSurveyField(localSurveyItem.items)">Add field</button>
+  </div>
+</div>

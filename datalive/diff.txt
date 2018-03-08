@@ -1,0 +1,54 @@
+42,44c42,44
+< DEBUG = True
+< CSRF_COOKIE_SECURE = True # Change to True when deploying other than localreserved.
+< SESSION_COOKIE_SECURE = True # Change to True when deploying other than local
+---
+> DEBUG = False
+> CSRF_COOKIE_SECURE = True
+> SESSION_COOKIE_SECURE = True
+119a120
+> 
+159c160
+<             'HOST': '/cloudsql/datalive-staging:europe-west1:datalive-django',
+---
+>             'HOST': '/cloudsql/datalive-production:europe-west1:datalive-django',
+162c163
+<             'PASSWORD': '$45Tk@d2l9',
+---
+>             'PASSWORD': '$hf#17-data-6',
+170c171
+<             'HOST': '/cloudsql/datalive-staging:europe-west1:datalive-django',
+---
+>             'HOST': '/cloudsql/datalive-production:europe-west1:datalive-django',
+173c174
+<             'PASSWORD': '$45Tk@d2l9',
+---
+>             'PASSWORD': '$hf#17-data-6',
+190c191
+<             'PASSWORD': '$45Tk@d2l9',
+---
+>             'PASSWORD': '$hf#17-data-6',
+218c219
+< #Google Storage settings (using 'storages' library)
+---
+> #Google Storage settings (using storages library)
+220c221
+< GS_BUCKET_NAME = 'datalive-staging-file-storage'#datalive-staging.appspot.com'
+---
+> GS_BUCKET_NAME = 'datalive-production-file-storage-1'
+235,236c236,237
+< # PROJECT_ID = 'datalive-staging'
+< # CLOUD_STORAGE_BUCKET = 'datalive-staging.appspot.com'
+---
+> # PROJECT_ID = 'datalive-production'
+> # CLOUD_STORAGE_BUCKET = 'datalive-production.appspot.com'
+242d242
+< 
+292d291
+< 
+295,296c294,295
+< NOTIFICATIONS_EMAIL_ADDRESS = 'no-reply@datalive-staging.appspotmail.com'
+< SITE_URL = 'https://datalive-staging.appspot.com'
+---
+> NOTIFICATIONS_EMAIL_ADDRESS = 'no-reply@datalive-production.appspotmail.com'
+> SITE_URL = 'https://datalive-production.appspot.com'

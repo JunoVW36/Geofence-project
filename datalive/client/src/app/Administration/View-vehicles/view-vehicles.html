@@ -1,0 +1,356 @@
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+
+   <div class="sidenav-user c-slide-panel  c-slide-panel--in-toolbar">
+    <mat-sidenav-container class="c-slide-panel__container">
+      <mat-sidenav align="end" #sidenavUsers mode="over" class="mat-sidenav c-slide-panel__sidenav c-slide-panel__sidenav--wide">
+        <div class="c-slide-panel__head">
+          <h4 class="c-slide-panel__title">{{ selectedVehicle.registration }} Details</h4>
+          <button mat-icon-button (click)="sidenavUsers.close()">
+            <mat-icon class="mat-24" >close</mat-icon>
+          </button>
+        </div>
+
+
+        <div class="user-details-activity c-slide-panel__body">
+              <form name="form" (ngSubmit)="sendFormVehicle(formUpdateAddVehicle.value)" class="example-form" #formUpdateAddVehicle="ngForm" novalidate [ngClass]="{'is-loading': isLoading}">
+                 
+                
+                <p class="between-select">
+                  <mat-input-container class="example-full-width">
+                  <mat-select (change)="changeCust(selectedVehicle.customer.name)" [ngClass]="{'touched': touchedCust}" name="customer" [(ngModel)]="selectedVehicle.customer.name" #customer="ngModel" placeholder="Customer" required>
+                    <mat-option *ngFor="let cust of currentCustomers" [value]="cust.name">
+                      {{cust.name}}
+                    </mat-option>
+                  </mat-select>
+                  </mat-input-container>
+                </p>
+
+                 <div class="o-grid o-grid--padding-large">
+                    <mat-input-container class="example-full-width">
+                        <input type="text" matInput placeholder="Registration" name="registration" [(ngModel)]="selectedVehicle.registration" #registration="ngModel" required>
+                        
+                        <mat-hint [hidden]="registration.valid || registration.untouched">
+                          <div *ngIf="registration.errors && registration.errors.required" class="error_field">Registration is required</div>
+                        </mat-hint>
+                      </mat-input-container>
+                        
+                  <div class="o-grid__col-1-3">
+                    
+                      <mat-input-container class="example-full-width">
+                        <mat-select (change)="changeManufacturer($event.value)" [ngClass]="{'touched': touchedManufacturer}" name="manufacturer" 
+                          [(ngModel)]="selectedVehicle.manufacturer_model.manufacturer" #manufacturer 
+                          placeholder="Manufacturer" [compareWith]="compareManufacturer" required>
+                          <mat-option *ngFor="let man of manufacturerList" [value]="man">
+                            {{man.name}}
+                          </mat-option>
+                        </mat-select>
+                        </mat-input-container>
+                    
+                  </div>
+                  <div class="o-grid__col-1-3">
+                     <mat-input-container class="example-full-width" *ngIf="selectedVehicle.manufacturer_model != null">
+                        <mat-select (change)="changeModel(selectedVehicle.manufacturer_model)" [ngClass]="{'touched': touchedModel}" name="model" 
+                          [(ngModel)]="selectedVehicle.manufacturer_model" #model="ngModel" placeholder="Model" 
+                          [compareWith]="compareModel" required>
+                          <mat-option *ngFor="let model of filteredManModels" [value]="model">
+                            {{model.model}}
+                          </mat-option>
+                        </mat-select>
+                        </mat-input-container>
+                  </div>
+                  <div class="o-grid__col-1-3">
+                    <mat-input-container class="example-full-width">
+                          <input matInput placeholder="Type" name="type" [readonly]="true" [(ngModel)]="selectedVehicle.manufacturer_model.vehicle_type">
+                          <span matSuffix>
+                            <img src="{{ img }}icons/car-icon.svg" alt="Vehicle type - Car" *ngIf="selectedVehicle.manufacturer_model.vehicle_type == 'CAR'" class="" />
+                            <img src="{{ img }}icons/van-icon.svg" alt="Vehicle type - Van" *ngIf="selectedVehicle.manufacturer_model.vehicle_type == 'VAN'" class="" />
+                            <img src="{{ img }}icons/str-icon.svg" alt="Vehicle type - Str" *ngIf="selectedVehicle.manufacturer_model.vehicle_type == 'STR'" class="" />
+                            <img src="{{ img }}icons/bik-icon.svg" alt="Vehicle type - Bike" *ngIf="selectedVehicle.manufacturer_model.vehicle_type == 'BIK'" class="" />
+                        </span>
+                    </mat-input-container>
+                  </div>
+                 </div>
+                 <div class="c-divider">
+                   <hr>
+                 </div>
+                <div class="">
+                  <!--Vehicle specific fields-->
+                  <h4>Vehicle Details</h4>
+                  <div class="multi-column">
+                    <p class="avoid-col-break">
+                      <mat-input-container class="example-full-width">
+                        <input matInput placeholder="Fleet" name="fleet_id" [(ngModel)]="selectedVehicle.fleet_id" #fleet_id="ngModel" required>
+                        <mat-hint [hidden]="fleet_id.valid || fleet_id.untouched">
+                          <div *ngIf="fleet_id.errors && fleet_id.errors.required" class="error_field">Fleet is required</div>
+                        </mat-hint>
+                      </mat-input-container>
+                    </p>
+                  
+                    <p class="avoid-col-break">
+                      <mat-input-container class="example-full-width">
+                        <input matInput placeholder="Vin" name="vin" [(ngModel)]="selectedVehicle.vin" #vin="ngModel" required>
+                        <mat-hint [hidden]="vin.valid || vin.untouched">
+                          <div *ngIf="vin.errors && vin.errors.required" class="error_field">Vin is required</div>
+                        </mat-hint>
+                      </mat-input-container>
+                    </p>
+                    <p class="avoid-col-break">
+                      <mat-input-container class="example-full-width">
+                        <mat-select (change)="changeTracker($event.value)" [ngClass]="{'touched': touchedTracker}" name="trackers" 
+                          [(ngModel)]="selectedVehicle.trackers" #trackers="ngModel" placeholder="Select a tracker for this vehicle" 
+                          [compareWith]="compareTrackers" required>
+                          <mat-option *ngFor="let tracker of vehiclesTrackers" [value]="tracker">
+                            {{tracker.tracker}}
+                          </mat-option>
+                        </mat-select>
+                        </mat-input-container>
+                    </p>
+
+                    <!--<p class="tags" [ngClass]="{'tags-touched': touchedTrack}">
+                     
+                      <tag-input (onAdd)="changeTrack(selectedVehicle.trackers)"
+                                (onRemove)="changeTrack(selectedVehicle.trackers)"
+                                placeholder="Add new tracker"
+                                secondaryPlaceholder="Add new tracker*"
+                                name="trackers"
+                                [(ngModel)]="selectedVehicle.trackers"
+                                #trackers="ngModel"
+                                [onlyFromAutocomplete]="true"
+                                [identifyBy]="'id'"
+                                [displayBy]="'tracker'"
+                                required
+                                name="trackers">
+                        <tag-input-dropdown
+                          placeholder="Add new tracker"
+                          secondaryPlaceholder="Add new tracker"
+                          [showDropdownIfEmpty]="true"
+                          [autocompleteObservable]="requestAutocompleteItemsFake"
+                          [identifyBy]="'id'"
+                          [displayBy]="'tracker'">
+                        </tag-input-dropdown>
+                      </tag-input>
+                    </p>-->
+                       <!-- NEW FIELDS -->
+                    <p class="avoid-col-break">
+                      <mat-form-field>
+                        <input matInput [matDatepicker]="motDatepicker"  placeholder="MOT Expiry Date" name="mot_date" [(ngModel)]="selectedVehicle.mot_date" #mot_date="ngModel" >
+                        <mat-datepicker-toggle matSuffix [for]="motDatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #motDatepicker></mat-datepicker>
+                      </mat-form-field>
+                        <!-- <mat-hint [hidden]="vin.valid || vin.untouched">
+                          <div *ngIf="vin.errors && vin.errors.required" class="error_field">Vin is required</div>
+                        </mat-hint> -->
+                    </p>
+                    <p class="avoid-col-break">
+                      <mat-form-field>
+                        <input matInput [matDatepicker]="allocated_depotDatepicker"  placeholder="Allocated Depot Date" name="allocated_depot_date" [(ngModel)]="selectedVehicle.allocated_depot_date" #allocated_depot_date="ngModel" >
+                        <mat-datepicker-toggle matSuffix [for]="allocated_depotDatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #allocated_depotDatepicker></mat-datepicker>
+                      </mat-form-field>
+                        <!-- <mat-hint [hidden]="vin.valid || vin.untouched">
+                          <div *ngIf="vin.errors && vin.errors.required" class="error_field">Vin is required</div>
+                        </mat-hint> -->
+                    </p>
+                    <!-- ved -->
+                    <p class="avoid-col-break">
+                      <mat-form-field>
+                        <input matInput [matDatepicker]="vedDatepicker"  placeholder="VED" name="ved" [(ngModel)]="selectedVehicle.ved" #ved="ngModel" >
+                        <mat-datepicker-toggle matSuffix [for]="vedDatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #vedDatepicker></mat-datepicker>
+                      </mat-form-field>
+                        <!-- <mat-hint [hidden]="vin.valid || vin.untouched">
+                          <div *ngIf="vin.errors && vin.errors.required" class="error_field">Vin is required</div>
+                        </mat-hint> -->
+                    </p>
+                    <!-- service_due_date  -->
+                    <p class="avoid-col-break">
+                      <mat-form-field>
+                        <input matInput [matDatepicker]="serviceDueDateDatepicker"  placeholder="Service Due Date" name="service_due_date" [(ngModel)]="selectedVehicle.service_due_date" #service_due_date="ngModel" >
+                        <mat-datepicker-toggle matSuffix [for]="serviceDueDateDatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #serviceDueDateDatepicker></mat-datepicker>
+                      </mat-form-field>
+                        <!-- <mat-hint [hidden]="vin.valid || vin.untouched">
+                          <div *ngIf="vin.errors && vin.errors.required" class="error_field">Vin is required</div>
+                        </mat-hint> -->
+                    </p>
+                    <!-- type="number" service_due_odo  -->
+                    <p class="avoid-col-break">
+                      <mat-form-field>
+                        <input matInput type="number"  placeholder="Service Due Odo" name="service_due_odo" [(ngModel)]="selectedVehicle.service_due_odo" #service_due_odo="ngModel" >
+                      </mat-form-field>
+                    </p>
+                    <!-- latest_odometer_reading  -->
+                    <p class="avoid-col-break">
+                      <mat-form-field>
+                        <input matInput type="number"  placeholder="Latest odometer reading" name="latest_odometer_reading" [(ngModel)]="selectedVehicle.latest_odometer_reading" #latest_odometer_reading="ngModel" >
+                      </mat-form-field>
+                    </p>
+                    <!-- latest_odometer_date -->
+                    <p class="avoid-col-break">
+                      <mat-form-field>
+                        <input matInput [matDatepicker]="latestOdometerDateDatepicker"  placeholder="Latest ODO Date" name="latest_odometer_date" [(ngModel)]="selectedVehicle.latest_odometer_date" #latest_odometer_date="ngModel" >
+                        <mat-datepicker-toggle matSuffix [for]="latestOdometerDateDatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #latestOdometerDateDatepicker></mat-datepicker>
+                      </mat-form-field>
+                        <!-- <mat-hint [hidden]="vin.valid || vin.untouched">
+                          <div *ngIf="vin.errors && vin.errors.required" class="error_field">Vin is required</div>
+                        </mat-hint> -->
+                    </p>
+                    <!-- latest_odometer_source  -->
+                    <p class="avoid-col-break">
+                      <mat-input-container class="example-full-width">
+                        <mat-select name="latest_odometer_source"
+                        placeholder="Latest Odometer Source"
+                        [(ngModel)]="selectedVehicle.latest_odometer_source"
+                        (change)="changeLOS(selectedVehicle.latest_odometer_source)" [ngClass]="{'touched': touchedType}">
+                          <mat-option>None</mat-option>
+                          <mat-option *ngFor="let source of sources" [value]="source.value">
+                            {{ source.text }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-input-container>
+                    </p>
+
+                  </div>
+
+                  <!--Model specific fields-->
+                  <mat-accordion>
+                    <mat-expansion-panel (opened)="panelOpenState = true"
+                                        (closed)="panelOpenState = false">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{selectedVehicle.manufacturer_model.manufacturer.name}} {{selectedVehicle.manufacturer_model.model}} Specific Details
+                        </mat-panel-title>
+                        
+                      </mat-expansion-panel-header>
+                        <div class="multi-column">
+                              <p>
+                                <mat-input-container class="example-full-width">
+                                  <input matInput placeholder="Fuel Type" name="fuel_type" [readonly]="true" [(ngModel)]="selectedVehicle.manufacturer_model.fuel_type">
+                                </mat-input-container>
+                              </p>
+                              <p>
+                                <mat-input-container class="example-full-width">
+                                  <input matInput placeholder="Load Capacity" name="load_capacity" [readonly]="true" [(ngModel)]="selectedVehicle.manufacturer_model.load_capacity">
+                                </mat-input-container>
+                              </p>
+                              <p>
+                                <mat-input-container class="example-full-width">
+                                  <input matInput placeholder="Gross Vehicle Weight" name="gross_vehicle_weight" [readonly]="true" [(ngModel)]="selectedVehicle.manufacturer_model.gross_vehicle_weight">
+                                </mat-input-container>
+                              </p>
+                              <p>
+                                <mat-input-container class="example-full-width ">
+                                  <input matInput placeholder="Front Tyre Pressure" name="front_tyre_pressure" [readonly]="true" [(ngModel)]="selectedVehicle.manufacturer_model.front_tyre_pressure">
+                                </mat-input-container>
+                              </p>
+                              <p>
+                                  <mat-input-container class="example-full-width o-grid__col-1-2">
+                                    <input matInput placeholder="Rear Tyre Pressure" name="rear_tyre_pressure" [readonly]="true" [(ngModel)]="selectedVehicle.manufacturer_model.rear_tyre_pressure">
+                                  </mat-input-container>
+                              </p>
+                              
+                              <p>
+                                <mat-input-container class="example-full-width">
+                                  <input matInput placeholder="Tyre Size" name="tyre_size" [readonly]="true" [(ngModel)]="selectedVehicle.manufacturer_model.tyre_size">
+                                </mat-input-container>
+                              </p>
+
+
+                          </div>
+
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                 
+                </div>
+               
+
+               
+               
+                
+
+             
+
+
+
+                 <div class="details-update-user c-slide-panel__footer c-slide-panel__footer--full">
+                  <button type="submit" class="c-btn c-btn-submit" *ngIf="updateBtn" [disabled]="!formUpdateAddVehicle.valid || disableSend">Update vehicle</button>
+                  <button type="submit" class="c-btn c-btn-submit" *ngIf="!updateBtn" [disabled]="!formUpdateAddVehicle.valid || disableSend">Add vehicle</button>
+                </div>
+                <mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+              </form>
+
+        </div>
+      </mat-sidenav>
+
+        <mat-toolbar class="title-users c-title-toolbar">
+          <h1 class="c-title-toolbar__heading">Vehicles</h1>
+          <div class="func-button-users c-title-toolbar__action-buttons">
+            <button mat-raised-button *ngIf="!hiddenBtn" (click)="sidenavUsers.open(); addNewVehicle(formUpdateAddVehicle)">Add new</button>
+            <button mat-raised-button class="hidden" *ngIf="!hiddenBtn" (click)="removeVehicle()">Delete</button>
+          </div>
+      </mat-toolbar>
+    </mat-sidenav-container>
+  </div>
+
+<div class="c-grid-list__row c-grid-list__row--header">
+      <div class="c-grid-list__cell c-grid-list__cell--check-box" *ngIf="!hiddenBtn"></div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-20">
+        <span>Registration</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-15">
+        <span>Fleet</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-16">
+        <span>Customer</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-13">
+        <span>Vin</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-13">
+        <span>Type</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-13">
+        <span>Trackers</span>
+      </div>
+      <div class="c-grid-list__cell c-grid-list__cell--width-7" [ngClass]="{'c-grid-list__cell--width-10': hiddenBtn}">
+        <span>Created</span>
+      </div>
+</div>
+<section class="o-scrollable--with-toolbar o-scrollable--with-shadow">
+  <div  [ngClass]="{'is-loading': isLoading}">
+
+   <div class="users-list view-user-list c-grid-list">
+    <div class="row-users">
+      <div class="c-grid-list__row c-grid-list__row--hover" (click)="selectVehicle(vehicle)" *ngFor="let vehicle of vehicles">
+        <div class="c-grid-list__cell c-grid-list__cell--check-box" *ngIf="!hiddenBtn">
+          <span><mat-checkbox class="example-margin" (click)="checkVehicle(vehicle.id)"></mat-checkbox></span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-20" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ vehicle.registration }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-15" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ vehicle.fleet_id }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-16" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ vehicle.customer.name }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-13" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ vehicle.vin }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-13" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ vehicle.type }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-13" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ vehicle.trackers.length }}</span>
+        </div>
+        <div class="c-grid-list__cell c-grid-list__cell--width-7" [ngClass]="{'c-grid-list__cell--width-10': hiddenBtn}" (click)="hiddenBtn ? null : sidenavUsers.open()">
+          <span>{{ vehicle.creation_datetime | date }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+  </div>
+</section>

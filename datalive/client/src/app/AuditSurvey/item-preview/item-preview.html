@@ -1,0 +1,157 @@
+<!--TODO: change inline styles to classes everywhere-->
+<div style="margin-bottom: 20px; border-bottom: 1px solid black; border-left: 1px dashed black; padding-left: 20px">
+  <div *ngIf="showButton()">
+    <button style="width: 100%" (click)="expandCollapse()">{{surveyItem.text}}</button>
+  </div>
+
+  <div *ngIf="!showButton()">
+    <div *ngIf="surveyItem.expanded" style="cursor: pointer; float: right;" (click)="expandCollapse()">
+      Collapse
+    </div>
+
+    <div *ngIf="surveyItem.type == 'L'">
+      <p *ngIf="surveyItem.style == 'p'"> {{surveyItem.text}} </p>
+      <h1 *ngIf="surveyItem.style == 'h1'"> {{surveyItem.text}} </h1>
+      <h2 *ngIf="surveyItem.style == 'h2'"> {{surveyItem.text}} </h2>
+      <h3 *ngIf="surveyItem.style == 'h3'"> {{surveyItem.text}} </h3>
+      <h4 *ngIf="surveyItem.style == 'h4'"> {{surveyItem.text}} </h4>
+      <h5 *ngIf="surveyItem.style == 'h5'"> {{surveyItem.text}} </h5>
+      <h6 *ngIf="surveyItem.style == 'h6'"> {{surveyItem.text}} </h6>
+    </div>
+
+    <div *ngIf="!allowBinds">
+
+      <div *ngIf="surveyItem.type != 'L' && surveyItem.type != 'H'">
+        {{surveyItem.text}}
+
+        <input type="number" disabled *ngIf="surveyItem.type == 'I'">
+
+        <input type="text" disabled *ngIf="surveyItem.type == 'T'">
+
+        <div *ngIf="surveyItem.type == 'DT'">
+          <select disabled>
+            <option></option>
+          </select>
+          <select disabled>
+            <option></option>
+          </select>
+          <select disabled>
+            <option></option>
+          </select>
+        </div>
+
+        <div *ngIf="surveyItem.type == 'TM'">
+          <select disabled>
+            <option></option>
+          </select>
+          <select disabled>
+            <option></option>
+          </select>
+        </div>
+
+        <div *ngIf="surveyItem.type == 'S'">
+          <i class="material-icons" *ngFor="let score of commonService.createArrayFromNumber(surveyItem.max)">star_border</i>
+        </div>
+
+        <div *ngIf="surveyItem.type == 'D'">
+          <div *ngIf="surveyItem.style == ''">
+            <select disabled>
+              <option *ngFor="let value of surveyItem.values" [value]="value">{{value}}</option>
+            </select>
+          </div>
+          <div *ngIf="surveyItem.style == 'multiselect'">
+            <select disabled multiple="true">
+              <option *ngFor="let value of surveyItem.values" [value]="value">{{value}}</option>
+            </select>
+          </div>
+          <div *ngIf="surveyItem.style == 'button'">
+            <div *ngFor="let value of surveyItem.values">
+              {{value}}
+              <input type="radio" [value]="value" [name]="surveyItem.text+'_'+value">
+            </div>
+          </div>
+        </div>
+
+        <input type="file" disabled *ngIf="surveyItem.type == 'UI'">
+      </div>
+
+    </div>
+
+    <div *ngIf="allowBinds">
+
+      <div *ngIf="surveyItem.type != 'L' && surveyItem.type != 'H'">
+        {{surveyItem.text}}
+
+        <input type="number" [(ngModel)]="surveyItem.value" *ngIf="surveyItem.type == 'I'">
+
+        <input type="text" [(ngModel)]="surveyItem.value" *ngIf="surveyItem.type == 'T'">
+
+        <div *ngIf="surveyItem.type == 'DT'">
+          <select [(ngModel)]="surveyItem.date.selectedDay">
+            <option *ngFor="let day of surveyItem.date.dayList" [value]="day.value">{{day.title}}</option>
+          </select>
+
+          <select [(ngModel)]="surveyItem.date.selectedMonth">
+            <option *ngFor="let month of surveyItem.date.monthList" [value]="month.value">{{month.title}}</option>
+          </select>
+
+          <select [(ngModel)]="surveyItem.date.selectedYear">
+            <option *ngFor="let year of surveyItem.date.yearList" [value]="year.value">{{year.title}}</option>
+          </select>
+        </div>
+
+        <div *ngIf="surveyItem.type == 'TM'">
+          <select [(ngModel)]="surveyItem.time.selectedHour">
+            <option *ngFor="let hour of surveyItem.time.hourList" [value]="hour.value">{{hour.title}}</option>
+          </select>
+
+          <select [(ngModel)]="surveyItem.time.selectedMinute">
+            <option *ngFor="let minute of surveyItem.time.minuteList" [value]="minute.value">{{minute.title}}</option>
+          </select>
+        </div>
+
+        <div *ngIf="surveyItem.type == 'S'">
+          <i class="material-icons" *ngFor="let score of commonService.createArrayFromNumber(surveyItem.max); let iterIndex = index" (click)="fillOutStar(iterIndex)">{{isStarFilled(iterIndex)}}</i>
+        </div>
+
+        <div *ngIf="surveyItem.type == 'D'">
+          <div *ngIf="surveyItem.style == ''">
+            <select [(ngModel)]="surveyItem.value">
+              <option *ngFor="let value of surveyItem.values" [value]="value">{{value}}</option>
+            </select>
+          </div>
+
+          <div *ngIf="surveyItem.style == 'multiselect'">
+            <select multiple="true" [(ngModel)]="surveyItem.value">
+              <option *ngFor="let value of surveyItem.values" [value]="value">{{value}}</option>
+            </select>
+          </div>
+
+          <div *ngIf="surveyItem.style == 'button'">
+            <div *ngFor="let value of surveyItem.values">
+              {{value}}
+              <input type="radio" [value]="value" [name]="surveyItem.text+'_'+value" [(ngModel)]="surveyItem.value">
+            </div>
+          </div>
+        </div>
+
+        <input type="file" *ngIf="surveyItem.type == 'UI'" (change)="handleFileSelect($event)">
+
+        <div *ngIf="surveyItem.comments">
+          <input type="checkbox" [(ngModel)]="surveyItem.showComment">
+          Comments?
+        </div>
+        <div *ngIf="surveyItem.showComment">
+          <input type="text" [(ngModel)]="surveyItem.comment">
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="surveyItem.items.length > 0">
+      <div *ngFor="let item of surveyItem.items | orderBy:'order'">
+        <item-preview [surveyItem]="item" [allowBinds]="allowBinds"></item-preview>
+      </div>
+    </div>
+
+  </div>
+</div>

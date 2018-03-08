@@ -1,0 +1,451 @@
+<section class="wrapper-administration o-content">
+  <aside class="admin-navigation o-content__sidebar c-sidebar"
+         [ngClass]="{'o-content__sidebar--hidden': !sidemenuOpen}">
+    <div class="d-context-panel__head flex-direction--column">
+      <img class="d-context-panel__head-img" src="{{ img }}vehicle-check-icon--grey.png" alt="Trips and stops icon">
+      <h4 class="d-context-panel__title">Vehicle Check</h4>
+    </div>
+    <region-depot-list (outputApiIsLoading)="isLoading=$event" [instance]="'depot'"></region-depot-list>
+    <button (click)="sidemenuOpen = !sidemenuOpen" class="hidden c-title-toolbar__toggle-btn"
+            [ngClass]="{'sidemenu-is-hidden': !sidemenuOpen}">
+      <mat-icon class="icon--16 c-title-toolbar__toggle-btn-icon">chevron_left</mat-icon>
+    </button>
+  </aside>
+
+  <main class="wrapper-admin-content o-content__main ">
+    <section class="o-scrollable--without-toolbar">
+      <div class="content-time page-depot" [ngClass]="{'is-loading': isLoading}">
+        <!--<div>
+          <button (click)="showSlideIn=!showSlideIn">Test slidein panel</button>
+        </div>-->
+        <mat-toolbar class="c-title-toolbar reports-header c-title-toolbar">
+          <h1 class="c-title-toolbar__heading c-title-toolbar__heading--no-context-menu">
+            {{depotStats.name}} Depot
+          </h1>
+
+          <div class="margin-right--small">
+            <label class="chart-stats-bar__input-label display--inline">Reports:</label>
+            <!--<select style="display: block"
+                    [(ngModel)]="generateReportParams.type"
+                    (change)="getReport()"
+                    [disabled]="isLoading">
+              <option *ngFor="let reportType of reportTypes" [ngValue]="reportType.value">{{reportType.title}}
+              </option>
+            </select>-->
+            <mat-form-field style="width: 275px">
+              <mat-select [(ngModel)]="generateReportParams.type"
+                          (change)="getReport();getDepotStats()">
+                <mat-option *ngFor="let reportType of reportTypes" [value]="reportType.value">
+                  {{reportType.title}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="">
+            <!--<label class="chart-stats-bar__input-label">Datepicker:</label>-->
+            <my-date-range-picker
+              [(ngModel)]="dateRange"
+              (dateRangeChanged)="onDateRangeChanged($event)"
+              [disabled]="isLoading"></my-date-range-picker>
+          </div>
+          <!--<div class="">
+            <button (click)="setLastDays(7, true)"
+                    [disabled]="isLoading">7 days</button>
+            <--Only need to show last 7 days in this phase--
+            <button>1 month</button>
+            <button>3 months</button>
+          </div>-->
+        </mat-toolbar>
+        <div class="charts__container">
+          <div class="charts-header">
+            <ul class="chart-stats-bar unstyled-list">
+              <li class="chart-stats-bar__item">
+                <span class="chart-stats-bar__value">{{depotStats.total_damages}}</span>
+                Damages
+              </li>
+              <li class="chart-stats-bar__item">
+                <span class="chart-stats-bar__value">{{depotStats.fixed_damages}}
+                </span>
+                Fixed Damages
+              </li>
+              <li class="chart-stats-bar__item chart-stats-bar__item--margin-auto-left text--right">
+                Made in {{ madeInDatesText }}:
+              </li>
+              <li class="chart-stats-bar__item text--right">
+                <span class="chart-stats-bar__value">{{depotStats.num_checks}}
+                </span>
+                Checks
+              </li>
+              <li class="chart-stats-bar__item text--right">
+                <span class="chart-stats-bar__value">{{depotStats.num_audits}}
+                </span>
+                Audits
+              </li>
+              <li class="chart-stats-bar__item text--right">
+                <span class="chart-stats-bar__value">{{depotStats.num_handovers}}
+                </span>
+                Handovers
+              </li>
+
+            </ul>
+
+          </div>
+
+          <div class="charts__chart-block" #chartBlock>
+            <chart [options]="chartOptions" *ngIf="chartOptionsIsReady"></chart>
+          </div>
+        </div>
+
+        <div class="reports__container">
+
+          <div class="reports__report-block">
+
+            <table class="c-table depot-report-table--aud" *ngIf="generateReportParams.type == 'AUD'">
+              <tr>
+                <th *ngFor="let tableHead of reportTables[generateReportParams.type]">{{tableHead}}</th>
+              </tr>
+              <tr *ngFor="let tableRow of reportData" (click)="getReportDetail(tableRow.id)">
+                <td>{{tableRow.vehicle_reg}}</td>
+                <td>{{tableRow.date}} / {{tableRow.time.split('.')[0]}}</td>
+                <td>{{tableRow.user_name}}</td>
+                <td>{{tableRow.checker_name}}</td>
+                <td>{{tableRow.notes}}</td>
+              </tr>
+            </table>
+
+            <table class="c-table depot-report-table--std" *ngIf="generateReportParams.type == 'STD'">
+              <tr>
+                <th *ngFor="let tableHead of reportTables[generateReportParams.type]">{{tableHead}}</th>
+              </tr>
+              <tr *ngFor="let tableRow of reportData" (click)="getReportDetail(tableRow.id)">
+                <td>{{tableRow.vehicle_reg}}</td>
+                <td>{{tableRow.date}} / {{tableRow.time.split('.')[0]}}</td>
+                <td>{{tableRow.user_name}}</td>
+                <td>{{tableRow.checker_name}}</td>
+                <td>{{tableRow.driver_name}}</td>
+                <td>{{tableRow.defect_status}}</td>
+                <td>{{tableRow.outcome}}</td>
+                <td>{{tableRow.damages_count}}</td>
+                <td>{{tableRow.defect_details}}</td>
+                <td>{{tableRow.notes}}</td>
+              </tr>
+            </table>
+
+            <table class="c-table depot-report-table--hnd" *ngIf="generateReportParams.type == 'HND'">
+              <tr>
+                <th *ngFor="let tableHead of reportTables[generateReportParams.type]">{{tableHead}}</th>
+              </tr>
+              <tr *ngFor="let tableRow of reportData" (click)="getReportDetail(tableRow.id)">
+                <td>{{tableRow.vehicle_reg}}</td>
+                <td>{{tableRow.date}} / {{tableRow.time.split('.')[0]}}</td>
+                <td>{{tableRow.user_name}}</td>
+                <td>{{tableRow.checker_name}}</td>
+                <td>{{tableRow.driver_name}}</td>
+                <td>{{tableRow.notes}}</td>
+              </tr>
+            </table>
+
+            <table class="c-table depot-report-table--dmg" *ngIf="generateReportParams.type == 'DMG'">
+              <tr>
+                <th *ngFor="let tableHead of reportTables[generateReportParams.type]">{{tableHead}}</th>
+              </tr>
+              <tr *ngFor="let tableRow of reportData">
+                <td>{{tableRow.type}}</td>
+                <td>{{tableRow.vehicle_reg}}</td>
+                <td>{{tableRow.location}}</td>
+                <td>{{tableRow.date}} / {{tableRow.time.split('.')[0]}}</td>
+                <td>{{tableRow.reported_by}}</td>
+                <td>{{tableRow.fixed_date}}</td>
+                <td>{{tableRow.fixed_by}}</td>
+              </tr>
+            </table>
+
+            <table class="c-table depot-report-table--gtc" *ngIf="generateReportParams.type == 'GTC'">
+              <tr>
+                <th *ngFor="let tableHead of reportTables[generateReportParams.type]">{{tableHead}}</th>
+              </tr>
+              <tr *ngFor="let tableRow of reportData" (click)="getReportDetail(tableRow.id)">
+                <td>{{tableRow.reg}}</td>
+                <td>{{tableRow.date}} / {{tableRow.time.split('.')[0]}}</td>
+                <td>{{tableRow.user_name}}</td>
+                <td>{{tableRow.depot}}</td>
+                <td>{{tableRow.notes}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <mat-progress-spinner class="c-progress-spinner" mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+      </div>
+    </section>
+  </main>
+  <aside class="o-content__dialog c-sidebar right-panel_container d-slide-dialog"
+         [ngClass]="{'o-content__dialog--hidden': !showSlideIn}">
+    <div class="right-panel_close" (click)="showSlideIn=false">
+      X
+    </div>
+    <div class="flex-direction--column"
+         *ngIf="!!reportDetails && rightPanelGateCheckTemplate.indexOf(generateReportParams.type) !== -1">
+      <mat-tab-group>
+        <mat-tab label="Details">
+          <div class="content-padding">
+            <h4>Details</h4>
+
+            <table class="c-table ">
+              <tr>
+                <td style="width: 45%">
+                  <strong>Hub: </strong>
+                </td>
+                <td>{{reportDetails.hub_name}}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Driver Name: </strong>
+                </td>
+                <td>{{reportDetails.driver_name}}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Agency: </strong>
+                </td>
+                <td>{{reportDetails.agency.toString()}}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Depot: </strong>
+                </td>
+                <td>{{reportDetails.depot_name}}</td>
+              </tr>
+              <tr>
+                <td style="width: 45%">
+                  <strong>Remarks: </strong>
+                </td>
+                <td style="width: 45%">{{reportDetails.notes}}</td>
+              </tr>
+            </table>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Tractor checks">
+          <div class="content-padding">
+            <h4>Tractor checks</h4>
+
+            <table class="c-table ">
+              <tr>
+                <td style="width: 45%">
+                  <strong>
+                    Tractor Unit Reg No:
+                  </strong>
+                </td>
+                <td style="width: 45%">
+                  {{reportDetails.reg}}
+                </td>
+              </tr>
+              <tr *ngFor="let tractor_question of reportDetails.tractor_question_responses">
+                <td style="width: 45%">
+                  <strong>{{tractor_question.question_text}}</strong>
+                </td>
+                <td style="width: 45%">{{tractor_question.answer_text}}</td>
+              </tr>
+            </table>
+
+            <div>
+              <div>Tractor photos:</div>
+              <div style="display: inline-block" *ngFor="let tractor_photo of reportDetails.tractor_photos">
+                <img [src]="tractor_photo.photo">
+              </div>
+            </div>
+
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Trailer checks">
+            <h4>Trailer checks</h4>
+
+            <table class="c-table ">
+              <tr>
+                <td style="width: 45%">
+                  <strong>
+                    Trailer No:
+                  </strong>
+                </td>
+                <td style="width: 45%">
+                  {{reportDetails.trailer}}
+                </td>
+              </tr>
+              <tr *ngFor="let trailer_question of reportDetails.trailer_question_responses">
+                <td style="width: 45%">
+                  <strong>{{trailer_question.question_text}}</strong>
+                </td>
+                <td style="width: 45%">{{trailer_question.answer_text}}</td>
+              </tr>
+            </table>
+
+            <div>
+              <div>Trailer photos:</div>
+              <div style="display: inline-block" *ngFor="let trailer_photo of reportDetails.trailer_photos">
+                <img [src]="trailer_photo.photo">
+              </div>
+            </div>
+
+        </mat-tab>
+        <mat-tab label="Hub checks">
+            <h4>Hub check</h4>
+
+            <table class="c-table ">
+              <tr *ngFor="let hub_question of reportDetails.hub_question_responses">
+                <td style="width: 45%">
+                  <strong>{{hub_question.question_text}}: </strong>
+                </td>
+                <td style="width: 45%">{{hub_question.answer_text}}</td>
+              </tr>
+            </table>
+
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    <div class="flex-direction--column"
+         *ngIf="!!reportDetails && rightPanelDepotReportTemplate.indexOf(generateReportParams.type) !== -1">
+      <mat-tab-group>
+        <mat-tab label="Vehicle Details">
+          <div class="content-padding">
+            <h4>Details</h4>
+            <!--<div>
+              <div>
+                <span>Vehicle: </span><span>{{reportDetails.vehicle_reg}}</span>
+              </div>
+              <div>
+                <span>Date/Time: </span><span>{{reportDetails.date}} / {{reportDetails.time.split('.')[0]}}</span>
+              </div>
+              <div>
+                <span>Status: </span><span>{{reportDetails.status}}</span>
+              </div>
+              <div>
+                <span>New damage: </span><span>{{reportDetails.new_damage_count}}</span>
+              </div>
+            </div>-->
+
+            <table class="c-table ">
+              <tr>
+                <td style="width: 45%"><strong>Vehicle: </strong></td>
+                <td>{{reportDetails.vehicle_reg}}</td>
+              </tr>
+              <tr>
+                <td><strong>Date/Time: </strong></td>
+                <td>{{reportDetails.date}} / {{reportDetails.time.split('.')[0]}}</td>
+              </tr>
+              <tr>
+                <td><strong>Status: </strong></td>
+                <td>{{reportDetails.status}}</td>
+              </tr>
+              <tr>
+                <td><strong>New damage: </strong></td>
+                <td>{{reportDetails.new_damage_count}}</td>
+              </tr>
+            </table>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="History">
+          <div class="content-padding">
+            <table class="c-table ">
+              <tr>
+                <th colspan="2">Damage type</th>
+                <th>View</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Reported by</th>
+                <th>Fixed date</th>
+                <th>Fixed by</th>
+              </tr>
+              <tr *ngFor="let history of reportDetails.history">
+                <td style="width: 45px"><img src="{{img}}icons/damage/icon-damage_{{history.type}}.png"></td>
+                <td>{{history.type}}</td>
+                <td>{{getHistoryViewName(history.view)}}</td>
+                <td>{{history.date}}</td>
+                <td>{{history.time.split('.')[0]}}</td>
+                <td>{{history.rep_by || '---'}}</td>
+                <td>{{history.been_fixed ? history.fixed_date : '-'}}</td>
+                <td>{{history.been_fixed ? history.fixed_by : 'Not fixed'}}</td>
+              </tr>
+
+            </table>
+
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Vehicle Damage" *ngIf="reportDetails.new_damages.length > 0">
+            <div class="vehicle-image__block content-padding">
+              <img class="vehicle-image__livery-image" [src]="reportDetails.livery.views[selectedLiveryViewTabIndex].img">
+              <img *ngFor="let damage of reportDetails.new_damages"
+                   src="{{img}}icons/damage/icon-damage_{{damage.type}}.png"
+                   style="position: absolute;"
+                   [style.display]="damage.view == selectedLiveryViewTabIndex ? '' : 'none'"
+                   [style.left.%]="damage.x"
+                   [style.bottom.%]="damage.y"
+                   class="vehicle-image__damage-image">
+          </div>
+
+          <mat-tab-group #liveryViewTabGroup (selectedTabChange)="liveryViewTabChanged($event)">
+            <mat-tab *ngFor="let liveryView of reportDetails.livery.views" [label]="liveryView.view_name">
+             
+              <div class="ehicle-damage__details--container content-padding">
+                <table class="c-table">
+                  <tr>
+                    <th colspan="2">Damage type</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Reported by</th>
+                    <th>Fixed date</th>
+                    <th>Fixed by</th>
+                  </tr>
+                  
+                  <tr *ngFor="let damageItem of reportDetails.new_damages" >
+                     <ng-container *ngIf="damageItem.view == selectedLiveryViewTabIndex">
+                      <td style="width: 50px"><img src="{{img}}icons/damage/icon-damage_{{damageItem.type}}.png"></td>
+                      <td>{{damageItem.type}}</td>
+                      <td>{{damageItem.date}}</td>
+                      <td>{{damageItem.time.split('.')[0]}}</td>
+                      <td>{{damageItem.rep_by || '-'}}</td>
+                      <td>{{damageItem.been_fixed ? damageItem.fixed_date : '-'}}</td>
+                      <td>{{damageItem.been_fixed ? damageItem.fixed_by : 'Not fixed'}}</td>
+                    </ng-container>
+                    
+                  </tr>
+                </table>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+
+        </mat-tab>
+
+        <mat-tab label="Conditions">
+          <div class="content-padding">
+            <h4>Conditions</h4>
+            <table class="c-table">
+              <tr *ngFor="let condition of reportDetails.conditions">
+                  <td style="width: 60%">{{condition.question_text}}:</td>
+                  <td>{{condition.answer_text}}</td>
+              </tr>
+            </table>
+          </div>
+        </mat-tab>
+        <mat-tab label="Signatures">
+          <div class="content-padding">
+            <div>
+              <div>Checked by:</div>
+              <svg width="90" height="90">
+                <image [attr.xlink:href]="reportDetails.checker_signature" width="90" height="90"/>
+              </svg>
+            </div>
+            <div>
+              <div>Driver acceptance:</div>
+              <svg width="90" height="90">
+                <image [attr.xlink:href]="reportDetails.driver_signature" width="90" height="90"/>
+              </svg>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </aside>
+</section>

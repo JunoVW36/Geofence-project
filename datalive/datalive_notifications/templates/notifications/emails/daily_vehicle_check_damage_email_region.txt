@@ -1,0 +1,9 @@
+Daily vehicle check report. Region Name: {{ region_name }}. Date: {{ report_date|date:"d/m/Y" }}
+
+Checked: {{ num_checked }}.
+Unchecked: {{ num_unchecked }}.
+
+New Damages: {{ new_damages }}.
+Unfixed Damages: {{ unfixed_damages }}.
+
+View your vehicle check dashboard by url: {{ dashboard_url }}.

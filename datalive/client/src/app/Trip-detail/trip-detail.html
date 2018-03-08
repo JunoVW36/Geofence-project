@@ -1,0 +1,92 @@
+
+<section class="wrapper-administration o-content">
+  <aside class="admin-navigation o-content__sidebar c-sidebar" [ngClass]="{'o-content__sidebar--hidden': !sidemenuOpen}">
+    <div class="d-context-panel__head flex-direction--column">
+      <img class="d-context-panel__head-img" src="{{ img }}trips-stops-gray-icon.png" alt="Trips and stops icon">
+        <h4 class="d-context-panel__title">Trip Stops</h4>
+    </div>
+        <search-vehicle-timesheet-app (outputTimesheet)="this.timesheet=$event"
+                                      (outputShowPage)="this.showPage=$event"
+                                      (outputTripTitle)="this.titleTrip=$event"
+                                      (outputStartDate)="this.startDateTime=$event"
+                                      (outputEndDate)="this.endDateTime=$event"
+                                      [redirectToTimesheet]="true"
+                                      [namePage]="'track'">
+        </search-vehicle-timesheet-app>
+        <button (click)="sidemenuOpen = !sidemenuOpen" class="c-title-toolbar__toggle-btn" [ngClass]="{'sidemenu-is-hidden': !sidemenuOpen}">
+          <mat-icon class="icon--16 c-title-toolbar__toggle-btn-icon">chevron_left</mat-icon>
+        </button>
+  </aside>
+
+  <main class="wrapper-admin-content o-content__main ">
+      <mat-toolbar class="c-title-toolbar">
+
+
+        <h1 class="c-title-toolbar__heading">
+
+          <span *ngIf="titleTimesheet == true">
+              <a class="timesheet-navigation" [routerLink]="['/timesheet']">Timesheet {{ searchAutocomplete }}</a>
+              <mat-icon class="icon--16 ">chevron_right</mat-icon>
+            </span>
+            <span *ngIf="titleTrip == true">
+              <a class="timesheet-navigation" [routerLink]="['/trip']">Trip Report</a>
+              <mat-icon class="icon--16 mat-smaller">chevron_right</mat-icon>
+            </span>
+            Journey Detail ({{ tripNumber.tripSelect.driveName }})
+      </h1>
+      </mat-toolbar>
+    <section class="o-scrollable--with-toolbar o-scrollable--with-shadow">
+
+      <div class="content-time">
+
+        <div class="c-grid-list">
+          <div class="c-grid-list__row c-grid-list__row--header time-fields-header">
+            <div class="c-grid-list__cell c-grid-list__cell--width-7">
+              <span>Leg</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10">
+              <span>Start\Time</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-53">
+              <span>Road</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10">
+             <span>Direction</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10">
+             <span>Distance</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10">
+              <span>Duration</span>
+            </div>
+
+          </div>
+          <div class="c-grid-list__row" *ngFor="let tripItem of track; let iteration = index">
+            <div class="c-grid-list__cell c-grid-list__cell--width-7" (click)="selectTripNumber(trp)">
+                <span>{{ tripItem.leg }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10" (click)="selectTripNumber(trp)">
+             <span>{{ tripItem.startTime }} </span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-53" (click)="selectTripNumber(trp)">
+               <span>{{ tripItem.road }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10" (click)="selectTripNumber(trp)">
+              <span>{{ tripItem.direction }}</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10" (click)="selectTripNumber(trp)">
+              <span *ngIf="units_distance == 'MLS'">{{ tripItem.distance }} miles</span>
+              <span *ngIf="units_distance == 'KMS'">{{ tripItem.distance }} km</span>
+            </div>
+            <div class="c-grid-list__cell c-grid-list__cell--width-10" (click)="selectTripNumber(trp)">
+             <span>{{ tripItem.duration }}Min</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+    </section>
+  </main>
+</section>

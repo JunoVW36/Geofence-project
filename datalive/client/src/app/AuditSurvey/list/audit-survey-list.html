@@ -1,0 +1,23 @@
+<section class="o-content wrapper--audit-survey-list">
+  <table class="c-table depot-report-table--aud">
+    <tr>
+      <th>Survey name</th>
+      <th>Customer name</th>
+      <th>Is default</th>
+      <th>Reports number</th>
+    </tr>
+    <tr *ngFor="let auditSurvey of auditSurveyList">
+      <td (click)="navigateReportsPage(auditSurvey.id)">{{auditSurvey.name}}</td>
+      <td (click)="navigateReportsPage(auditSurvey.id)">{{auditSurvey.customer_name}}</td>
+      <td>
+        <button (click)="updateDefault(auditSurvey)">{{auditSurvey.is_default ? 'Yes' : 'No'}}</button>
+      </td>
+      <td (click)="navigateReportsPage(auditSurvey.id)">{{auditSurvey.reports_num}}</td>
+    </tr>
+  </table>
+
+  <button [routerLink]="['/audit_survey/create']">
+    Create new template
+  </button>
+</section>
+

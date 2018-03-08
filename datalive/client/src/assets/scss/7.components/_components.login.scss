@@ -1,0 +1,77 @@
+.wrapper--login{
+    @extend .bg-datalive-gradient;
+    z-index:1000;
+    left: 0;
+    top: 0;
+    bottom:0;
+    right: 0;
+    margin-top:0;
+    height: 100%;
+    position: absolute;
+    text-align: center;
+}
+
+.c-login-panel {
+    max-width: 380px;
+    padding: 0;
+    left: 50%;
+    top: 50%;
+    margin-left: -190px;
+   // margin-top: -50%;
+    &.mat-card{
+        transition: transform 0.4s 0.1s; // remove default material transition
+        padding: 0;
+    }
+    opacity: 0.8;
+    position: absolute;
+    
+    transform: translateY(-200%); 
+    &.transition{
+        opacity: 1;
+        
+        transform: translateY(-45%);
+    }
+}
+.c-login-panel__form{
+    padding: $spacing-unit--small $spacing-unit--base;
+}
+ 
+.c-login-panel__logo {
+    opacity: 0;
+    transition: opacity 0.4s ease-in 0.6s;
+    padding: $spacing-unit--small $spacing-unit--base;
+    border-bottom: 1px solid $color-ui;
+    &.transition{
+        opacity: 1;
+    }
+    img {
+        max-width: 300px;
+    }
+}
+.c-login-panel__title {
+    @include font-size(19px);
+    margin: $spacing-unit--base;
+
+}
+
+.c-login-panel__button{
+    width: 100%;
+    text-transform: uppercase;
+}
+
+
+
+
+
+
+.c-login-panel__input {
+    width: 100%;
+}
+.c-login-panel__forgot-pass, .c-login-panel__return-to-login {
+    padding: $spacing-unit--small $spacing-unit--base;
+    border-top: 1px solid $color-ui;
+}
+.c-login-panel__forgot-pass-link {
+
+}
+
